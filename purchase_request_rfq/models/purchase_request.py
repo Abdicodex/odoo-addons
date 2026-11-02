@@ -118,10 +118,10 @@ class PurchaseRequest(models.Model):
     def _prepare_rfq_vals(self, partner):
         """Values for one RFQ addressed to `partner` with every request line."""
         self.ensure_one()
-        uom_field = (
-            'product_uom_id'
-            if 'product_uom_id' in self.env['purchase.order.line']._fields
-            else 'product_uom')
+        po_line_fields = self.env['purchase.order.line']._fields
+        uom_field = next(
+            name for name in ('uom_id', 'product_uom_id', 'product_uom')
+            if name in po_line_fields)
         planned = fields.Datetime.to_datetime(self.date_required)
         lines = []
         for line in self.line_ids:

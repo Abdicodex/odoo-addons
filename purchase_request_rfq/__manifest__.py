@@ -11,8 +11,7 @@ turns approved requests into one RFQ per chosen vendor in the Purchase app.
     'depends': ['purchase', 'mail'],
     'data': [
         'security/groups.xml',
-        'security/ir.model.access.csv',
-        'security/rules.xml',
+        'security/ir.access.csv',
         'data/sequence.xml',
         'views/purchase_request_views.xml',
         'views/purchase_order_views.xml',
