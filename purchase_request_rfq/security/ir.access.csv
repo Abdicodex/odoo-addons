@@ -1,9 +1,10 @@
 id,name,model_id,group_id/id,operation,domain
 purchase_request_requester_rule,Purchase Request Requester,purchase.request,group_purchase_request_user,cru,"[('requester_id', '=', user.id)]"
 purchase_request_manager_rule,Purchase Request Approver,purchase.request,group_purchase_request_manager,crud,
-purchase_request_buyer_rule,Purchase Request Buyer,purchase.request,purchase.group_purchase_user,ru,
+purchase_request_buyer_rule,Purchase Request Buyer,purchase.request,purchase.group_purchase_user,cru,
+purchase_request_purchase_manager_rule,Purchase Request Purchase Administrator,purchase.request,purchase.group_purchase_manager,crud,
 purchase_request_comp_rule,Purchase Request multi-company,purchase.request,,crud,"[('company_id', 'in', company_ids)]"
 purchase_request_line_requester_rule,Purchase Request Line Requester,purchase.request.line,group_purchase_request_user,crud,"[('request_id.requester_id', '=', user.id)]"
 purchase_request_line_manager_rule,Purchase Request Line Approver,purchase.request.line,group_purchase_request_manager,crud,
-purchase_request_line_buyer_rule,Purchase Request Line Buyer,purchase.request.line,purchase.group_purchase_user,r,
+purchase_request_line_buyer_rule,Purchase Request Line Buyer,purchase.request.line,purchase.group_purchase_user,crud,
 purchase_request_line_comp_rule,Purchase Request Line multi-company,purchase.request.line,,crud,"[('company_id', 'in', company_ids)]"
