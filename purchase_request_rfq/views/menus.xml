@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_purchase_request_root"
+              name="Purchase Requests"
+              parent="purchase.menu_purchase_root"
+              sequence="5"
+              groups="group_purchase_request_user,purchase.group_purchase_user"/>
+
+    <menuitem id="menu_purchase_request"
+              name="My Requests"
+              parent="menu_purchase_request_root"
+              action="purchase_request_action"
+              sequence="10"/>
+
+    <menuitem id="menu_purchase_request_approval"
+              name="To Approve"
+              parent="menu_purchase_request_root"
+              action="purchase_request_action_approval"
+              sequence="20"
+              groups="group_purchase_request_manager"/>
+</odoo>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_request_make_rfq_view_form" model="ir.ui.view">
+        <field name="name">purchase.request.make.rfq.form</field>
+        <field name="model">purchase.request.make.rfq</field>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <field name="request_id"/>
+                    <field name="partner_ids" widget="many2many_tags"
+                           options="{'no_create': True}"/>
+                </group>
+                <footer>
+                    <button name="action_create_rfqs" string="Create RFQs" type="object"
+                            class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>
