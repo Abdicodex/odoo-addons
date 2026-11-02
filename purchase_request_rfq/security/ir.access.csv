@@ -1,10 +1,27 @@
 id,name,model_id,group_id/id,operation,domain
-purchase_request_requester_rule,Purchase Request Requester,purchase.request,group_purchase_request_user,cru,"[('requester_id', '=', user.id)]"
-purchase_request_manager_rule,Purchase Request Approver,purchase.request,group_purchase_request_manager,crud,
-purchase_request_buyer_rule,Purchase Request Buyer,purchase.request,purchase.group_purchase_user,cru,
-purchase_request_purchase_manager_rule,Purchase Request Purchase Administrator,purchase.request,purchase.group_purchase_manager,crud,
-purchase_request_comp_rule,Purchase Request multi-company,purchase.request,,crud,"[('company_id', 'in', company_ids)]"
-purchase_request_line_requester_rule,Purchase Request Line Requester,purchase.request.line,group_purchase_request_user,crud,"[('request_id.requester_id', '=', user.id)]"
-purchase_request_line_manager_rule,Purchase Request Line Approver,purchase.request.line,group_purchase_request_manager,crud,
-purchase_request_line_buyer_rule,Purchase Request Line Buyer,purchase.request.line,purchase.group_purchase_user,crud,
-purchase_request_line_comp_rule,Purchase Request Line multi-company,purchase.request.line,,crud,"[('company_id', 'in', company_ids)]"
+purchase_request_requester_rule,Requisition Requestor,purchase.request,group_purchase_request_user,cru,"[('requester_id', '=', user.id)]"
+purchase_request_signer_rule,Requisition Approver or 2nd Signatory,purchase.request,group_purchase_request_user,ru,"['|', ('approver_id', '=', user.id), ('second_signatory_id', '=', user.id)]"
+purchase_request_manager_rule,Requisition Manager,purchase.request,group_purchase_request_manager,crud,
+purchase_request_buyer_rule,Requisition Buyer,purchase.request,purchase.group_purchase_user,cru,
+purchase_request_purchase_manager_rule,Requisition Purchase Administrator,purchase.request,purchase.group_purchase_manager,crud,
+purchase_request_comp_rule,Requisition multi-company,purchase.request,,crud,"[('company_id', 'in', company_ids)]"
+purchase_request_line_requester_rule,Requisition Item Requestor,purchase.request.line,group_purchase_request_user,crud,"[('request_id.requester_id', '=', user.id)]"
+purchase_request_line_signer_rule,Requisition Item Approver or 2nd Signatory,purchase.request.line,group_purchase_request_user,r,"['|', ('request_id.approver_id', '=', user.id), ('request_id.second_signatory_id', '=', user.id)]"
+purchase_request_line_manager_rule,Requisition Item Manager,purchase.request.line,group_purchase_request_manager,crud,
+purchase_request_line_buyer_rule,Requisition Item Buyer,purchase.request.line,purchase.group_purchase_user,crud,
+purchase_request_line_comp_rule,Requisition Item multi-company,purchase.request.line,,crud,"[('company_id', 'in', company_ids)]"
+purchase_request_project_read,Requisition Project read,purchase.request.project,base.group_user,r,
+purchase_request_project_manage,Requisition Project manage,purchase.request.project,group_purchase_request_manager,crud,
+purchase_request_project_admin,Requisition Project admin,purchase.request.project,purchase.group_purchase_manager,crud,
+purchase_request_budget_read,Requisition Budget read,purchase.request.budget,base.group_user,r,
+purchase_request_budget_manage,Requisition Budget manage,purchase.request.budget,group_purchase_request_manager,crud,
+purchase_request_budget_admin,Requisition Budget admin,purchase.request.budget,purchase.group_purchase_manager,crud,
+purchase_request_fund_read,Requisition Fund read,purchase.request.fund,base.group_user,r,
+purchase_request_fund_manage,Requisition Fund manage,purchase.request.fund,group_purchase_request_manager,crud,
+purchase_request_fund_admin,Requisition Fund admin,purchase.request.fund,purchase.group_purchase_manager,crud,
+purchase_request_location_read,Requisition Location read,purchase.request.location,base.group_user,r,
+purchase_request_location_manage,Requisition Location manage,purchase.request.location,group_purchase_request_manager,crud,
+purchase_request_location_admin,Requisition Location admin,purchase.request.location,purchase.group_purchase_manager,crud,
+purchase_request_department_read,Requisition Department read,purchase.request.department,base.group_user,r,
+purchase_request_department_manage,Requisition Department manage,purchase.request.department,group_purchase_request_manager,crud,
+purchase_request_department_admin,Requisition Department admin,purchase.request.department,purchase.group_purchase_manager,crud,

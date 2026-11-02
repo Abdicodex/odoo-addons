@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Projects -->
+    <record id="purchase_request_project_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.project.list</field>
+        <field name="model">purchase.request.project</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="purchase_request_project_action" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">purchase.request.project</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Budget codes -->
+    <record id="purchase_request_budget_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.budget.list</field>
+        <field name="model">purchase.request.budget</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="project_id" options="{'no_create': True}"/>
+                <field name="code"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+    <record id="purchase_request_budget_view_search" model="ir.ui.view">
+        <field name="name">purchase.request.budget.search</field>
+        <field name="model">purchase.request.budget</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="code"/>
+                <field name="description"/>
+                <field name="project_id"/>
+                <group>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="purchase_request_budget_action" model="ir.actions.act_window">
+        <field name="name">Budget Codes</field>
+        <field name="res_model">purchase.request.budget</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Funds -->
+    <record id="purchase_request_fund_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.fund.list</field>
+        <field name="model">purchase.request.fund</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="purchase_request_fund_action" model="ir.actions.act_window">
+        <field name="name">Funds</field>
+        <field name="res_model">purchase.request.fund</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Locations -->
+    <record id="purchase_request_location_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.location.list</field>
+        <field name="model">purchase.request.location</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="purchase_request_location_action" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">purchase.request.location</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Departments -->
+    <record id="purchase_request_department_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.department.list</field>
+        <field name="model">purchase.request.department</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="purchase_request_department_action" model="ir.actions.act_window">
+        <field name="name">Departments</field>
+        <field name="res_model">purchase.request.department</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

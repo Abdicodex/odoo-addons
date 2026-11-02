@@ -4,19 +4,18 @@
         <field name="name">purchase.request.list</field>
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
-            <list string="Purchase Requests" decoration-info="state == 'to_approve'"
-                  decoration-success="state == 'approved'"
+            <list string="Purchase Requisitions" decoration-info="state == 'to_approve'"
                   decoration-muted="state in ('cancelled', 'rejected')">
-                <field name="priority" optional="show" widget="priority" nolabel="1"/>
-                <field name="name" string="Reference"/>
-                <field name="date_request" optional="show"/>
+                <field name="name" string="PRF"/>
+                <field name="date_request" widget="date"/>
                 <field name="requester_id" widget="many2one_avatar_user"/>
-                <field name="partner_id" optional="show"/>
-                <field name="user_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="department_id" optional="show"/>
+                <field name="project_id" optional="show"/>
+                <field name="budget_id" optional="hide"/>
+                <field name="fund_id" optional="hide"/>
+                <field name="approver_id" widget="many2one_avatar_user" optional="show"/>
                 <field name="company_id" groups="base.group_multi_company" optional="hide"/>
-                <field name="origin" optional="hide"/>
-                <field name="date_required" optional="show"/>
-                <field name="amount_total" sum="Total" widget="monetary" optional="show"/>
+                <field name="amount_total" sum="Total" widget="monetary"/>
                 <field name="currency_id" column_invisible="True"/>
                 <field name="state" widget="badge"
                        decoration-info="state == 'to_approve'"
@@ -30,17 +29,15 @@
         <field name="name">purchase.request.form</field>
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
-            <form string="Purchase Request">
+            <form string="Purchase Requisition">
                 <header>
                     <button name="action_request_approval" string="Request Approval" type="object"
                             class="oe_highlight" invisible="state != 'draft'" data-hotkey="g"/>
                     <button name="action_approve" string="Approve" type="object"
                             class="oe_highlight" invisible="state != 'to_approve'"
-                            groups="purchase_request_rfq.group_purchase_request_manager"
                             data-hotkey="z"/>
                     <button name="action_open_reject" string="Reject" type="object"
-                            invisible="state != 'to_approve'"
-                            groups="purchase_request_rfq.group_purchase_request_manager"/>
+                            invisible="state != 'to_approve'"/>
                     <button name="action_open_make_rfq" string="Create RFQ" type="object"
                             class="oe_highlight" invisible="state not in ('approved', 'rfq_created')"
                             groups="purchase.group_purchase_user" data-hotkey="q"/>
@@ -62,97 +59,90 @@
                         </button>
                     </div>
                     <div class="oe_title">
-                        <span class="o_form_label">Purchase Request</span>
-                        <h1 class="d-flex align-items-center gap-2">
-                            <field name="priority" widget="priority" readonly="state in ('rfq_created', 'cancelled')"/>
-                            <field name="name" readonly="1"/>
-                        </h1>
+                        <span class="o_form_label">Purchase Requisition Form</span>
+                        <h1><field name="name" readonly="1"/></h1>
                     </div>
                     <group>
-                        <group>
-                            <field name="partner_id" widget="res_partner_many2one"
-                                   context="{'res_partner_search_mode': 'supplier', 'show_vat': True}"
-                                   placeholder="Optional - can be chosen when creating the RFQ"
-                                   readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
-                            <field name="partner_ref"
-                                   readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
+                        <group name="date_group">
+                            <field name="date_request" widget="date" readonly="state != 'draft'"/>
+                        </group>
+                        <group name="company_group">
                             <field name="currency_id" groups="base.group_multi_currency"
                                    readonly="state != 'draft'"/>
-                            <field name="requester_id" widget="many2one_avatar_user"
+                            <field name="company_id" groups="base.group_multi_company"
                                    readonly="state != 'draft'"/>
-                            <field name="company_id" invisible="1"/>
-                        </group>
-                        <group>
-                            <field name="date_request" readonly="state != 'draft'"/>
-                            <field name="date_required"
-                                   readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
-                            <field name="payment_term_id" options="{'no_create': True}"
-                                   readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
                         </group>
                     </group>
-                    <notebook>
-                        <page string="Products" name="products">
-                            <field name="line_ids" readonly="state != 'draft'">
-                                <list string="Purchase Request Lines" editable="bottom">
-                                    <field name="sequence" widget="handle"/>
-                                    <field name="company_id" column_invisible="True"/>
-                                    <field name="currency_id" column_invisible="True"/>
-                                    <field name="product_id" placeholder="Select a Product"
-                                           context="{'quantity': product_qty, 'company_id': parent.company_id}"
-                                           domain="[('purchase_ok', '=', True), '|', ('company_id', '=', False), ('company_id', '=', parent.company_id)]"/>
-                                    <field name="description" placeholder="Enter a Description..."/>
-                                    <field name="date_planned" optional="hide"/>
-                                    <field name="analytic_distribution" widget="analytic_distribution"
-                                           groups="analytic.group_analytic_accounting"
-                                           options="{'product_field': 'product_id', 'business_domain': 'purchase_order', 'amount_field': 'subtotal'}"/>
-                                    <field name="product_qty"/>
-                                    <field name="product_uom_id" groups="uom.group_uom"
-                                           options="{'no_create': True}"/>
-                                    <field name="price_unit"/>
-                                    <field name="tax_ids" widget="many2many_tax_tags"
-                                           options="{'no_create': True}" optional="show"
-                                           domain="[('type_tax_use', '=', 'purchase'), ('company_id', '=', parent.company_id)]"/>
-                                    <field name="subtotal"/>
-                                </list>
-                            </field>
-                            <group>
-                                <group>
-                                    <field colspan="2" name="note" nolabel="1"
-                                           placeholder="Define your terms and conditions ..."
-                                           readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
-                                </group>
-                                <group class="oe_subtotal_footer border-top-0">
-                                    <field name="amount_untaxed"/>
-                                    <field name="amount_tax"/>
-                                    <field name="amount_total" class="oe_subtotal_footer_separator"/>
-                                </group>
-                            </group>
-                            <div class="clearfix"/>
-                        </page>
-                        <page string="Other Information" name="other_info">
-                            <group>
-                                <group name="buyer_info">
-                                    <field name="user_id" widget="many2one_avatar_user"
-                                           readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
-                                    <field name="origin"
-                                           readonly="state in ('rfq_created', 'rejected', 'cancelled')"/>
-                                    <field name="company_id" groups="base.group_multi_company"
-                                           readonly="state != 'draft'"/>
-                                </group>
-                                <group name="approval_info">
-                                    <field name="approver_id" widget="many2one_avatar_user"
-                                           invisible="not approver_id"/>
-                                    <field name="decision_date" invisible="not decision_date"/>
-                                    <field name="rejection_reason" invisible="not rejection_reason"/>
-                                </group>
-                            </group>
-                            <group string="Justification">
-                                <field name="reason" nolabel="1"
-                                       placeholder="Why is this needed?"
-                                       readonly="state != 'draft'"/>
-                            </group>
-                        </page>
-                    </notebook>
+                    <separator string="Requisition Details"/>
+                    <group>
+                        <group name="requestor_details">
+                            <field name="requester_id" widget="many2one_avatar_user"
+                                   readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="requester_position" readonly="state != 'draft'"/>
+                            <field name="department_id" required="1" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="location_id" required="1" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="requester_email"/>
+                        </group>
+                        <group name="funding_details">
+                            <field name="project_id" required="1" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="budget_id" required="1" readonly="state != 'draft'"
+                                   domain="[('project_id', '=', project_id)]"
+                                   options="{'no_create': True}"/>
+                            <field name="fund_id" required="1" readonly="state != 'draft'"
+                                   options="{'no_create': True}"/>
+                            <field name="category"/>
+                            <field name="verifier_id" widget="many2one_avatar_user"
+                                   readonly="state != 'draft'" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <separator string="Item Details"/>
+                    <field name="line_ids" nolabel="1" readonly="state != 'draft'">
+                        <list string="Items" editable="bottom">
+                            <field name="sequence" widget="handle"/>
+                            <field name="company_id" column_invisible="True"/>
+                            <field name="currency_id" column_invisible="True"/>
+                            <field name="item_no" string="Item #"/>
+                            <field name="description" required="1"
+                                   placeholder="Describe the item or service..."/>
+                            <field name="unit"/>
+                            <field name="product_qty" string="Quantity"/>
+                            <field name="frequency"/>
+                            <field name="price_unit"/>
+                            <field name="subtotal" string="Amount" sum="Total Amount"/>
+                            <field name="product_id" optional="hide"
+                                   options="{'no_create': True}"/>
+                        </list>
+                    </field>
+                    <group class="oe_subtotal_footer">
+                        <field name="amount_total" class="oe_subtotal_footer_separator"/>
+                    </group>
+                    <div class="clearfix"/>
+                    <separator string="Approval"/>
+                    <group>
+                        <group name="approver_block">
+                            <field name="approver_id" widget="many2one_avatar_user"
+                                   readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="approver_position"/>
+                            <field name="approval_date" invisible="not approval_date"/>
+                        </group>
+                        <group name="second_signatory_block">
+                            <field name="second_signatory_id" widget="many2one_avatar_user"
+                                   readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="second_position" invisible="not second_signatory_id"/>
+                            <field name="second_approval_date" invisible="not second_approval_date"/>
+                        </group>
+                    </group>
+                    <group invisible="not rejection_reason">
+                        <field name="decision_by_id" string="Rejected By"/>
+                        <field name="rejection_reason"/>
+                    </group>
+                    <group string="Remarks">
+                        <field name="reason" nolabel="1" readonly="state != 'draft'"
+                               placeholder="Any extra remarks..."/>
+                    </group>
                 </sheet>
                 <chatter/>
             </form>
@@ -163,15 +153,16 @@
         <field name="name">purchase.request.search</field>
         <field name="model">purchase.request</field>
         <field name="arch" type="xml">
-            <search string="Search Purchase Requests">
-                <field name="name" string="Reference"/>
+            <search string="Search Requisitions">
+                <field name="name" string="PRF"/>
                 <field name="requester_id"/>
-                <field name="partner_id"/>
-                <field name="origin"/>
-                <field name="line_ids" string="Product" filter_domain="[('line_ids.product_id', 'ilike', self)]"/>
-                <filter name="my_requests" string="My Requests"
+                <field name="project_id"/>
+                <field name="budget_id"/>
+                <field name="fund_id"/>
+                <field name="department_id"/>
+                <field name="line_ids" string="Item" filter_domain="[('line_ids.description', 'ilike', self)]"/>
+                <filter name="my_requests" string="My Requisitions"
                         domain="[('requester_id', '=', uid)]"/>
-                <filter name="urgent" string="Urgent" domain="[('priority', '=', '1')]"/>
                 <separator/>
                 <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
                 <filter name="to_approve" string="To Approve"
@@ -182,31 +173,33 @@
                         domain="[('state', '=', 'rfq_created')]"/>
                 <group>
                     <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
-                    <filter name="group_requester" string="Requester"
+                    <filter name="group_requester" string="Requestor"
                             context="{'group_by': 'requester_id'}"/>
-                    <filter name="group_vendor" string="Vendor"
-                            context="{'group_by': 'partner_id'}"/>
-                    <filter name="group_date" string="Request Date"
-                            context="{'group_by': 'date_request:month'}"/>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                    <filter name="group_department" string="Department"
+                            context="{'group_by': 'department_id'}"/>
+                    <filter name="group_fund" string="Fund" context="{'group_by': 'fund_id'}"/>
+                    <filter name="group_date" string="Date" context="{'group_by': 'date_request:month'}"/>
                 </group>
             </search>
         </field>
     </record>
 
     <record id="purchase_request_action" model="ir.actions.act_window">
-        <field name="name">Purchase Requests</field>
+        <field name="name">Requisitions</field>
         <field name="res_model">purchase.request</field>
         <field name="view_mode">list,form</field>
         <field name="help" type="html">
-            <p class="o_view_nocontent_smiling_face">Create your first purchase request</p>
-            <p>Request products, get them approved, then turn them into RFQs.</p>
+            <p class="o_view_nocontent_smiling_face">Create your first purchase requisition</p>
+            <p>Raise a requisition, get it approved, then turn it into RFQs.</p>
         </field>
     </record>
 
     <record id="purchase_request_action_approval" model="ir.actions.act_window">
-        <field name="name">Requests to Approve</field>
+        <field name="name">Awaiting My Approval</field>
         <field name="res_model">purchase.request</field>
         <field name="view_mode">list,form</field>
-        <field name="context">{'search_default_to_approve': 1}</field>
+        <field name="domain">[('state', '=', 'to_approve'), '|', ('approver_id', '=', uid), ('second_signatory_id', '=', uid)]</field>
     </record>
 </odoo>

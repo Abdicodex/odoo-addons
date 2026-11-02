@@ -1,21 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="menu_purchase_request_root"
-              name="Purchase Requests"
+              name="Requisitions"
               parent="purchase.menu_purchase_root"
               sequence="5"
               groups="group_purchase_request_user,purchase.group_purchase_user"/>
 
     <menuitem id="menu_purchase_request"
-              name="My Requests"
+              name="Requisitions"
               parent="menu_purchase_request_root"
               action="purchase_request_action"
               sequence="10"/>
 
     <menuitem id="menu_purchase_request_approval"
-              name="To Approve"
+              name="Awaiting My Approval"
               parent="menu_purchase_request_root"
               action="purchase_request_action_approval"
-              sequence="20"
-              groups="group_purchase_request_manager"/>
+              sequence="20"/>
+
+    <menuitem id="menu_purchase_request_config"
+              name="Configuration"
+              parent="menu_purchase_request_root"
+              sequence="90"
+              groups="group_purchase_request_manager,purchase.group_purchase_manager"/>
+
+    <menuitem id="menu_purchase_request_project" name="Projects"
+              parent="menu_purchase_request_config" action="purchase_request_project_action"
+              sequence="10"/>
+    <menuitem id="menu_purchase_request_budget" name="Budget Codes"
+              parent="menu_purchase_request_config" action="purchase_request_budget_action"
+              sequence="20"/>
+    <menuitem id="menu_purchase_request_fund" name="Funds"
+              parent="menu_purchase_request_config" action="purchase_request_fund_action"
+              sequence="30"/>
+    <menuitem id="menu_purchase_request_location" name="Locations"
+              parent="menu_purchase_request_config" action="purchase_request_location_action"
+              sequence="40"/>
+    <menuitem id="menu_purchase_request_department" name="Departments"
+              parent="menu_purchase_request_config" action="purchase_request_department_action"
+              sequence="50"/>
 </odoo>

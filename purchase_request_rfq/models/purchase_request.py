@@ -1,21 +1,19 @@
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-APPROVER_GROUP = 'purchase_request_rfq.group_purchase_request_manager'
 BUYER_GROUP = 'purchase.group_purchase_user'
+TODO_ACTIVITY = 'mail.mail_activity_data_todo'
 
 
 class PurchaseRequest(models.Model):
     _name = 'purchase.request'
-    _description = 'Purchase Request'
+    _description = 'Purchase Requisition'
     _inherit = ['mail.thread', 'mail.activity.mixin']
-    _order = 'priority desc, id desc'
+    _order = 'id desc'
 
     name = fields.Char(
-        string='Reference', required=True, copy=False, readonly=True, index=True,
+        string='PRF', required=True, copy=False, readonly=True, index=True,
         default=lambda self: _('New'))
-    priority = fields.Selection(
-        [('0', 'Normal'), ('1', 'Urgent')], string='Priority', default='0', index=True)
     state = fields.Selection([
         ('draft', 'Draft'),
         ('to_approve', 'To Approve'),
@@ -24,115 +22,139 @@ class PurchaseRequest(models.Model):
         ('rejected', 'Rejected'),
         ('cancelled', 'Cancelled'),
     ], default='draft', required=True, copy=False, tracking=True, index=True)
-
-    requester_id = fields.Many2one(
-        'res.users', string='Requested By', required=True, tracking=True,
-        default=lambda self: self.env.user)
-    user_id = fields.Many2one(
-        'res.users', string='Buyer', tracking=True,
-        help="Purchase representative who will turn this request into RFQs.")
-    partner_id = fields.Many2one(
-        'res.partner', string='Preferred Vendor', tracking=True,
-        help="Optional. Pre-filled when creating the RFQ.")
-    partner_ref = fields.Char(string='Vendor Reference', copy=False)
-    origin = fields.Char(string='Source', copy=False,
-                         help="Reference of the document that generated this request.")
     company_id = fields.Many2one(
         'res.company', string='Company', required=True, index=True,
         default=lambda self: self.env.company)
     currency_id = fields.Many2one(
         'res.currency', string='Currency', required=True,
         default=lambda self: self.env.company.currency_id)
-    payment_term_id = fields.Many2one('account.payment.term', string='Payment Terms')
-
     date_request = fields.Datetime(
-        string='Request Date', required=True, copy=False, default=fields.Datetime.now)
-    date_required = fields.Date(string='Expected Arrival', required=True, tracking=True)
+        string='Date', required=True, copy=False, default=fields.Datetime.now)
+    date_required = fields.Date(string='Required By')
 
-    reason = fields.Text(string='Justification')
-    note = fields.Html(string='Terms and Conditions')
+    # Requisition details
+    requester_id = fields.Many2one(
+        'res.users', string='Requestor', required=True, tracking=True,
+        default=lambda self: self.env.user)
+    requester_position = fields.Char(
+        string='Position', compute='_compute_requester_position', store=True, readonly=False)
+    requester_email = fields.Char(string='Email', related='requester_id.email')
+    department_id = fields.Many2one('purchase.request.department', string='Department', tracking=True)
+    location_id = fields.Many2one('purchase.request.location', string='Location', tracking=True)
+    project_id = fields.Many2one('purchase.request.project', string='Project', tracking=True)
+    budget_id = fields.Many2one('purchase.request.budget', string='Budget', tracking=True)
+    category = fields.Char(string='Category', related='budget_id.description')
+    fund_id = fields.Many2one('purchase.request.fund', string='Fund', tracking=True)
+    verifier_id = fields.Many2one('res.users', string='Verifier', tracking=True)
+
+    # Items
     line_ids = fields.One2many(
-        'purchase.request.line', 'request_id', string='Products', copy=True)
-
-    amount_untaxed = fields.Monetary(
-        string='Untaxed Amount', compute='_compute_amounts', store=True)
-    amount_tax = fields.Monetary(string='Taxes', compute='_compute_amounts', store=True)
+        'purchase.request.line', 'request_id', string='Item Details', copy=True)
     amount_total = fields.Monetary(
-        string='Total', compute='_compute_amounts', store=True, tracking=True)
+        string='Total Amount', compute='_compute_amount_total', store=True, tracking=True)
+    reason = fields.Text(string='Remarks')
 
-    approver_id = fields.Many2one('res.users', string='Approved/Rejected By', copy=False, readonly=True)
+    # Approval
+    approver_id = fields.Many2one('res.users', string='Name of Approver', tracking=True)
+    approver_position = fields.Char(string='Position', related='approver_id.function')
+    approval_date = fields.Datetime(string='Date', copy=False, readonly=True)
+    second_signatory_id = fields.Many2one(
+        'res.users', string='2nd Signatory (if required)', tracking=True)
+    second_position = fields.Char(string='Position', related='second_signatory_id.function')
+    second_approval_date = fields.Datetime(string='Date', copy=False, readonly=True)
+    decision_by_id = fields.Many2one('res.users', string='Decided By', copy=False, readonly=True)
     decision_date = fields.Datetime(string='Decision Date', copy=False, readonly=True)
     rejection_reason = fields.Text(copy=False, readonly=True)
 
     rfq_ids = fields.One2many('purchase.order', 'purchase_request_id', string='RFQs')
     rfq_count = fields.Integer(compute='_compute_rfq_count')
 
-    @api.depends('line_ids.subtotal', 'line_ids.price_tax')
-    def _compute_amounts(self):
+    @api.depends('requester_id')
+    def _compute_requester_position(self):
         for rec in self:
-            untaxed = sum(rec.line_ids.mapped('subtotal'))
-            tax = sum(rec.line_ids.mapped('price_tax'))
-            rec.amount_untaxed = untaxed
-            rec.amount_tax = tax
-            rec.amount_total = untaxed + tax
+            rec.requester_position = rec.requester_id.function
+
+    @api.depends('line_ids.subtotal')
+    def _compute_amount_total(self):
+        for rec in self:
+            rec.amount_total = sum(rec.line_ids.mapped('subtotal'))
 
     def _compute_rfq_count(self):
         # sudo: requesters may not have access to purchase orders
         for rec in self:
             rec.rfq_count = len(rec.sudo().rfq_ids)
 
+    @api.onchange('project_id')
+    def _onchange_project_id(self):
+        if self.budget_id and self.budget_id.project_id != self.project_id:
+            self.budget_id = False
+
     @api.model_create_multi
     def create(self, vals_list):
         for vals in vals_list:
             if vals.get('name', _('New')) == _('New'):
-                vals['name'] = self.env['ir.sequence'].next_by_code('purchase.request') or _('New')
+                vals['name'] = (
+                    self.env['ir.sequence'].next_by_code('purchase.requisition.prf') or _('New'))
         return super().create(vals_list)
 
     # ------------------------------------------------------------------
     # Workflow
     # ------------------------------------------------------------------
-    def _check_group(self, xmlid, message):
-        if not self.env.user.has_group(xmlid):
-            raise UserError(message)
-
-    def _get_approvers(self):
-        group = self.env.ref(APPROVER_GROUP)
-        return group.user_ids.filtered(lambda u: u.active and u.share is False)
-
-    def _close_approval_activities(self):
-        self.activity_feedback(['mail.mail_activity_data_todo'])
+    def _schedule_approval_activity(self, user):
+        self.ensure_one()
+        self.activity_schedule(
+            TODO_ACTIVITY,
+            summary=_("Approve purchase requisition %s", self.name),
+            user_id=user.id)
 
     def action_request_approval(self):
+        required = (
+            'department_id', 'location_id', 'project_id', 'budget_id', 'fund_id',
+            'verifier_id', 'approver_id')
         for rec in self:
             if not rec.line_ids:
-                raise UserError(_("Add at least one product before requesting approval."))
+                raise UserError(_("Add at least one item before requesting approval."))
+            missing = [rec._fields[name].string for name in required if not rec[name]]
+            if missing:
+                raise UserError(_(
+                    "Please fill in: %s", ", ".join(missing)))
         self.write({'state': 'to_approve'})
         for rec in self:
-            for approver in rec._get_approvers():
-                rec.activity_schedule(
-                    'mail.mail_activity_data_todo',
-                    summary=_("Approve purchase request %s", rec.name),
-                    user_id=approver.id)
-            rec.message_post(body=_("Approval requested."))
+            rec._schedule_approval_activity(rec.approver_id)
+            rec.message_post(body=_("Approval requested from %s.", rec.approver_id.name))
 
     def action_approve(self):
-        self._check_group(
-            APPROVER_GROUP, _("Only purchase request approvers can approve requests."))
-        self._close_approval_activities()
-        self.write({
-            'state': 'approved',
-            'approver_id': self.env.user.id,
-            'decision_date': fields.Datetime.now(),
-            'rejection_reason': False,
-        })
+        user = self.env.user
+        now = fields.Datetime.now()
+        for rec in self:
+            if rec.state != 'to_approve':
+                raise UserError(_("Only requisitions waiting for approval can be approved."))
+            signed = False
+            if user == rec.approver_id and not rec.approval_date:
+                rec.approval_date = now
+                signed = True
+            if user == rec.second_signatory_id and not rec.second_approval_date:
+                rec.second_approval_date = now
+                signed = True
+            if not signed:
+                raise UserError(_(
+                    "Only the named approver or 2nd signatory can approve this requisition."))
+            rec.activity_feedback([TODO_ACTIVITY], user_id=user.id)
+            rec.message_post(body=_("Approved by %s.", user.name))
+            if rec.second_signatory_id and not rec.second_approval_date:
+                rec._schedule_approval_activity(rec.second_signatory_id)
+            if rec.approval_date and (
+                    not rec.second_signatory_id or rec.second_approval_date):
+                rec.write({'state': 'approved', 'decision_date': now, 'decision_by_id': user.id})
 
     def action_open_reject(self):
         self.ensure_one()
-        self._check_group(
-            APPROVER_GROUP, _("Only purchase request approvers can reject requests."))
+        if self.env.user not in (self.approver_id | self.second_signatory_id):
+            raise UserError(_(
+                "Only the named approver or 2nd signatory can reject this requisition."))
         return {
             'type': 'ir.actions.act_window',
-            'name': _('Reject Purchase Request'),
+            'name': _('Reject Requisition'),
             'res_model': 'purchase.request.reject',
             'view_mode': 'form',
             'target': 'new',
@@ -142,7 +164,9 @@ class PurchaseRequest(models.Model):
     def action_reset_draft(self):
         self.write({
             'state': 'draft',
-            'approver_id': False,
+            'approval_date': False,
+            'second_approval_date': False,
+            'decision_by_id': False,
             'decision_date': False,
             'rejection_reason': False,
         })
@@ -150,24 +174,22 @@ class PurchaseRequest(models.Model):
     def action_cancel(self):
         if any(rec.rfq_ids for rec in self.sudo()):
             raise UserError(_("Cancel the linked RFQs first."))
-        self._close_approval_activities()
+        self.activity_unlink([TODO_ACTIVITY])
         self.write({'state': 'cancelled'})
 
     def action_open_make_rfq(self):
         self.ensure_one()
-        self._check_group(BUYER_GROUP, _("Only purchase users can create RFQs."))
+        if not self.env.user.has_group(BUYER_GROUP):
+            raise UserError(_("Only purchase users can create RFQs."))
         if self.state not in ('approved', 'rfq_created'):
-            raise UserError(_("Only approved requests can be turned into RFQs."))
-        context = {'default_request_id': self.id}
-        if self.partner_id:
-            context['default_partner_ids'] = [(6, 0, self.partner_id.ids)]
+            raise UserError(_("Only approved requisitions can be turned into RFQs."))
         return {
             'type': 'ir.actions.act_window',
             'name': _('Create RFQs'),
             'res_model': 'purchase.request.make.rfq',
             'view_mode': 'form',
             'target': 'new',
-            'context': context,
+            'context': {'default_request_id': self.id},
         }
 
     def action_view_rfqs(self):
@@ -181,41 +203,34 @@ class PurchaseRequest(models.Model):
         return action
 
     def _prepare_rfq_vals(self, partner):
-        """Values for one RFQ addressed to `partner` with every request line."""
+        """Values for one RFQ addressed to `partner` with every requisition item."""
         self.ensure_one()
         po_line_fields = self.env['purchase.order.line']._fields
         uom_field = next(
             name for name in ('uom_id', 'product_uom_id', 'product_uom')
             if name in po_line_fields)
-        planned = fields.Datetime.to_datetime(self.date_required)
+        planned = fields.Datetime.to_datetime(self.date_required) or fields.Datetime.now()
         lines = []
         for line in self.line_ids:
+            uom = line.product_uom_id or line.product_id.uom_id
             line_vals = {
                 'product_id': line.product_id.id,
                 'name': line.description or line.product_id.display_name,
-                'product_qty': line.product_qty,
-                uom_field: line.product_uom_id.id,
-                'date_planned': line.date_planned or planned,
-                'tax_ids': [(6, 0, line.tax_ids.ids)],
+                # quantity x frequency, so quantity x unit price matches the requisition amount
+                'product_qty': line.product_qty * line.frequency,
+                uom_field: uom.id,
+                'date_planned': planned,
             }
-            if line.analytic_distribution:
-                line_vals['analytic_distribution'] = line.analytic_distribution
             # let Odoo pick the vendor price when no estimate was entered
             if line.price_unit:
                 line_vals['price_unit'] = line.price_unit
             lines.append((0, 0, line_vals))
-        vals = {
+        return {
             'partner_id': partner.id,
             'company_id': self.company_id.id,
             'currency_id': self.currency_id.id,
             'origin': self.name,
-            'priority': self.priority,
             'purchase_request_id': self.id,
-            'user_id': (self.user_id or self.env.user).id,
+            'user_id': self.env.user.id,
             'order_line': lines,
         }
-        if self.payment_term_id:
-            vals['payment_term_id'] = self.payment_term_id.id
-        if self.note:
-            vals['note'] = self.note
-        return vals

@@ -7,4 +7,14 @@
         <field name="padding">4</field>
         <field name="company_id" eval="False"/>
     </record>
+
+    <!-- numbering like the paper form: SO-RQ001800 -->
+    <record id="seq_purchase_requisition_prf" model="ir.sequence">
+        <field name="name">Purchase Requisition (PRF)</field>
+        <field name="code">purchase.requisition.prf</field>
+        <field name="prefix">SO-RQ</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
 </odoo>

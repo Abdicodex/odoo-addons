@@ -10,6 +10,15 @@
                     <field name="partner_ids" widget="many2many_tags"
                            options="{'no_create': True}"/>
                 </group>
+                <separator string="Products for the RFQ"/>
+                <field name="line_ids" nolabel="1">
+                    <list editable="bottom" create="0" delete="0">
+                        <field name="item_no" string="Item #"/>
+                        <field name="description"/>
+                        <field name="quantity"/>
+                        <field name="product_id" required="1" options="{'no_create': True}"/>
+                    </list>
+                </field>
                 <footer>
                     <button name="action_create_rfqs" string="Create RFQs" type="object"
                             class="btn-primary" data-hotkey="q"/>
@@ -26,7 +35,7 @@
             <form>
                 <group>
                     <field name="request_id"/>
-                    <field name="reason" placeholder="Why is this request rejected?"/>
+                    <field name="reason" placeholder="Why is this requisition rejected?"/>
                 </group>
                 <footer>
                     <button name="action_reject" string="Reject" type="object"

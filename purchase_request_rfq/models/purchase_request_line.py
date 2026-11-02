@@ -4,83 +4,63 @@ from odoo.exceptions import ValidationError
 
 class PurchaseRequestLine(models.Model):
     _name = 'purchase.request.line'
-    _inherit = ['analytic.mixin']
-    _description = 'Purchase Request Line'
+    _description = 'Purchase Requisition Item'
     _order = 'request_id, sequence, id'
 
     request_id = fields.Many2one('purchase.request', required=True, ondelete='cascade', index=True)
     sequence = fields.Integer(default=10)
+    item_no = fields.Integer(string='Item #', compute='_compute_item_no')
     company_id = fields.Many2one(related='request_id.company_id', store=True)
     currency_id = fields.Many2one(related='request_id.currency_id')
     state = fields.Selection(related='request_id.state')
 
-    product_id = fields.Many2one(
-        'product.product', string='Product', required=True,
-        domain=[('purchase_ok', '=', True)])
-    description = fields.Text(
-        string='Description', compute='_compute_description', store=True, readonly=False)
-    date_planned = fields.Datetime(
-        string='Expected Arrival', compute='_compute_date_planned', store=True, readonly=False)
+    description = fields.Text(string='Description')
+    unit = fields.Char(string='Unit', default='Unit')
     product_qty = fields.Float(string='Quantity', required=True, default=1.0, digits='Product Unit')
+    frequency = fields.Float(string='Frequency', required=True, default=1.0)
+    price_unit = fields.Monetary(string='Unit Price')
+    subtotal = fields.Monetary(string='Amount', compute='_compute_subtotal', store=True)
+
+    # Set by the buyer when the RFQ is created; not part of the paper form.
+    product_id = fields.Many2one(
+        'product.product', string='Product', domain=[('purchase_ok', '=', True)])
     product_uom_id = fields.Many2one(
-        'uom.uom', string='Unit', compute='_compute_product_uom_id',
-        store=True, readonly=False, required=True)
-    price_unit = fields.Monetary(
-        string='Unit Price', compute='_compute_price_unit', store=True, readonly=False)
-    tax_ids = fields.Many2many(
-        'account.tax', string='Taxes',
-        compute='_compute_tax_ids', store=True, readonly=False,
-        context={'active_test': False})
-    subtotal = fields.Monetary(string='Amount', compute='_compute_amount', store=True)
-    price_tax = fields.Monetary(string='Tax', compute='_compute_amount', store=True)
-    price_total = fields.Monetary(string='Total', compute='_compute_amount', store=True)
+        'uom.uom', string='Unit of Measure', compute='_compute_product_uom_id',
+        store=True, readonly=False)
 
-    @api.depends('product_id')
-    def _compute_description(self):
+    @api.depends('request_id.line_ids', 'sequence')
+    def _compute_item_no(self):
+        numbering = {}
+        for request in self.request_id:
+            for number, line in enumerate(request.line_ids.sorted('sequence'), 1):
+                numbering[line.id] = number
         for line in self:
-            if line.product_id:
-                line.description = line.product_id.display_name
-
-    @api.depends('request_id.date_required')
-    def _compute_date_planned(self):
-        for line in self:
-            if line.request_id.date_required:
-                line.date_planned = fields.Datetime.to_datetime(line.request_id.date_required)
+            line.item_no = numbering.get(line.id, 0)
 
     @api.depends('product_id')
     def _compute_product_uom_id(self):
         for line in self:
             if line.product_id:
                 line.product_uom_id = line.product_id.uom_id
+            else:
+                line.product_uom_id = False
 
-    @api.depends('product_id')
-    def _compute_price_unit(self):
+    @api.depends('product_qty', 'frequency', 'price_unit')
+    def _compute_subtotal(self):
+        for line in self:
+            line.subtotal = line.product_qty * line.frequency * line.price_unit
+
+    @api.onchange('product_id')
+    def _onchange_product_id(self):
         for line in self:
             if line.product_id:
-                line.price_unit = line.product_id.standard_price
+                if not line.description:
+                    line.description = line.product_id.display_name
+                line.unit = line.product_id.uom_id.name
 
-    @api.depends('product_id', 'company_id')
-    def _compute_tax_ids(self):
+    @api.constrains('product_qty', 'frequency')
+    def _check_positive(self):
         for line in self:
-            line.tax_ids = line.product_id.supplier_taxes_id.filtered(
-                lambda tax: tax.company_id == line.company_id)
-
-    @api.depends('product_qty', 'price_unit', 'tax_ids', 'request_id.partner_id')
-    def _compute_amount(self):
-        for line in self:
-            currency = line.request_id.currency_id or line.company_id.currency_id
-            taxes = line.tax_ids.compute_all(
-                line.price_unit,
-                currency=currency,
-                quantity=line.product_qty,
-                product=line.product_id,
-                partner=line.request_id.partner_id)
-            line.subtotal = taxes['total_excluded']
-            line.price_total = taxes['total_included']
-            line.price_tax = taxes['total_included'] - taxes['total_excluded']
-
-    @api.constrains('product_qty')
-    def _check_product_qty(self):
-        for line in self:
-            if line.product_qty <= 0:
-                raise ValidationError(self.env._("Quantity must be greater than zero."))
+            if line.product_qty <= 0 or line.frequency <= 0:
+                raise ValidationError(
+                    self.env._("Quantity and frequency must be greater than zero."))
