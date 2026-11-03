@@ -116,6 +116,44 @@ class PurchaseRequest(models.Model):
                     self.env['ir.sequence'].next_by_code('purchase.requisition.prf') or _('New'))
         return super().create(vals_list)
 
+    def _prepare_prf_data(self):
+        """Plain values for the printed requisition form (see report/prf_pdf.py)."""
+        self.ensure_one()
+
+        def local_date(value):
+            return fields.Datetime.context_timestamp(self, value).date() if value else None
+
+        return {
+            'name': self.name or '',
+            'date': local_date(self.date_request),
+            'logo': self.company_id.sudo().logo or False,
+            'requestor': self.requester_id.name or '',
+            'position': self.requester_position or '',
+            'department': self.department_id.name or '',
+            'location': self.location_id.name or '',
+            'email': self.requester_email or '',
+            'project': self.project_id.code or '',
+            'budget': self.budget_code or '',
+            'fund': self.fund_id.code or '',
+            'category': self.budget_id.name or '',
+            'verifier': self.verifier_id.name or '',
+            'lines': [{
+                'description': line.description or '',
+                'unit': line.unit or '',
+                'quantity': line.product_qty,
+                'frequency': line.frequency,
+                'price': line.price_unit,
+                'amount': line.subtotal,
+            } for line in self.line_ids.sorted('sequence')],
+            'total': self.amount_total,
+            'approver': self.approver_id.name or '',
+            'approver_position': self.approver_position or '',
+            'approval_date': local_date(self.approval_date),
+            'second': self.second_signatory_id.name or '',
+            'second_position': self.second_position or '',
+            'second_date': local_date(self.second_approval_date),
+        }
+
     # ------------------------------------------------------------------
     # Workflow
     # ------------------------------------------------------------------
