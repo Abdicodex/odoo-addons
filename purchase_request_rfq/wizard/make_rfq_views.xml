@@ -6,9 +6,19 @@
         <field name="arch" type="xml">
             <form>
                 <group>
-                    <field name="request_id"/>
-                    <field name="partner_ids" widget="many2many_tags"
-                           options="{'no_create': True}"/>
+                    <group>
+                        <field name="request_id"/>
+                        <field name="subject"/>
+                        <field name="partner_ids" widget="many2many_tags"
+                               options="{'no_create': True}"/>
+                    </group>
+                    <group>
+                        <field name="deadline"/>
+                        <field name="validity_days"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="quotation_details" placeholder="One item per line, e.g. company registration certificate"/>
                 </group>
                 <separator string="Products for the RFQ"/>
                 <field name="line_ids" nolabel="1">

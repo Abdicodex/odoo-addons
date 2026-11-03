@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -10,6 +12,16 @@ class PurchaseRequestMakeRfq(models.TransientModel):
     partner_ids = fields.Many2many(
         'res.partner', string='Vendors', required=True,
         help="One RFQ is created for each vendor so quotes can be compared.")
+    subject = fields.Char(
+        string='Subject', required=True,
+        help="What the RFQ is for, printed on the document.")
+    deadline = fields.Datetime(
+        string='Submission Deadline', required=True,
+        default=lambda self: fields.Datetime.now() + timedelta(days=7))
+    validity_days = fields.Integer(string='Quotation Validity (days)', default=90)
+    quotation_details = fields.Text(
+        string='Quotation Details to Include',
+        help="One item per line; printed as bullet points on the RFQ.")
     line_ids = fields.One2many(
         'purchase.request.make.rfq.line', 'wizard_id', string='Items')
 
@@ -18,6 +30,9 @@ class PurchaseRequestMakeRfq(models.TransientModel):
         res = super().default_get(fields_list)
         request = self.env['purchase.request'].browse(
             res.get('request_id') or self.env.context.get('default_request_id'))
+        if request and 'subject' in fields_list:
+            first = request.line_ids[:1].description or ''
+            res['subject'] = ' '.join(first.split())[:120]
         if request and 'line_ids' in fields_list:
             res['line_ids'] = [(0, 0, {
                 'request_line_id': line.id,
@@ -36,11 +51,21 @@ class PurchaseRequestMakeRfq(models.TransientModel):
             if line.product_id and line.product_id != item._get_rfq_product():
                 item.product_id = line.product_id
         # one RFQ reference; each vendor gets its own quotation under it (RFQ-1, RFQ-2, ...)
-        group = self.env['purchase.request.rfq'].create({'request_id': request.id})
+        group = self.env['purchase.request.rfq'].create({
+            'request_id': request.id,
+            'subject': self.subject,
+            'deadline': self.deadline,
+            'validity_days': self.validity_days,
+            'quotation_details': self.quotation_details,
+        })
         orders = self.env['purchase.order']
         for index, partner in enumerate(self.partner_ids, 1):
             vals = request._prepare_rfq_vals(partner)
-            vals.update({'rfq_group_id': group.id, 'name': f"{group.name}-{index}"})
+            vals.update({
+                'rfq_group_id': group.id,
+                'name': f"{group.name}-{index}",
+                'date_order': self.deadline,
+            })
             orders |= self.env['purchase.order'].create(vals)
         request.state = 'rfq_created'
         vendors = ", ".join(self.partner_ids.mapped('name'))
