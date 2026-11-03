@@ -82,24 +82,43 @@ def wrap(text, font, width, size=FONT_SIZE):
     return lines or ['']
 
 
+def _image_bytes(value):
+    """Possible raw encodings of a binary field value.
+
+    Odoo 20 returns binary fields as raw bytes; older versions returned base64.
+    Try the value as it is first, then decoded from base64.
+    """
+    if isinstance(value, str):
+        value = value.encode()
+    options = [bytes(value)]
+    try:
+        options.append(base64.b64decode(value))
+    except Exception:
+        pass
+    return options
+
+
 def load_image(*candidates):
-    """First candidate (base64 text/bytes) that PIL can read, as an ImageReader."""
+    """First candidate (raw bytes or base64) that PIL can read, as an ImageReader."""
+    from PIL import Image
     for value in candidates:
         if not value:
             continue
-        try:
-            from PIL import Image
-            raw = base64.b64decode(value)
-            image = Image.open(BytesIO(raw))
-            image.load()
-            if image.mode not in ('RGB', 'RGBA'):
-                image = image.convert('RGBA')
-            buffer = BytesIO()
-            image.save(buffer, format='PNG')
-            buffer.seek(0)
-            return ImageReader(buffer)
-        except Exception as error:  # a bad image must never break the print
-            _logger.warning("Requisition PDF: could not read an image (%s)", error)
+        for raw in _image_bytes(value):
+            try:
+                image = Image.open(BytesIO(raw))
+                image.load()
+                if image.mode not in ('RGB', 'RGBA'):
+                    image = image.convert('RGBA')
+                buffer = BytesIO()
+                image.save(buffer, format='PNG')
+                buffer.seek(0)
+                return ImageReader(buffer)
+            except Exception:
+                continue
+        _logger.warning(
+            "Requisition PDF: could not read an image (%d bytes, starts with %r)",
+            len(value), bytes(value[:8]) if not isinstance(value, str) else value[:8])
     return None
 
 
