@@ -126,8 +126,9 @@ class PurchaseRequest(models.Model):
             return fields.Datetime.context_timestamp(self, value).date() if value else None
 
         company = self.company_id.sudo()
-        signatures = self.env['hijra.signature'].get_signatures(
-            self.requester_id | self.verifier_id | self.approver_id | self.second_signatory_id)
+        signatures = (
+            self.requester_id | self.verifier_id | self.approver_id | self.second_signatory_id
+        )._get_signature_images()
 
         def signature(user, signed):
             return signatures.get(user.id) if signed and user else False

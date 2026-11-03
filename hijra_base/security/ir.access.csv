@@ -11,5 +11,3 @@ hijra_fund_system,HIJRA Fund system,hijra.fund,base.group_system,crud,
 hijra_location_read,HIJRA Location read,hijra.location,base.group_user,r,
 hijra_location_manage,HIJRA Location manage,hijra.location,group_hijra_codes_manager,crud,
 hijra_location_system,HIJRA Location system,hijra.location,base.group_system,crud,
-hijra_signature_own,HIJRA Signature own,hijra.signature,base.group_user,crud,"[('user_id', '=', user.id)]"
-hijra_signature_system,HIJRA Signature system,hijra.signature,base.group_system,crud,
