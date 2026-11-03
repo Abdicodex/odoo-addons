@@ -73,7 +73,8 @@ class PurchaseRequest(models.Model):
     decision_date = fields.Datetime(string='Decision Date', copy=False, readonly=True)
     rejection_reason = fields.Text(copy=False, readonly=True)
 
-    rfq_ids = fields.One2many('purchase.order', 'purchase_request_id', string='RFQs')
+    rfq_ids = fields.One2many('purchase.order', 'purchase_request_id', string='Quotations')
+    rfq_group_ids = fields.One2many('purchase.request.rfq', 'request_id', string='RFQs')
     rfq_count = fields.Integer(compute='_compute_rfq_count')
 
     @api.model
@@ -103,7 +104,7 @@ class PurchaseRequest(models.Model):
     def _compute_rfq_count(self):
         # sudo: requesters may not have access to purchase orders
         for rec in self:
-            rec.rfq_count = len(rec.sudo().rfq_ids)
+            rec.rfq_count = len(rec.sudo().rfq_group_ids)
 
     @api.onchange('project_id')
     def _onchange_project_id(self):
@@ -287,12 +288,13 @@ class PurchaseRequest(models.Model):
 
     def action_view_rfqs(self):
         self.ensure_one()
-        action = self.env['ir.actions.act_window']._for_xml_id('purchase.purchase_rfq')
-        action['domain'] = [('purchase_request_id', '=', self.id)]
+        action = self.env['ir.actions.act_window']._for_xml_id(
+            'purchase_request_rfq.purchase_request_rfq_action')
+        action['domain'] = [('request_id', '=', self.id)]
         action['context'] = {'create': False}
         if self.rfq_count == 1:
             action['views'] = [(False, 'form')]
-            action['res_id'] = self.rfq_ids.id
+            action['res_id'] = self.sudo().rfq_group_ids.id
         return action
 
     def _prepare_rfq_vals(self, partner):
@@ -313,6 +315,7 @@ class PurchaseRequest(models.Model):
                     line.item_no))
             uom = line.product_uom_id or product.uom_id
             line_vals = {
+                'purchase_request_line_id': line.id,
                 'product_id': product.id,
                 'name': line._get_rfq_description(),
                 # quantity x frequency, so quantity x unit price matches the requisition amount

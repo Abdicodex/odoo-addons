@@ -13,3 +13,5 @@ purchase_request_line_comp_rule,Requisition Item multi-company,purchase.request.
 purchase_request_reject_wizard,Requisition Reject wizard,purchase.request.reject,base.group_user,crud,
 purchase_request_make_rfq_wizard,Requisition Create RFQ wizard,purchase.request.make.rfq,purchase.group_purchase_user,crud,
 purchase_request_make_rfq_line_wizard,Requisition Create RFQ wizard line,purchase.request.make.rfq.line,purchase.group_purchase_user,crud,
+purchase_request_rfq_buyer,Requisition RFQ buyer,purchase.request.rfq,purchase.group_purchase_user,crud,
+purchase_request_rfq_comp_rule,Requisition RFQ multi-company,purchase.request.rfq,,crud,"[('company_id', 'in', company_ids)]"

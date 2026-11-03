@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_request_rfq_view_list" model="ir.ui.view">
+        <field name="name">purchase.request.rfq.list</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="arch" type="xml">
+            <list string="RFQs" decoration-muted="state == 'cancelled'"
+                  decoration-success="state == 'awarded'">
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="vendor_ids" widget="many2many_tags"/>
+                <field name="order_count" string="Quotations"/>
+                <field name="awarded_partner_id" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-info="state == 'open'"
+                       decoration-success="state == 'awarded'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="purchase_request_rfq_view_form" model="ir.ui.view">
+        <field name="name">purchase.request.rfq.form</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="arch" type="xml">
+            <form string="RFQ" create="0">
+                <header>
+                    <button name="action_cancel" string="Cancel RFQ" type="object"
+                            invisible="state != 'open'"/>
+                    <field name="state" widget="statusbar" statusbar_visible="open,awarded"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <span class="o_form_label">Request for Quotation</span>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id"/>
+                            <field name="vendor_ids" widget="many2many_tags"/>
+                        </group>
+                        <group>
+                            <field name="awarded_partner_id" invisible="not awarded_partner_id"/>
+                            <field name="awarded_order_id" invisible="not awarded_order_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Quotations" name="quotations">
+                            <field name="order_ids" nolabel="1">
+                                <list string="Quotations" create="0" delete="0"
+                                      decoration-muted="state == 'cancel'"
+                                      decoration-success="state == 'purchase'">
+                                    <field name="name"/>
+                                    <field name="partner_id"/>
+                                    <field name="date_order"/>
+                                    <field name="amount_untaxed" sum="Total"/>
+                                    <field name="amount_total"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="state" widget="badge"/>
+                                    <button name="action_open_order" type="object" string="Open"
+                                            icon="fa-external-link"/>
+                                    <button name="action_award_order" type="object" string="Award"
+                                            icon="fa-check" class="text-success"
+                                            invisible="parent.state != 'open' or state not in ('draft', 'sent')"
+                                            confirm="Buy from this vendor? The other quotations will be cancelled."/>
+                                </list>
+                            </field>
+                            <p class="text-muted">
+                                Update each quotation's prices after the vendor replies, then press
+                                Award on the vendor you will buy from. That order is confirmed and
+                                the other quotations are cancelled.
+                            </p>
+                        </page>
+                        <page string="Price Comparison" name="comparison">
+                            <field name="comparison" nolabel="1" readonly="1"/>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="purchase_request_rfq_view_search" model="ir.ui.view">
+        <field name="name">purchase.request.rfq.search</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="arch" type="xml">
+            <search string="Search RFQs">
+                <field name="name"/>
+                <field name="request_id"/>
+                <field name="vendor_ids"/>
+                <filter name="open" string="Open" domain="[('state', '=', 'open')]"/>
+                <filter name="awarded" string="Awarded" domain="[('state', '=', 'awarded')]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_request" string="Requisition"
+                            context="{'group_by': 'request_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="purchase_request_rfq_action" model="ir.actions.act_window">
+        <field name="name">RFQs</field>
+        <field name="res_model">purchase.request.rfq</field>
+        <field name="view_mode">list,form</field>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No RFQs yet</p>
+            <p>Create an RFQ from an approved requisition. One RFQ can go to several vendors.</p>
+        </field>
+    </record>
+</odoo>

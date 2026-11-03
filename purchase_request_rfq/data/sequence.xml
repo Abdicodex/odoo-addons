@@ -17,4 +17,14 @@
         <field name="number_next">1</field>
         <field name="company_id" eval="False"/>
     </record>
+
+    <!-- one reference per RFQ, e.g. SO-RFQ000001 (its quotations are SO-RFQ000001-1, -2, ...) -->
+    <record id="seq_purchase_request_rfq" model="ir.sequence">
+        <field name="name">Requisition RFQ</field>
+        <field name="code">purchase.request.rfq</field>
+        <field name="prefix">SO-RFQ</field>
+        <field name="padding">6</field>
+        <field name="number_next">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
 </odoo>

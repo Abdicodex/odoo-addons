@@ -57,7 +57,8 @@
                 <sheet>
                     <div class="oe_button_box" name="button_box">
                         <button name="action_view_rfqs" type="object" class="oe_stat_button"
-                                icon="fa-shopping-cart" invisible="rfq_count == 0">
+                                icon="fa-shopping-cart" invisible="rfq_count == 0"
+                                groups="purchase.group_purchase_user">
                             <field name="rfq_count" widget="statinfo" string="RFQs"/>
                         </button>
                     </div>

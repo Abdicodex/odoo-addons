@@ -35,13 +35,19 @@ class PurchaseRequestMakeRfq(models.TransientModel):
             item = line.request_line_id
             if line.product_id and line.product_id != item._get_rfq_product():
                 item.product_id = line.product_id
+        # one RFQ reference; each vendor gets its own quotation under it (RFQ-1, RFQ-2, ...)
+        group = self.env['purchase.request.rfq'].create({'request_id': request.id})
         orders = self.env['purchase.order']
-        for partner in self.partner_ids:
-            orders |= self.env['purchase.order'].create(request._prepare_rfq_vals(partner))
+        for index, partner in enumerate(self.partner_ids, 1):
+            vals = request._prepare_rfq_vals(partner)
+            vals.update({'rfq_group_id': group.id, 'name': f"{group.name}-{index}"})
+            orders |= self.env['purchase.order'].create(vals)
         request.state = 'rfq_created'
+        vendors = ", ".join(self.partner_ids.mapped('name'))
+        group.message_post(body=_("Sent to: %s.", vendors))
         request.message_post(body=_(
-            "RFQs created: %s", ", ".join(orders.mapped('name'))))
-        return request.action_view_rfqs()
+            "RFQ %(rfq)s sent to: %(vendors)s.", rfq=group.name, vendors=vendors))
+        return group.action_open()
 
 
 class PurchaseRequestMakeRfqLine(models.TransientModel):
