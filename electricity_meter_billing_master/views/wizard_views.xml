@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="house_activate_wizard_view_form" model="ir.ui.view">
+        <field name="name">house.activate.wizard.form</field>
+        <field name="model">house.activate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Activate House">
+                <group>
+                    <field name="house_id"/>
+                    <field name="activation_reason_id" options="{'no_create': True}"/>
+                    <field name="activation_remark"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Activate" type="object" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="house_deactivate_wizard_view_form" model="ir.ui.view">
+        <field name="name">house.deactivate.wizard.form</field>
+        <field name="model">house.deactivate.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Deactivate House">
+                <group>
+                    <field name="house_id"/>
+                    <field name="deactivation_reason_id" options="{'no_create': True}"/>
+                    <field name="deactivation_remark"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Deactivate" type="object" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="meter_reading_update_wizard_view_form" model="ir.ui.view">
+        <field name="name">meter.reading.update.wizard.form</field>
+        <field name="model">meter.reading.update.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Update Meter Reading">
+                <group>
+                    <group>
+                        <field name="house_id"/>
+                        <field name="meter_number" readonly="1"/>
+                        <field name="current_reading"/>
+                    </group>
+                    <group>
+                        <field name="new_reading"/>
+                        <field name="new_meter_number" placeholder="Only if the meter is replaced"/>
+                        <field name="reason_id" options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <group>
+                    <field name="remarks"/>
+                </group>
+                <footer>
+                    <button name="action_confirm" string="Update" type="object" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="meter_reading_history_report_wizard_view_form" model="ir.ui.view">
+        <field name="name">meter.reading.history.report.wizard.form</field>
+        <field name="model">meter.reading.history.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Meter Reading History Report">
+                <group>
+                    <group>
+                        <field name="date_from"/>
+                        <field name="date_to"/>
+                    </group>
+                    <group>
+                        <field name="company_id" groups="base.group_multi_company"/>
+                    </group>
+                </group>
+                <footer>
+                    <button name="action_print" string="Print" type="object" class="btn-primary"
+                            data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="meter_reading_history_report_wizard_action" model="ir.actions.act_window">
+        <field name="name">Meter Reading History Report</field>
+        <field name="res_model">meter.reading.history.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+</odoo>

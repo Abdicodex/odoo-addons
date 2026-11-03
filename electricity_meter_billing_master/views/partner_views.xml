@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Customers (meter billing) -->
+    <record id="res_partner_view_list_customer" model="ir.ui.view">
+        <field name="name">res.partner.list.customer.type</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <list string="Customers">
+                <field name="customer_unique_id"/>
+                <field name="display_name" string="Name"/>
+                <field name="mobile"/>
+                <field name="phone" optional="hide"/>
+                <field name="customer_type_ids" widget="many2many_tags"/>
+                <field name="house_count"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="res_partner_view_form_customer_registration" model="ir.ui.view">
+        <field name="name">res.partner.customer.registration.form</field>
+        <field name="model">res.partner</field>
+        <field name="arch" type="xml">
+            <form string="Customer Registration">
+                <sheet>
+                    <field name="active" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_houses" type="object" class="oe_stat_button"
+                                icon="fa-home">
+                            <field name="house_count" widget="statinfo" string="Houses"/>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" placeholder="Customer name"/></h1>
+                        <div class="text-muted">
+                            <field name="customer_unique_id" readonly="1" placeholder="ID assigned on save"/>
+                        </div>
+                    </div>
+                    <group>
+                        <group string="Contact">
+                            <field name="is_meter_billing"/>
+                            <field name="mobile" widget="phone"/>
+                            <field name="phone" widget="phone"/>
+                            <field name="email" widget="email"/>
+                            <field name="customer_type_ids" widget="many2many_tags" readonly="1"/>
+                        </group>
+                        <group string="Address">
+                            <field name="street" placeholder="Street"/>
+                            <field name="street2" placeholder="Street 2"/>
+                            <field name="city" placeholder="City"/>
+                            <field name="country_id" options="{'no_create': True}"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Houses" name="houses">
+                            <field name="house_ids" context="{'default_partner_id': id}">
+                                <list>
+                                    <field name="name"/>
+                                    <field name="customer_type_id"/>
+                                    <field name="village_id"/>
+                                    <field name="meter_number"/>
+                                    <field name="billing_type"/>
+                                    <field name="state"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Supporting Documents" name="documents">
+                            <field name="document_ids">
+                                <list editable="bottom">
+                                    <field name="document_name"/>
+                                    <field name="attachment" filename="attachment_name"/>
+                                    <field name="attachment_name" column_invisible="True"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_partner_customer_action" model="ir.actions.act_window">
+        <field name="name">Customers</field>
+        <field name="res_model">res.partner</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('is_meter_billing', '=', True)]</field>
+        <field name="context">{'default_is_meter_billing': True}</field>
+    </record>
+    <record id="res_partner_customer_action_list" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="res_partner_view_list_customer"/>
+        <field name="act_window_id" ref="res_partner_customer_action"/>
+    </record>
+    <record id="res_partner_customer_action_form" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="res_partner_view_form_customer_registration"/>
+        <field name="act_window_id" ref="res_partner_customer_action"/>
+    </record>
+
+    <!-- Employees: collectors and technicians -->
+    <record id="hr_employee_view_form_meter_billing" model="ir.ui.view">
+        <field name="name">hr.employee.form.inherit.meter.billing</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='work_information']" position="after">
+                <page string="Meter Billing" name="meter_billing">
+                    <group>
+                        <field name="is_collector"/>
+                        <field name="is_technician"/>
+                    </group>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hr_employee_view_search_meter_billing" model="ir.ui.view">
+        <field name="name">hr.employee.search.inherit.meter.billing</field>
+        <field name="model">hr.employee</field>
+        <field name="inherit_id" ref="hr.view_employee_filter"/>
+        <field name="arch" type="xml">
+            <xpath expr="//search" position="inside">
+                <filter name="collectors" string="Collectors" domain="[('is_collector', '=', True)]"/>
+                <filter name="technicians" string="Technicians" domain="[('is_technician', '=', True)]"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

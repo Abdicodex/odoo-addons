@@ -1,0 +1,672 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="customer_type_view_list" model="ir.ui.view">
+        <field name="name">customer.type.list</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <list string="Customer Types">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="house_count"/>
+                <field name="partner_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="customer_type_view_form" model="ir.ui.view">
+        <field name="name">customer.type.form</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <form string="Customer Types">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_houses" type="object" class="oe_stat_button" icon="fa-home">
+    <field name="house_count" widget="statinfo" string="Houses"/>
+</button>
+                        <button name="action_view_partners" type="object" class="oe_stat_button" icon="fa-users">
+    <field name="partner_count" widget="statinfo" string="Customers"/>
+</button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="customer_type_view_search" model="ir.ui.view">
+        <field name="name">customer.type.search</field>
+        <field name="model">customer.type</field>
+        <field name="arch" type="xml">
+            <search string="Customer Types">
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="customer_type_action" model="ir.actions.act_window">
+        <field name="name">Customer Types</field>
+        <field name="res_model">customer.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="reason_master_view_list" model="ir.ui.view">
+        <field name="name">reason.master.list</field>
+        <field name="model">reason.master</field>
+        <field name="arch" type="xml">
+            <list string="Reasons">
+                <field name="name"/>
+                <field name="reason_type"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="reason_master_view_form" model="ir.ui.view">
+        <field name="name">reason.master.form</field>
+        <field name="model">reason.master</field>
+        <field name="arch" type="xml">
+            <form string="Reasons">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="reason_type"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="reason_master_view_search" model="ir.ui.view">
+        <field name="name">reason.master.search</field>
+        <field name="model">reason.master</field>
+        <field name="arch" type="xml">
+            <search string="Reasons">
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_reason_type" string="Reason Type" context="{'group_by': 'reason_type'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="reason_master_action" model="ir.actions.act_window">
+        <field name="name">Reasons</field>
+        <field name="res_model">reason.master</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="meter_type_view_list" model="ir.ui.view">
+        <field name="name">meter.type.list</field>
+        <field name="model">meter.type</field>
+        <field name="arch" type="xml">
+            <list string="Meter Types">
+                <field name="name"/>
+                <field name="description"/>
+                <field name="sub_meter_type_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="meter_type_view_form" model="ir.ui.view">
+        <field name="name">meter.type.form</field>
+        <field name="model">meter.type</field>
+        <field name="arch" type="xml">
+            <form string="Meter Types">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sub Meter Types">
+    <field name="sub_meter_type_ids">
+        <list editable="bottom">
+            <field name="name"/>
+            <field name="description"/>
+        </list>
+    </field>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="meter_type_view_search" model="ir.ui.view">
+        <field name="name">meter.type.search</field>
+        <field name="model">meter.type</field>
+        <field name="arch" type="xml">
+            <search string="Meter Types">
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="meter_type_action" model="ir.actions.act_window">
+        <field name="name">Meter Types</field>
+        <field name="res_model">meter.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="sub_meter_type_view_list" model="ir.ui.view">
+        <field name="name">sub.meter.type.list</field>
+        <field name="model">sub.meter.type</field>
+        <field name="arch" type="xml">
+            <list string="Sub Meter Types">
+                <field name="name"/>
+                <field name="meter_type_id"/>
+                <field name="description"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sub_meter_type_view_form" model="ir.ui.view">
+        <field name="name">sub.meter.type.form</field>
+        <field name="model">sub.meter.type</field>
+        <field name="arch" type="xml">
+            <form string="Sub Meter Types">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="meter_type_id"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                            <field name="description"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sub_meter_type_view_search" model="ir.ui.view">
+        <field name="name">sub.meter.type.search</field>
+        <field name="model">sub.meter.type</field>
+        <field name="arch" type="xml">
+            <search string="Sub Meter Types">
+                <field name="name"/>
+                <field name="meter_type_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_meter_type_id" string="Meter Type" context="{'group_by': 'meter_type_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sub_meter_type_action" model="ir.actions.act_window">
+        <field name="name">Sub Meter Types</field>
+        <field name="res_model">sub.meter.type</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="region_view_list" model="ir.ui.view">
+        <field name="name">res.region.list</field>
+        <field name="model">res.region</field>
+        <field name="arch" type="xml">
+            <list string="Regions">
+                <field name="name"/>
+                <field name="district_count"/>
+                <field name="zone_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="region_view_form" model="ir.ui.view">
+        <field name="name">res.region.form</field>
+        <field name="model">res.region</field>
+        <field name="arch" type="xml">
+            <form string="Regions">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Districts">
+    <field name="district_ids" readonly="1">
+        <list>
+            <field name="name"/>
+            <field name="zone_count"/>
+        </list>
+    </field>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="region_view_search" model="ir.ui.view">
+        <field name="name">res.region.search</field>
+        <field name="model">res.region</field>
+        <field name="arch" type="xml">
+            <search string="Regions">
+                <field name="name"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="region_action" model="ir.actions.act_window">
+        <field name="name">Regions</field>
+        <field name="res_model">res.region</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="district_view_list" model="ir.ui.view">
+        <field name="name">res.district.list</field>
+        <field name="model">res.district</field>
+        <field name="arch" type="xml">
+            <list string="Districts">
+                <field name="name"/>
+                <field name="region_id"/>
+                <field name="zone_count"/>
+                <field name="sub_zone_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="district_view_form" model="ir.ui.view">
+        <field name="name">res.district.form</field>
+        <field name="model">res.district</field>
+        <field name="arch" type="xml">
+            <form string="Districts">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="region_id"/>
+                        </group>
+                        <group>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Zones">
+    <field name="zone_ids" readonly="1">
+        <list>
+            <field name="code"/>
+            <field name="name"/>
+            <field name="sub_zone_count"/>
+        </list>
+    </field>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="district_view_search" model="ir.ui.view">
+        <field name="name">res.district.search</field>
+        <field name="model">res.district</field>
+        <field name="arch" type="xml">
+            <search string="Districts">
+                <field name="name"/>
+                <field name="region_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_region_id" string="Region" context="{'group_by': 'region_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="district_action" model="ir.actions.act_window">
+        <field name="name">Districts</field>
+        <field name="res_model">res.district</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="zone_view_list" model="ir.ui.view">
+        <field name="name">res.zone.list</field>
+        <field name="model">res.zone</field>
+        <field name="arch" type="xml">
+            <list string="Zones">
+                <field name="code"/>
+                <field name="name"/>
+                <field name="prefix"/>
+                <field name="district_id"/>
+                <field name="region_id"/>
+                <field name="sub_zone_count"/>
+                <field name="village_count"/>
+                <field name="house_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="zone_view_form" model="ir.ui.view">
+        <field name="name">res.zone.form</field>
+        <field name="model">res.zone</field>
+        <field name="arch" type="xml">
+            <form string="Zones">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="prefix"/>
+                            <field name="code"/>
+                        </group>
+                        <group>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Sub-Zones">
+    <field name="sub_zone_ids" readonly="1">
+        <list>
+            <field name="name"/>
+            <field name="prefix"/>
+            <field name="village_count"/>
+        </list>
+    </field>
+</page>
+                        <page string="Villages / Neighbourhoods">
+    <field name="village_ids" readonly="1">
+        <list>
+            <field name="name"/>
+            <field name="sub_zone_id"/>
+        </list>
+    </field>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="zone_view_search" model="ir.ui.view">
+        <field name="name">res.zone.search</field>
+        <field name="model">res.zone</field>
+        <field name="arch" type="xml">
+            <search string="Zones">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="district_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_district_id" string="District" context="{'group_by': 'district_id'}"/>
+                    <filter name="group_region_id" string="Region" context="{'group_by': 'region_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="zone_action" model="ir.actions.act_window">
+        <field name="name">Zones</field>
+        <field name="res_model">res.zone</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="sub_zone_view_list" model="ir.ui.view">
+        <field name="name">res.sub.zone.list</field>
+        <field name="model">res.sub.zone</field>
+        <field name="arch" type="xml">
+            <list string="Sub-Zones">
+                <field name="name"/>
+                <field name="prefix"/>
+                <field name="zone_id"/>
+                <field name="district_id"/>
+                <field name="region_id"/>
+                <field name="village_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="sub_zone_view_form" model="ir.ui.view">
+        <field name="name">res.sub.zone.form</field>
+        <field name="model">res.sub.zone</field>
+        <field name="arch" type="xml">
+            <form string="Sub-Zones">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="prefix"/>
+                            <field name="zone_id"/>
+                        </group>
+                        <group>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assignments">
+    <group>
+        <field name="assigned_collector_ids" widget="many2many_tags"/>
+        <field name="assigned_technician_ids" widget="many2many_tags"/>
+    </group>
+</page>
+                        <page string="Villages / Neighbourhoods">
+    <field name="village_ids" readonly="1">
+        <list>
+            <field name="name"/>
+        </list>
+    </field>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="sub_zone_view_search" model="ir.ui.view">
+        <field name="name">res.sub.zone.search</field>
+        <field name="model">res.sub.zone</field>
+        <field name="arch" type="xml">
+            <search string="Sub-Zones">
+                <field name="name"/>
+                <field name="zone_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_zone_id" string="Zone" context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_district_id" string="District" context="{'group_by': 'district_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="sub_zone_action" model="ir.actions.act_window">
+        <field name="name">Sub-Zones</field>
+        <field name="res_model">res.sub.zone</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="village_view_list" model="ir.ui.view">
+        <field name="name">res.village.list</field>
+        <field name="model">res.village</field>
+        <field name="arch" type="xml">
+            <list string="Villages / Neighbourhoods">
+                <field name="name"/>
+                <field name="zone_id"/>
+                <field name="sub_zone_id"/>
+                <field name="district_id"/>
+                <field name="region_id"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="village_view_form" model="ir.ui.view">
+        <field name="name">res.village.form</field>
+        <field name="model">res.village</field>
+        <field name="arch" type="xml">
+            <form string="Villages / Neighbourhoods">
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="zone_id"/>
+                            <field name="sub_zone_id"/>
+                        </group>
+                        <group>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Assignments">
+    <group>
+        <field name="assigned_collector_ids" widget="many2many_tags"/>
+        <field name="assigned_technician_ids" widget="many2many_tags"/>
+    </group>
+</page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="village_view_search" model="ir.ui.view">
+        <field name="name">res.village.search</field>
+        <field name="model">res.village</field>
+        <field name="arch" type="xml">
+            <search string="Villages / Neighbourhoods">
+                <field name="name"/>
+                <field name="zone_id"/>
+                <field name="sub_zone_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_zone_id" string="Zone" context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_sub_zone_id" string="Sub-Zone" context="{'group_by': 'sub_zone_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="village_action" model="ir.actions.act_window">
+        <field name="name">Villages / Neighbourhoods</field>
+        <field name="res_model">res.village</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="transformer_view_list" model="ir.ui.view">
+        <field name="name">res.transformer.list</field>
+        <field name="model">res.transformer</field>
+        <field name="arch" type="xml">
+            <list string="Transformers">
+                <field name="name"/>
+                <field name="capacity"/>
+                <field name="location"/>
+                <field name="village_id"/>
+                <field name="zone_id"/>
+                <field name="house_count"/>
+                <field name="company_id" groups="base.group_multi_company"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="transformer_view_form" model="ir.ui.view">
+        <field name="name">res.transformer.form</field>
+        <field name="model">res.transformer</field>
+        <field name="arch" type="xml">
+            <form string="Transformers">
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_houses" type="object" class="oe_stat_button" icon="fa-home">
+    <field name="house_count" widget="statinfo" string="Houses"/>
+</button>
+                    </div>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <group>
+                        <group>
+                            <field name="name"/>
+                            <field name="capacity"/>
+                            <field name="location"/>
+                            <field name="village_id"/>
+                        </group>
+                        <group>
+                            <field name="zone_id"/>
+                            <field name="sub_zone_id"/>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="latitude"/>
+                            <field name="longitude"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="transformer_view_search" model="ir.ui.view">
+        <field name="name">res.transformer.search</field>
+        <field name="model">res.transformer</field>
+        <field name="arch" type="xml">
+            <search string="Transformers">
+                <field name="name"/>
+                <field name="location"/>
+                <field name="zone_id"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_zone_id" string="Zone" context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_district_id" string="District" context="{'group_by': 'district_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="transformer_action" model="ir.actions.act_window">
+        <field name="name">Transformers</field>
+        <field name="res_model">res.transformer</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>

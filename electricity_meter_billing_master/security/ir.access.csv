@@ -1,0 +1,45 @@
+id,name,model_id,group_id/id,operation,domain
+access_customer_type_user,Customer Type user,customer.type,group_meter_billing_user,r,
+access_customer_type_manager,Customer Type manager,customer.type,group_meter_billing_manager,crud,
+access_reason_master_user,Reason user,reason.master,group_meter_billing_user,r,
+access_reason_master_manager,Reason manager,reason.master,group_meter_billing_manager,crud,
+access_meter_type_user,Meter Type user,meter.type,group_meter_billing_user,r,
+access_meter_type_manager,Meter Type manager,meter.type,group_meter_billing_manager,crud,
+access_sub_meter_type_user,Sub Meter Type user,sub.meter.type,group_meter_billing_user,r,
+access_sub_meter_type_manager,Sub Meter Type manager,sub.meter.type,group_meter_billing_manager,crud,
+access_res_region_user,Region user,res.region,group_meter_billing_user,r,
+access_res_region_manager,Region manager,res.region,group_meter_billing_manager,crud,
+access_res_district_user,District user,res.district,group_meter_billing_user,r,
+access_res_district_manager,District manager,res.district,group_meter_billing_manager,crud,
+access_res_zone_user,Zone user,res.zone,group_meter_billing_user,r,
+access_res_zone_manager,Zone manager,res.zone,group_meter_billing_manager,crud,
+access_res_sub_zone_user,Sub-Zone user,res.sub.zone,group_meter_billing_user,r,
+access_res_sub_zone_manager,Sub-Zone manager,res.sub.zone,group_meter_billing_manager,crud,
+access_res_village_user,Village user,res.village,group_meter_billing_user,r,
+access_res_village_manager,Village manager,res.village,group_meter_billing_manager,crud,
+access_res_transformer_user,Transformer user,res.transformer,group_meter_billing_user,r,
+access_res_transformer_manager,Transformer manager,res.transformer,group_meter_billing_manager,crud,
+access_res_house_user,House user,res.house,group_meter_billing_user,cru,
+access_res_house_manager,House manager,res.house,group_meter_billing_manager,crud,
+access_meter_reading_history_user,Meter Reading History user,meter.reading.history,group_meter_billing_user,cr,
+access_meter_reading_history_manager,Meter Reading History manager,meter.reading.history,group_meter_billing_manager,crud,
+access_partner_document_user,Customer Document user,partner.document,group_meter_billing_user,crud,
+access_res_zone_report_user,Zone Report user,res.zone.report,group_meter_billing_user,r,
+access_res_zone_report_manager,Zone Report manager,res.zone.report,group_meter_billing_manager,r,
+access_house_activate_wizard_user,Activate House wizard,house.activate.wizard,group_meter_billing_user,crud,
+access_house_deactivate_wizard_user,Deactivate House wizard,house.deactivate.wizard,group_meter_billing_user,crud,
+access_meter_reading_update_wizard_user,Update Meter Reading wizard,meter.reading.update.wizard,group_meter_billing_user,crud,
+access_meter_reading_history_report_wizard_user,Meter Reading History Report wizard,meter.reading.history.report.wizard,group_meter_billing_user,crud,
+rule_customer_type_company,customer.type multi-company,customer.type,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_reason_master_company,reason.master multi-company,reason.master,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_meter_type_company,meter.type multi-company,meter.type,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_sub_meter_type_company,sub.meter.type multi-company,sub.meter.type,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_region_company,res.region multi-company,res.region,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_district_company,res.district multi-company,res.district,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_zone_company,res.zone multi-company,res.zone,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_sub_zone_company,res.sub.zone multi-company,res.sub.zone,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_village_company,res.village multi-company,res.village,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_transformer_company,res.transformer multi-company,res.transformer,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_house_company,res.house multi-company,res.house,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_meter_reading_history_company,meter.reading.history multi-company,meter.reading.history,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"
+rule_res_zone_report_company,res.zone.report multi-company,res.zone.report,,crud,"['|', ('company_id', '=', False), ('company_id', 'in', company_ids)]"

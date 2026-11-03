@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_meter_billing_root" name="Meter Billing" sequence="30"
+              groups="group_meter_billing_user,group_meter_billing_manager"
+              web_icon="electricity_meter_billing_master,static/description/icon.png"/>
+
+    <menuitem id="menu_meter_billing_customers" name="Customers" parent="menu_meter_billing_root"
+              action="res_partner_customer_action" sequence="10"/>
+    <menuitem id="menu_meter_billing_zone_report" name="Zone Report" parent="menu_meter_billing_root"
+              action="res_zone_report_action" sequence="20"/>
+
+    <menuitem id="menu_meter_billing_reports" name="Reports" parent="menu_meter_billing_root"
+              sequence="30"/>
+    <menuitem id="menu_meter_reading_history_report" name="Meter Reading History Report"
+              parent="menu_meter_billing_reports" action="meter_reading_history_report_wizard_action"
+              sequence="10"/>
+    <menuitem id="menu_meter_reading_history" name="Meter Reading History"
+              parent="menu_meter_billing_reports" action="meter_reading_history_action"
+              sequence="20"/>
+
+    <menuitem id="menu_meter_billing_config" name="Configuration" parent="menu_meter_billing_root"
+              sequence="90" groups="group_meter_billing_manager"/>
+    <menuitem id="menu_meter_billing_master" name="Master Data" parent="menu_meter_billing_config"
+              sequence="10"/>
+
+    <menuitem id="menu_customer_type" name="Customer Types" parent="menu_meter_billing_master"
+              action="customer_type_action" sequence="10"/>
+    <menuitem id="menu_region" name="Regions" parent="menu_meter_billing_master"
+              action="region_action" sequence="20"/>
+    <menuitem id="menu_district" name="Districts" parent="menu_meter_billing_master"
+              action="district_action" sequence="30"/>
+    <menuitem id="menu_zone" name="Zones" parent="menu_meter_billing_master"
+              action="zone_action" sequence="40"/>
+    <menuitem id="menu_sub_zone" name="Sub-Zones" parent="menu_meter_billing_master"
+              action="sub_zone_action" sequence="50"/>
+    <menuitem id="menu_village" name="Villages/Neighbourhoods" parent="menu_meter_billing_master"
+              action="village_action" sequence="60"/>
+    <menuitem id="menu_transformer" name="Transformers" parent="menu_meter_billing_master"
+              action="transformer_action" sequence="70"/>
+    <menuitem id="menu_house" name="Houses" parent="menu_meter_billing_master"
+              action="res_house_action" sequence="80"/>
+    <menuitem id="menu_meter_type" name="Meter Types" parent="menu_meter_billing_master"
+              action="meter_type_action" sequence="90"/>
+    <menuitem id="menu_sub_meter_type" name="Sub Meter Types" parent="menu_meter_billing_master"
+              action="sub_meter_type_action" sequence="100"/>
+    <menuitem id="menu_reason_master" name="Reasons Master" parent="menu_meter_billing_master"
+              action="reason_master_action" sequence="110"/>
+</odoo>

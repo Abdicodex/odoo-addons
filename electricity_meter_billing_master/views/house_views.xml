@@ -1,0 +1,285 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_house_view_list" model="ir.ui.view">
+        <field name="name">res.house.list</field>
+        <field name="model">res.house</field>
+        <field name="arch" type="xml">
+            <list string="Houses" decoration-muted="state == 'inactive'"
+                  decoration-success="state == 'active'">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="customer_type_id" optional="show"/>
+                <field name="village_id" optional="show"/>
+                <field name="zone_id" optional="show"/>
+                <field name="sub_zone_id" optional="hide"/>
+                <field name="meter_number" optional="show"/>
+                <field name="billing_type" optional="show"/>
+                <field name="billed_reading" optional="show"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="state" widget="badge"
+                       decoration-success="state == 'active'"
+                       decoration-info="state == 'draft'"
+                       decoration-muted="state == 'inactive'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="res_house_view_form" model="ir.ui.view">
+        <field name="name">res.house.form</field>
+        <field name="model">res.house</field>
+        <field name="arch" type="xml">
+            <form string="House">
+                <header>
+                    <button name="action_activate" string="Activate" type="object" class="oe_highlight"
+                            invisible="state == 'active'"/>
+                    <button name="action_deactivate" string="Deactivate" type="object"
+                            invisible="state != 'active'"/>
+                    <button name="action_update_meter_reading" string="Update Meter Reading"
+                            type="object" class="oe_highlight" invisible="not can_update_meter_reading"/>
+                    <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive"/>
+                </header>
+                <sheet>
+                    <widget name="web_ribbon" title="Archived" bg_color="text-bg-danger" invisible="active"/>
+                    <field name="active" invisible="1"/>
+                    <field name="can_update_meter_reading" invisible="1"/>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_meter_reading_history" type="object"
+                                class="oe_stat_button" icon="fa-tachometer">
+                            <field name="meter_reading_history_count" widget="statinfo"
+                                   string="Reading History"/>
+                        </button>
+                        <button name="action_open_map" type="object" class="oe_stat_button"
+                                icon="fa-map-marker" string="Map"
+                                invisible="not latitude and not longitude"/>
+                    </div>
+                    <div class="oe_title">
+                        <span class="o_form_label">Supply Number</span>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group string="Customer">
+                            <field name="partner_id"/>
+                            <field name="mobile"/>
+                            <field name="customer_type_id" options="{'no_create': True}"/>
+                            <field name="billing_type"/>
+                            <field name="connection_date"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group string="Location">
+                            <field name="village_id" options="{'no_create': True}"/>
+                            <field name="neighbourhood"/>
+                            <field name="zone_id"/>
+                            <field name="sub_zone_id"/>
+                            <field name="district_id"/>
+                            <field name="region_id"/>
+                            <field name="transformer_id" options="{'no_create': True}"/>
+                            <label for="latitude" string="GPS"/>
+                            <div class="o_row">
+                                <field name="latitude" placeholder="Latitude"/>
+                                <field name="longitude" placeholder="Longitude"/>
+                            </div>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Meter" name="meter">
+                            <group>
+                                <group>
+                                    <field name="meter_number"/>
+                                    <field name="meter_type_id" options="{'no_create': True}"/>
+                                    <field name="sub_meter_type_id" options="{'no_create': True}"/>
+                                </group>
+                                <group>
+                                    <field name="billed_reading"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Owner / Grantor" name="owner">
+                            <group>
+                                <group string="Owner">
+                                    <field name="owner_name"/>
+                                    <field name="owner_phone"/>
+                                </group>
+                                <group string="Grantor">
+                                    <field name="grantor_name"/>
+                                    <field name="grantor_mobile"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Activation" name="activation">
+                            <group>
+                                <group string="Activation">
+                                    <field name="activation_date"/>
+                                    <field name="activation_reason_id"/>
+                                    <field name="activation_remark"/>
+                                </group>
+                                <group string="Deactivation">
+                                    <field name="deactivation_date"/>
+                                    <field name="deactivation_reason_id"/>
+                                    <field name="deactivation_remark"/>
+                                </group>
+                            </group>
+                        </page>
+                        <page string="Reading History" name="history">
+                            <field name="meter_reading_history_ids" readonly="1">
+                                <list>
+                                    <field name="date"/>
+                                    <field name="meter_number"/>
+                                    <field name="new_meter_number"/>
+                                    <field name="previous_reading"/>
+                                    <field name="new_reading"/>
+                                    <field name="difference"/>
+                                    <field name="reason_id"/>
+                                    <field name="user_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="res_house_view_pivot" model="ir.ui.view">
+        <field name="name">res.house.pivot</field>
+        <field name="model">res.house</field>
+        <field name="arch" type="xml">
+            <pivot string="Houses">
+                <field name="zone_id" type="row"/>
+                <field name="state" type="col"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="res_house_view_search" model="ir.ui.view">
+        <field name="name">res.house.search</field>
+        <field name="model">res.house</field>
+        <field name="arch" type="xml">
+            <search string="Houses">
+                <field name="name"/>
+                <field name="partner_id"/>
+                <field name="meter_number"/>
+                <field name="village_id"/>
+                <field name="zone_id"/>
+                <field name="transformer_id"/>
+                <filter name="draft" string="New" domain="[('state', '=', 'draft')]"/>
+                <filter name="active_state" string="Active" domain="[('state', '=', 'active')]"/>
+                <filter name="inactive_state" string="Inactive" domain="[('state', '=', 'inactive')]"/>
+                <separator/>
+                <filter name="metered" string="Metered" domain="[('billing_type', '=', 'metered')]"/>
+                <filter name="flat" string="Flat Rate" domain="[('billing_type', '=', 'flat')]"/>
+                <filter name="archived" string="Archived" domain="[('active', '=', False)]"/>
+                <group>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_zone" string="Zone" context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_sub_zone" string="Sub-Zone" context="{'group_by': 'sub_zone_id'}"/>
+                    <filter name="group_village" string="Village" context="{'group_by': 'village_id'}"/>
+                    <filter name="group_customer_type" string="Customer Type"
+                            context="{'group_by': 'customer_type_id'}"/>
+                    <filter name="group_billing" string="Billing Type" context="{'group_by': 'billing_type'}"/>
+                    <filter name="group_transformer" string="Transformer"
+                            context="{'group_by': 'transformer_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="res_house_action" model="ir.actions.act_window">
+        <field name="name">Houses</field>
+        <field name="res_model">res.house</field>
+        <field name="view_mode">list,form,pivot</field>
+    </record>
+
+    <!-- Meter reading history -->
+    <record id="meter_reading_history_view_list" model="ir.ui.view">
+        <field name="name">meter.reading.history.list</field>
+        <field name="model">meter.reading.history</field>
+        <field name="arch" type="xml">
+            <list string="Meter Reading History" create="0">
+                <field name="date"/>
+                <field name="house_id"/>
+                <field name="partner_id" optional="show"/>
+                <field name="zone_id" optional="show"/>
+                <field name="meter_number" optional="show"/>
+                <field name="new_meter_number" optional="show"/>
+                <field name="previous_reading"/>
+                <field name="new_reading"/>
+                <field name="difference" sum="Total"/>
+                <field name="reason_id" optional="show"/>
+                <field name="user_id" optional="show"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="meter_reading_history_view_form" model="ir.ui.view">
+        <field name="name">meter.reading.history.form</field>
+        <field name="model">meter.reading.history</field>
+        <field name="arch" type="xml">
+            <form string="Meter Reading History" create="0" edit="0">
+                <sheet>
+                    <group>
+                        <group>
+                            <field name="house_id"/>
+                            <field name="partner_id"/>
+                            <field name="customer_type_id"/>
+                            <field name="date"/>
+                            <field name="user_id"/>
+                            <field name="company_id" groups="base.group_multi_company"/>
+                        </group>
+                        <group>
+                            <field name="region_id"/>
+                            <field name="district_id"/>
+                            <field name="zone_id"/>
+                            <field name="sub_zone_id"/>
+                            <field name="village_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <group string="Meter">
+                            <field name="meter_number"/>
+                            <field name="new_meter_number"/>
+                        </group>
+                        <group string="Reading">
+                            <field name="previous_reading"/>
+                            <field name="new_reading"/>
+                            <field name="difference"/>
+                            <field name="reason_id"/>
+                        </group>
+                    </group>
+                    <group>
+                        <field name="remarks"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="meter_reading_history_view_search" model="ir.ui.view">
+        <field name="name">meter.reading.history.search</field>
+        <field name="model">meter.reading.history</field>
+        <field name="arch" type="xml">
+            <search string="Meter Reading History">
+                <field name="house_id"/>
+                <field name="partner_id"/>
+                <field name="meter_number"/>
+                <field name="new_meter_number"/>
+                <field name="zone_id"/>
+                <field name="user_id"/>
+                <filter name="today" string="Today"
+                        domain="[('date', '&gt;=', context_today().strftime('%Y-%m-%d'))]"/>
+                <group>
+                    <filter name="group_zone" string="Zone" context="{'group_by': 'zone_id'}"/>
+                    <filter name="group_house" string="Supply Number" context="{'group_by': 'house_id'}"/>
+                    <filter name="group_user" string="Updated By" context="{'group_by': 'user_id'}"/>
+                    <filter name="group_month" string="Month" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="meter_reading_history_action" model="ir.actions.act_window">
+        <field name="name">Meter Reading History</field>
+        <field name="res_model">meter.reading.history</field>
+        <field name="view_mode">list,form</field>
+    </record>
+</odoo>
