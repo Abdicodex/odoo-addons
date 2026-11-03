@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_groups_privilege_hijra_codes" model="res.groups.privilege">
+        <field name="name">HIJRA Codes</field>
+        <field name="sequence">50</field>
+        <field name="category_id" ref="base.module_category_administration"/>
+    </record>
+
+    <record id="group_hijra_codes_manager" model="res.groups">
+        <field name="name">Codes Manager</field>
+        <field name="sequence">10</field>
+        <field name="privilege_id" ref="res_groups_privilege_hijra_codes"/>
+    </record>
+</odoo>

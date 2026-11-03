@@ -1,0 +1,13 @@
+id,name,model_id,group_id/id,operation,domain
+hijra_project_read,HIJRA Project read,hijra.project,base.group_user,r,
+hijra_project_manage,HIJRA Project manage,hijra.project,group_hijra_codes_manager,crud,
+hijra_project_system,HIJRA Project system,hijra.project,base.group_system,crud,
+hijra_budget_read,HIJRA Budget read,hijra.budget,base.group_user,r,
+hijra_budget_manage,HIJRA Budget manage,hijra.budget,group_hijra_codes_manager,crud,
+hijra_budget_system,HIJRA Budget system,hijra.budget,base.group_system,crud,
+hijra_fund_read,HIJRA Fund read,hijra.fund,base.group_user,r,
+hijra_fund_manage,HIJRA Fund manage,hijra.fund,group_hijra_codes_manager,crud,
+hijra_fund_system,HIJRA Fund system,hijra.fund,base.group_system,crud,
+hijra_location_read,HIJRA Location read,hijra.location,base.group_user,r,
+hijra_location_manage,HIJRA Location manage,hijra.location,group_hijra_codes_manager,crud,
+hijra_location_system,HIJRA Location system,hijra.location,base.group_system,crud,

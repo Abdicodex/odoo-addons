@@ -60,7 +60,7 @@
                         <td class="lbl">Position</td>
                         <td><span t-field="o.requester_position"/></td>
                         <td class="lbl">Budget</td>
-                        <td><span t-field="o.budget_id.code"/></td>
+                        <td><span t-field="o.budget_code"/></td>
                     </tr>
                     <tr>
                         <td class="lbl">Department</td>
@@ -70,9 +70,9 @@
                     </tr>
                     <tr>
                         <td class="lbl">Location</td>
-                        <td><span t-field="o.location_id.code"/></td>
+                        <td><span t-field="o.location_id.name"/></td>
                         <td class="lbl">Category</td>
-                        <td><span t-field="o.category"/></td>
+                        <td><span t-field="o.budget_id.name"/></td>
                     </tr>
                     <tr>
                         <td class="lbl">Email</td>

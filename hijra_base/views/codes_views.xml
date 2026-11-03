@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Projects -->
+    <record id="hijra_project_view_list" model="ir.ui.view">
+        <field name="name">hijra.project.list</field>
+        <field name="model">hijra.project</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="hijra_project_action" model="ir.actions.act_window">
+        <field name="name">Projects</field>
+        <field name="res_model">hijra.project</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Budget codes -->
+    <record id="hijra_budget_view_list" model="ir.ui.view">
+        <field name="name">hijra.budget.list</field>
+        <field name="model">hijra.budget</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="project_id" options="{'no_create': True}"/>
+                <field name="name"/>
+                <field name="code"/>
+            </list>
+        </field>
+    </record>
+    <record id="hijra_budget_view_search" model="ir.ui.view">
+        <field name="name">hijra.budget.search</field>
+        <field name="model">hijra.budget</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="project_id"/>
+                <group>
+                    <filter name="group_project" string="Project"
+                            context="{'group_by': 'project_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+    <record id="hijra_budget_action" model="ir.actions.act_window">
+        <field name="name">Budget Codes</field>
+        <field name="res_model">hijra.budget</field>
+        <field name="view_mode">list</field>
+        <field name="context">{'search_default_group_project': 1}</field>
+    </record>
+
+    <!-- Funds -->
+    <record id="hijra_fund_view_list" model="ir.ui.view">
+        <field name="name">hijra.fund.list</field>
+        <field name="model">hijra.fund</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="hijra_fund_action" model="ir.actions.act_window">
+        <field name="name">Funds</field>
+        <field name="res_model">hijra.fund</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Locations -->
+    <record id="hijra_location_view_list" model="ir.ui.view">
+        <field name="name">hijra.location.list</field>
+        <field name="model">hijra.location</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="code"/>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+    <record id="hijra_location_action" model="ir.actions.act_window">
+        <field name="name">Locations</field>
+        <field name="res_model">hijra.location</field>
+        <field name="view_mode">list</field>
+    </record>
+
+    <!-- Menus -->
+    <menuitem id="menu_hijra_codes_root"
+              name="HIJRA Codes"
+              sequence="90"
+              groups="group_hijra_codes_manager,base.group_system"/>
+    <menuitem id="menu_hijra_project" name="Projects" parent="menu_hijra_codes_root"
+              action="hijra_project_action" sequence="10"/>
+    <menuitem id="menu_hijra_budget" name="Budget Codes" parent="menu_hijra_codes_root"
+              action="hijra_budget_action" sequence="20"/>
+    <menuitem id="menu_hijra_fund" name="Funds" parent="menu_hijra_codes_root"
+              action="hijra_fund_action" sequence="30"/>
+    <menuitem id="menu_hijra_location" name="Locations" parent="menu_hijra_codes_root"
+              action="hijra_location_action" sequence="40"/>
+</odoo>

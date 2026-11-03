@@ -76,24 +76,25 @@
                     <separator string="Requisition Details"/>
                     <group>
                         <group name="requestor_details">
+                            <!-- name, position, department and email come from the user record -->
                             <field name="requester_id" widget="many2one_avatar_user"
-                                   readonly="state != 'draft'" options="{'no_create': True}"/>
-                            <field name="requester_position" readonly="state != 'draft'"/>
-                            <field name="department_id" required="1" readonly="state != 'draft'"
-                                   options="{'no_create': True}"/>
+                                   options="{'no_open': True}"/>
+                            <field name="requester_position"/>
+                            <field name="department_id" options="{'no_open': True}"/>
                             <field name="location_id" required="1" readonly="state != 'draft'"
-                                   options="{'no_create': True}"/>
+                                   options="{'no_create': True, 'no_open': True}"/>
                             <field name="requester_email"/>
                         </group>
                         <group name="funding_details">
                             <field name="project_id" required="1" readonly="state != 'draft'"
-                                   options="{'no_create': True}"/>
-                            <field name="budget_id" required="1" readonly="state != 'draft'"
-                                   domain="[('project_id', '=', project_id)]"
-                                   options="{'no_create': True}"/>
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="budget_id" required="1"
+                                   readonly="state != 'draft' or not project_id"
+                                   placeholder="Select the category..."
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="budget_code"/>
                             <field name="fund_id" required="1" readonly="state != 'draft'"
-                                   options="{'no_create': True}"/>
-                            <field name="category"/>
+                                   options="{'no_create': True, 'no_open': True}"/>
                             <field name="verifier_id" widget="many2one_avatar_user"
                                    readonly="state != 'draft'" options="{'no_create': True}"/>
                         </group>

@@ -33,18 +33,23 @@ class PurchaseRequest(models.Model):
     date_required = fields.Date(string='Required By')
 
     # Requisition details
+    # Name, position, department and email come from the requestor's user record.
     requester_id = fields.Many2one(
-        'res.users', string='Requestor', required=True, tracking=True,
+        'res.users', string='Requestor', required=True, readonly=True, tracking=True,
         default=lambda self: self.env.user)
     requester_position = fields.Char(
-        string='Position', compute='_compute_requester_position', store=True, readonly=False)
+        string='Position', compute='_compute_requester_details', store=True)
     requester_email = fields.Char(string='Email', related='requester_id.email')
-    department_id = fields.Many2one('purchase.request.department', string='Department', tracking=True)
-    location_id = fields.Many2one('purchase.request.location', string='Location', tracking=True)
-    project_id = fields.Many2one('purchase.request.project', string='Project', tracking=True)
-    budget_id = fields.Many2one('purchase.request.budget', string='Budget', tracking=True)
-    category = fields.Char(string='Category', related='budget_id.description')
-    fund_id = fields.Many2one('purchase.request.fund', string='Fund', tracking=True)
+    department_id = fields.Many2one(
+        'hr.department', string='Department', compute='_compute_requester_details', store=True)
+    location_id = fields.Many2one('hijra.location', string='Location', tracking=True)
+    project_id = fields.Many2one('hijra.project', string='Project', tracking=True)
+    # The user picks the category; the budget code follows from it.
+    budget_id = fields.Many2one(
+        'hijra.budget', string='Category', tracking=True,
+        domain="[('project_id', '=', project_id)]")
+    budget_code = fields.Char(string='Budget', related='budget_id.code')
+    fund_id = fields.Many2one('hijra.fund', string='Fund', tracking=True)
     verifier_id = fields.Many2one('res.users', string='Verifier', tracking=True)
 
     # Items
@@ -56,11 +61,11 @@ class PurchaseRequest(models.Model):
 
     # Approval
     approver_id = fields.Many2one('res.users', string='Name of Approver', tracking=True)
-    approver_position = fields.Char(string='Position', related='approver_id.function')
+    approver_position = fields.Char(string='Position', compute='_compute_signatory_positions')
     approval_date = fields.Datetime(string='Date', copy=False, readonly=True)
     second_signatory_id = fields.Many2one(
         'res.users', string='2nd Signatory (if required)', tracking=True)
-    second_position = fields.Char(string='Position', related='second_signatory_id.function')
+    second_position = fields.Char(string='Position', compute='_compute_signatory_positions')
     second_approval_date = fields.Datetime(string='Date', copy=False, readonly=True)
     decision_by_id = fields.Many2one('res.users', string='Decided By', copy=False, readonly=True)
     decision_date = fields.Datetime(string='Decision Date', copy=False, readonly=True)
@@ -69,10 +74,24 @@ class PurchaseRequest(models.Model):
     rfq_ids = fields.One2many('purchase.order', 'purchase_request_id', string='RFQs')
     rfq_count = fields.Integer(compute='_compute_rfq_count')
 
+    @api.model
+    def _get_position(self, user):
+        # sudo: employee data is not readable by every user
+        user = user.sudo()
+        return user.job_title or user.function or False
+
     @api.depends('requester_id')
-    def _compute_requester_position(self):
+    def _compute_requester_details(self):
         for rec in self:
-            rec.requester_position = rec.requester_id.function
+            user = rec.requester_id.sudo()
+            rec.requester_position = rec._get_position(user)
+            rec.department_id = user.department_id
+
+    @api.depends('approver_id', 'second_signatory_id')
+    def _compute_signatory_positions(self):
+        for rec in self:
+            rec.approver_position = rec._get_position(rec.approver_id)
+            rec.second_position = rec._get_position(rec.second_signatory_id)
 
     @api.depends('line_ids.subtotal')
     def _compute_amount_total(self):
