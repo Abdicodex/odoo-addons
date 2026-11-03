@@ -45,7 +45,6 @@
                         <group>
                             <field name="deadline" readonly="state != 'open'"/>
                             <field name="validity_days" readonly="state != 'open'"/>
-                            <field name="submission_email" readonly="state != 'open'"/>
                             <field name="awarded_partner_id" invisible="not awarded_partner_id"/>
                             <field name="awarded_order_id" invisible="not awarded_order_id"/>
                             <field name="company_id" groups="base.group_multi_company"/>

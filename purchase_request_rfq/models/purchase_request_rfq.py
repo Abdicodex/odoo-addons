@@ -46,9 +46,6 @@ class PurchaseRequestRfq(models.Model):
     validity_days = fields.Integer(
         string='Quotation Validity (days)', default=90,
         help="Printed in the compliance checklist: how long a quotation must stay valid.")
-    submission_email = fields.Char(
-        string='Submit Quotations To',
-        default=lambda self: self.env.company.procurement_email or self.env.company.email)
     quotation_details = fields.Text(
         string='Quotation Details to Include',
         help="One item per line; printed as bullet points under 'Additional Information'.")
@@ -183,7 +180,7 @@ class PurchaseRequestRfq(models.Model):
                 ('RFQ Date', rfq_pdf.fmt_long_date(local(order.create_date))),
                 ('Submission Deadline', rfq_pdf.fmt_short_date(deadline)),
             ],
-            'submission_email': self.submission_email or company.procurement_email or company.email,
+            'submission_email': rfq_pdf.SUBMISSION_EMAIL,
             'deadline_text': rfq_pdf.fmt_short_date(deadline),
             'currency': order.currency_id.name or '',
             'items': items,

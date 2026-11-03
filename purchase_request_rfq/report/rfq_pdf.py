@@ -15,6 +15,9 @@ from .prf_pdf import (
     SANS, SANS_BOLD, SERIF, SERIF_BOLD, load_image, register_fonts, text_width, wrap,
 )
 
+# Where vendors send their quotations; printed in "Manner of Submission".
+SUBMISSION_EMAIL = 'procurement.so@hijra.or.ke'
+
 PAGE_W, PAGE_H = 612.0, 792.0
 LEFT, RIGHT = 72.0, 540.0
 TEXT_RIGHT = 543.0              # body paragraphs run from 72 to 543
