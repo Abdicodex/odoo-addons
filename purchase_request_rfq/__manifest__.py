@@ -5,7 +5,7 @@
 Employees raise purchase requests, an approver reviews them and a buyer
 turns approved requests into one RFQ per chosen vendor in the Purchase app.
     """,
-    'version': '20.0.1.1.0',
+    'version': '20.0.1.2.0',
     'category': 'Inventory/Purchase',
     'license': 'LGPL-3',
     'depends': ['purchase', 'mail', 'hr', 'hijra_base'],

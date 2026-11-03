@@ -8,6 +8,7 @@ Everything here is plain Python (reportlab only) so it can be tested without Odo
 Coordinates are written top-down in points, like the template.
 """
 import base64
+import logging
 import os
 from io import BytesIO
 
@@ -15,6 +16,8 @@ from reportlab.lib.utils import ImageReader
 from reportlab.pdfbase import pdfmetrics
 from reportlab.pdfbase.ttfonts import TTFont
 from reportlab.pdfgen import canvas
+
+_logger = logging.getLogger(__name__)
 
 PAGE_W = 595.2756
 PAGE_H = 841.8898
@@ -77,6 +80,27 @@ def wrap(text, font, width, size=FONT_SIZE):
             current = word
         lines.append(current)
     return lines or ['']
+
+
+def load_image(*candidates):
+    """First candidate (base64 text/bytes) that PIL can read, as an ImageReader."""
+    for value in candidates:
+        if not value:
+            continue
+        try:
+            from PIL import Image
+            raw = base64.b64decode(value)
+            image = Image.open(BytesIO(raw))
+            image.load()
+            if image.mode not in ('RGB', 'RGBA'):
+                image = image.convert('RGBA')
+            buffer = BytesIO()
+            image.save(buffer, format='PNG')
+            buffer.seek(0)
+            return ImageReader(buffer)
+        except Exception as error:  # a bad image must never break the print
+            _logger.warning("Requisition PDF: could not read an image (%s)", error)
+    return None
 
 
 def fmt_date(value):
@@ -171,15 +195,29 @@ class Form:
         self.y = y + shift['gap']
 
     def draw_logo(self, logo, top):
-        try:
-            reader = ImageReader(BytesIO(base64.b64decode(logo)))
-            width, height = reader.getSize()
-        except Exception:  # unreadable logo: skip it rather than fail the print
+        candidates = logo if isinstance(logo, (list, tuple)) else [logo]
+        reader = load_image(*candidates)
+        if not reader:
             return
+        width, height = reader.getSize()
         box_w, box_h = LOGO_BOX
         scale = min(box_w / width, box_h / height)
         w, h = width * scale, height * scale
         self.c.drawImage(reader, LOGO_RIGHT - w, self._y(top + h), w, h, mask='auto')
+
+    def draw_signature(self, value, x0, y0, x1, y1):
+        """Fit a signature image inside a cell, left-aligned with a small margin."""
+        reader = load_image(value)
+        if not reader:
+            return False
+        width, height = reader.getSize()
+        box_w, box_h = (x1 - x0) - 8.0, (y1 - y0) - 8.0
+        scale = min(box_w / width, box_h / height)
+        w, h = width * scale, height * scale
+        x = x0 + 4.0
+        y = y0 + ((y1 - y0) - h) / 2.0
+        self.c.drawImage(reader, x, self._y(y + h), w, h, mask='auto')
+        return True
 
     def details(self, data, shift):
         xs = DETAIL_COLS
@@ -215,6 +253,8 @@ class Form:
                        wrap("Requestor's Signature", SANS_BOLD, xs[1] - xs[0] - 2 * PAD), SANS_BOLD, 13.4)
         self.cell_text(xs[2], xs[3], y, SIGN_ROW,
                        wrap("Verifier's Signature", SANS_BOLD, xs[3] - xs[2] - 2 * PAD), SANS_BOLD, 13.4)
+        self.draw_signature(data.get('requestor_signature'), xs[1], y, xs[2], y + SIGN_ROW)
+        self.draw_signature(data.get('verifier_signature'), xs[3], y, xs[4], y + SIGN_ROW)
         self.y = y + SIGN_ROW + shift['gap']
 
     def items(self, data, shift):
@@ -285,7 +325,7 @@ class Form:
                            offset=centre, size=size)
         return y + height
 
-    def signatory(self, label, name, position, signed_on, shift):
+    def signatory(self, label, name, position, signed_on, signature, shift):
         xs = APPROVER_COLS
         label_lines = wrap(label, SANS_BOLD, xs[1] - xs[0] - 2 * PAD)
         self.need(SIGN_ROW + ROW)
@@ -294,7 +334,7 @@ class Form:
         self.cell_text(xs[0], xs[1], y, SIGN_ROW, label_lines, SANS_BOLD, 13.4)
         self.cell_text(xs[1], xs[2], y, SIGN_ROW, wrap(name, SANS, xs[2] - xs[1] - 2 * PAD), SANS, 13.4)
         self.cell_text(xs[2], xs[3], y, SIGN_ROW, ['Signature:'], SANS_BOLD, 13.4)
-        if signed_on:
+        if not self.draw_signature(signature, xs[3], y, xs[4], y + SIGN_ROW) and signed_on:
             self.cell_text(xs[3], xs[4], y, SIGN_ROW, ['Approved electronically'], SANS, 13.4,
                            size=7.5)
         y += SIGN_ROW
@@ -343,9 +383,9 @@ def _draw(form, data, level):
     form.details(data, level)
     form.items(data, level)
     form.signatory('Name of Approver:', data['approver'], data['approver_position'],
-                   data['approval_date'], level)
+                   data['approval_date'], data.get('approver_signature'), level)
     form.signatory('2nd Signatory (if required):', data['second'], data['second_position'],
-                   data['second_date'], level)
+                   data['second_date'], data.get('second_signature'), level)
 
 
 def build_pdf(requisitions, font_dir):

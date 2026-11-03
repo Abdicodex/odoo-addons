@@ -13,9 +13,15 @@
               sequence="10"/>
 
     <menuitem id="menu_purchase_request_approval"
-              name="Awaiting My Approval"
+              name="Awaiting My Action"
               parent="menu_purchase_request_root"
               action="purchase_request_action_approval"
               sequence="20"/>
 
+
+    <menuitem id="menu_purchase_request_signature"
+              name="My Signature"
+              parent="menu_purchase_request_root"
+              action="hijra_base.hijra_signature_action_my"
+              sequence="30"/>
 </odoo>

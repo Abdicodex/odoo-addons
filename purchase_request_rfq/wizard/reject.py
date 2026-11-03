@@ -12,8 +12,8 @@ class PurchaseRequestReject(models.TransientModel):
     def action_reject(self):
         self.ensure_one()
         request = self.request_id
-        if request.state != 'to_approve':
-            raise UserError(_("Only requisitions waiting for approval can be rejected."))
+        if request.state not in ('to_verify', 'to_approve'):
+            raise UserError(_("Only requisitions waiting for verification or approval can be rejected."))
         request.activity_unlink(['mail.mail_activity_data_todo'])
         request.write({
             'state': 'rejected',

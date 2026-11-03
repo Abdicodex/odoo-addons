@@ -16,6 +16,7 @@ class PurchaseRequest(models.Model):
         default=lambda self: _('New'))
     state = fields.Selection([
         ('draft', 'Draft'),
+        ('to_verify', 'To Verify'),
         ('to_approve', 'To Approve'),
         ('approved', 'Approved'),
         ('rfq_created', 'RFQ Created'),
@@ -59,7 +60,8 @@ class PurchaseRequest(models.Model):
         string='Total Amount', compute='_compute_amount_total', store=True, tracking=True)
     reason = fields.Text(string='Remarks')
 
-    # Approval
+    # Verification and approval
+    verify_date = fields.Datetime(string='Verified On', copy=False, readonly=True)
     approver_id = fields.Many2one('res.users', string='Name of Approver', tracking=True)
     approver_position = fields.Char(string='Position', compute='_compute_signatory_positions')
     approval_date = fields.Datetime(string='Date', copy=False, readonly=True)
@@ -123,10 +125,22 @@ class PurchaseRequest(models.Model):
         def local_date(value):
             return fields.Datetime.context_timestamp(self, value).date() if value else None
 
+        company = self.company_id.sudo()
+        signatures = self.env['hijra.signature'].get_signatures(
+            self.requester_id | self.verifier_id | self.approver_id | self.second_signatory_id)
+
+        def signature(user, signed):
+            return signatures.get(user.id) if signed and user else False
+
         return {
             'name': self.name or '',
             'date': local_date(self.date_request),
-            'logo': self.company_id.sudo().logo or False,
+            # the full logo first; the resized web logo as a fallback
+            'logo': [value for value in (company.logo, getattr(company, 'logo_web', False)) if value],
+            'requestor_signature': signature(self.requester_id, self.state != 'draft'),
+            'verifier_signature': signature(self.verifier_id, self.verify_date),
+            'approver_signature': signature(self.approver_id, self.approval_date),
+            'second_signature': signature(self.second_signatory_id, self.second_approval_date),
             'requestor': self.requester_id.name or '',
             'position': self.requester_position or '',
             'department': self.department_id.name or '',
@@ -164,6 +178,13 @@ class PurchaseRequest(models.Model):
             summary=_("Approve purchase requisition %s", self.name),
             user_id=user.id)
 
+    def _schedule_verification_activity(self, user):
+        self.ensure_one()
+        self.activity_schedule(
+            TODO_ACTIVITY,
+            summary=_("Verify purchase requisition %s", self.name),
+            user_id=user.id)
+
     def action_request_approval(self):
         required = (
             'department_id', 'location_id', 'project_id', 'budget_id', 'fund_id',
@@ -175,10 +196,23 @@ class PurchaseRequest(models.Model):
             if missing:
                 raise UserError(_(
                     "Please fill in: %s", ", ".join(missing)))
-        self.write({'state': 'to_approve'})
+        self.write({'state': 'to_verify'})
         for rec in self:
+            rec._schedule_verification_activity(rec.verifier_id)
+            rec.message_post(body=_("Verification requested from %s.", rec.verifier_id.name))
+
+    def action_verify(self):
+        user = self.env.user
+        for rec in self:
+            if rec.state != 'to_verify':
+                raise UserError(_("Only requisitions waiting for verification can be verified."))
+            if user != rec.verifier_id:
+                raise UserError(_("Only the named verifier can verify this requisition."))
+            rec.activity_feedback([TODO_ACTIVITY], user_id=user.id)
+            rec.write({'state': 'to_approve', 'verify_date': fields.Datetime.now()})
+            rec.message_post(body=_(
+                "Verified by %s. Approval requested from %s.", user.name, rec.approver_id.name))
             rec._schedule_approval_activity(rec.approver_id)
-            rec.message_post(body=_("Approval requested from %s.", rec.approver_id.name))
 
     def action_approve(self):
         user = self.env.user
@@ -206,9 +240,9 @@ class PurchaseRequest(models.Model):
 
     def action_open_reject(self):
         self.ensure_one()
-        if self.env.user not in (self.approver_id | self.second_signatory_id):
+        if self.env.user not in (self.verifier_id | self.approver_id | self.second_signatory_id):
             raise UserError(_(
-                "Only the named approver or 2nd signatory can reject this requisition."))
+                "Only the named verifier, approver or 2nd signatory can reject this requisition."))
         return {
             'type': 'ir.actions.act_window',
             'name': _('Reject Requisition'),
@@ -221,6 +255,7 @@ class PurchaseRequest(models.Model):
     def action_reset_draft(self):
         self.write({
             'state': 'draft',
+            'verify_date': False,
             'approval_date': False,
             'second_approval_date': False,
             'decision_by_id': False,
