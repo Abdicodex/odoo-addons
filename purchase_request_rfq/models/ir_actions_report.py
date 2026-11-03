@@ -32,11 +32,9 @@ class IrActionsReport(models.Model):
                                     self._font_dir())
             return pdf, 'pdf'
 
-        # RFQs created from a requisition use the HIJRA template; any other RFQ keeps Odoo's own
         orders = self.env['purchase.order'].browse(res_ids or [])
-        if not orders or not all(order.rfq_group_id for order in orders):
+        if not orders:
             return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
         from ..report import rfq_pdf
-        pdf = rfq_pdf.build_pdf(
-            [order.rfq_group_id._prepare_pdf_data(order) for order in orders], self._font_dir())
+        pdf = rfq_pdf.build_pdf([order._prepare_rfq_pdf_data() for order in orders], self._font_dir())
         return pdf, 'pdf'

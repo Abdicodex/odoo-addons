@@ -51,13 +51,7 @@ class PurchaseRequestMakeRfq(models.TransientModel):
             if line.product_id and line.product_id != item._get_rfq_product():
                 item.product_id = line.product_id
         # one RFQ reference; each vendor gets its own quotation under it (RFQ-1, RFQ-2, ...)
-        group = self.env['purchase.request.rfq'].create({
-            'request_id': request.id,
-            'subject': self.subject,
-            'deadline': self.deadline,
-            'validity_days': self.validity_days,
-            'quotation_details': self.quotation_details,
-        })
+        group = self.env['purchase.request.rfq'].create({'request_id': request.id})
         orders = self.env['purchase.order']
         for index, partner in enumerate(self.partner_ids, 1):
             vals = request._prepare_rfq_vals(partner)
@@ -65,6 +59,11 @@ class PurchaseRequestMakeRfq(models.TransientModel):
                 'rfq_group_id': group.id,
                 'name': f"{group.name}-{index}",
                 'date_order': self.deadline,
+                'rfq_subject': self.subject,
+                'rfq_validity_days': self.validity_days,
+                'rfq_quotation_details': self.quotation_details,
+                'rfq_project_id': request.project_id.id,
+                'rfq_location_id': request.location_id.id,
             })
             orders |= self.env['purchase.order'].create(vals)
         request.state = 'rfq_created'

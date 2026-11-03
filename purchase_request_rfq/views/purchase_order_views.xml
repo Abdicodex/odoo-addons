@@ -6,8 +6,29 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <field name="partner_ref" position="after">
+                <field name="rfq_subject" readonly="state in ('cancel', 'purchase')"/>
+                <field name="rfq_project_id" options="{'no_create': True}"
+                       readonly="state in ('cancel', 'purchase')"/>
+                <field name="rfq_location_id" options="{'no_create': True}"
+                       readonly="state in ('cancel', 'purchase')"/>
                 <field name="purchase_request_id" invisible="not purchase_request_id"/>
+                <field name="rfq_group_id" invisible="not rfq_group_id"/>
             </field>
+            <xpath expr="//label[@for='date_order']" position="attributes">
+                <attribute name="string">Submission Deadline</attribute>
+            </xpath>
+            <xpath expr="//page[@name='products']" position="after">
+                <page string="RFQ Details" name="rfq_details">
+                    <group>
+                        <field name="rfq_validity_days" readonly="state in ('cancel', 'purchase')"/>
+                    </group>
+                    <group string="Quotation Details to Include">
+                        <field name="rfq_quotation_details" nolabel="1"
+                               readonly="state in ('cancel', 'purchase')"
+                               placeholder="One item per line; printed as bullet points on the Request for Quotation."/>
+                    </group>
+                </page>
+            </xpath>
         </field>
     </record>
 </odoo>
