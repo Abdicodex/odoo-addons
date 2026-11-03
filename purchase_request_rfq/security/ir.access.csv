@@ -10,3 +10,6 @@ purchase_request_line_signer_rule,Requisition Item Approver or 2nd Signatory,pur
 purchase_request_line_manager_rule,Requisition Item Manager,purchase.request.line,group_purchase_request_manager,crud,
 purchase_request_line_buyer_rule,Requisition Item Buyer,purchase.request.line,purchase.group_purchase_user,crud,
 purchase_request_line_comp_rule,Requisition Item multi-company,purchase.request.line,,crud,"[('company_id', 'in', company_ids)]"
+purchase_request_reject_wizard,Requisition Reject wizard,purchase.request.reject,base.group_user,crud,
+purchase_request_make_rfq_wizard,Requisition Create RFQ wizard,purchase.request.make.rfq,purchase.group_purchase_user,crud,
+purchase_request_make_rfq_line_wizard,Requisition Create RFQ wizard line,purchase.request.make.rfq.line,purchase.group_purchase_user,crud,
