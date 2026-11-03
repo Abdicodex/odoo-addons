@@ -305,10 +305,16 @@ class PurchaseRequest(models.Model):
         planned = fields.Datetime.to_datetime(self.date_required) or fields.Datetime.now()
         lines = []
         for line in self.line_ids:
-            uom = line.product_uom_id or line.product_id.uom_id
+            product = line._get_rfq_product()
+            if not product:
+                raise UserError(_(
+                    "No product is available for item %s. Pick one, link a product to its "
+                    "budget category, or restore the generic service product.",
+                    line.item_no))
+            uom = line.product_uom_id or product.uom_id
             line_vals = {
-                'product_id': line.product_id.id,
-                'name': line.description or line.product_id.display_name,
+                'product_id': product.id,
+                'name': line._get_rfq_description(),
                 # quantity x frequency, so quantity x unit price matches the requisition amount
                 'product_qty': line.product_qty * line.frequency,
                 uom_field: uom.id,

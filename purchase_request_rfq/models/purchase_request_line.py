@@ -28,6 +28,31 @@ class PurchaseRequestLine(models.Model):
         'uom.uom', string='Unit of Measure', compute='_compute_product_uom_id',
         store=True, readonly=False)
 
+    def _get_rfq_product(self):
+        """Product for this item's RFQ line: its own, else its budget category's,
+        else the generic service product."""
+        self.ensure_one()
+        return (
+            self.product_id
+            or self.request_id.budget_id.purchase_product_id
+            or self.env.ref('purchase_request_rfq.product_generic_service',
+                            raise_if_not_found=False)
+            or self.env['product.product']
+        )
+
+    def _get_rfq_description(self):
+        """Requisition text, with the unit and frequency so the vendor sees the breakdown."""
+        self.ensure_one()
+        text = self.description or self.product_id.display_name or ''
+        unit = (self.unit or '').strip()
+        if self.frequency != 1:
+            detail = f"{self.product_qty:g} {unit} x {self.frequency:g}"
+        elif unit and unit.lower() != 'unit':
+            detail = f"{self.product_qty:g} {unit}"
+        else:
+            detail = ''
+        return f"{text} ({' '.join(detail.split())})" if detail else text
+
     @api.depends('request_id.line_ids', 'sequence')
     def _compute_item_no(self):
         numbering = {}

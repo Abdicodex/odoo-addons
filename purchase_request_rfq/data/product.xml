@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Used on RFQ lines when a requisition item has no product of its own
+         and its budget category has none either (training, services, ...). -->
+    <record id="product_generic_service" model="product.product">
+        <field name="name">Requisitioned Item / Service</field>
+        <field name="default_code">REQ-SERVICE</field>
+        <field name="type">service</field>
+        <field name="purchase_ok" eval="True"/>
+        <field name="sale_ok" eval="False"/>
+    </record>
+</odoo>

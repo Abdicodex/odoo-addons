@@ -17,7 +17,7 @@
                         <field name="item_no" string="Item #"/>
                         <field name="description"/>
                         <field name="quantity"/>
-                        <field name="product_id" required="1" options="{'no_create': True}"/>
+                        <field name="product_id" placeholder="Default product" options="{'no_create': True}"/>
                     </list>
                 </field>
                 <footer>
