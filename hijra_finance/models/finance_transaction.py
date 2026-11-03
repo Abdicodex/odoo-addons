@@ -110,12 +110,15 @@ class FinanceTransaction(models.Model):
     # ------------------------------------------------------------------
     # ORM
     # ------------------------------------------------------------------
-    @api.model_create_multi
-    def create(self, vals_list):
-        for vals in vals_list:
-            if vals.get('name', 'New') == 'New':
-                vals['name'] = self.env['ir.sequence'].next_by_code('finance.transaction') or _('New')
-        return super().create(vals_list)
+    def _assign_number(self):
+        """The voucher number is given when the transaction leaves draft, because its prefix
+        depends on the vendor: SO-VPV for a payment to a vendor, SO-CPV for everything else."""
+        for rec in self:
+            if rec.name and rec.name != 'New':
+                continue
+            code = 'finance.transaction.vendor' if (
+                rec.transaction_type == 'expense' and rec.partner_id) else 'finance.transaction'
+            rec.name = self.env['ir.sequence'].next_by_code(code) or _('New')
 
     @api.ondelete(at_uninstall=False)
     def _unlink_except_processed(self):
@@ -201,6 +204,7 @@ class FinanceTransaction(models.Model):
             if rec.state != 'draft':
                 raise UserError(_("Only draft transactions can be sent for approval."))
             rec._get_split_lines()  # makes sure an account is set
+            rec._assign_number()
             rec.state = 'to_approve'
             rec.message_post(body=_("Sent for approval."))
             if rec.approver_id:
@@ -240,6 +244,7 @@ class FinanceTransaction(models.Model):
         for rec in self:
             if rec.state not in ('draft', 'to_approve', 'approved'):
                 raise UserError(_("%s is already posted or cancelled.", rec.name))
+            rec._assign_number()
             move = rec.env['account.move'].sudo().with_company(rec.company_id).create(
                 rec._prepare_move_vals())
             move.action_post()
@@ -308,7 +313,7 @@ class FinanceTransaction(models.Model):
 
         return {
             'title': _('Payment Voucher') if self.transaction_type == 'expense' else _('Receipt Voucher'),
-            'name': self.name or '',
+            'name': self.name if self.name and self.name != 'New' else _('DRAFT'),
             'date': self.date,
             'logo': [value for value in (company.logo, getattr(company, 'logo_web', False)) if value],
             'for': self.description or '',

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The bank and cash cards of the accounting dashboard: the "New" column of the card menu
+         creates our transactions instead of customer and vendor payments. -->
+    <record id="account_journal_dashboard_kanban_view" model="ir.ui.view">
+        <field name="name">account.journal.dashboard.kanban.hijra.finance</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.account_journal_dashboard_kanban_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='bank_customer_payment']/a" position="replace">
+                <a role="menuitem" type="object" name="finance_action_new_income">Income</a>
+            </xpath>
+            <xpath expr="//a[@name='create_supplier_payment']" position="replace">
+                <a role="menuitem" type="object" name="finance_action_new_expense">Expense</a>
+            </xpath>
+        </field>
+    </record>
+
+    <!-- an NGO does not sell: no customer invoice card on the dashboard -->
+    <record id="account.open_account_journal_dashboard_kanban" model="ir.actions.act_window">
+        <field name="domain">[('type', '!=', 'sale')]</field>
+    </record>
+</odoo>
