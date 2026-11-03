@@ -131,7 +131,8 @@ class PurchaseRequestRfq(models.Model):
     def action_print(self):
         """Print the RFQ document for every vendor."""
         self.ensure_one()
-        return self.env.ref('purchase.report_purchase_quotation').report_action(self.order_ids)
+        report = self.env.ref('purchase.report_purchase_quotation')
+        return report.with_context(discard_logo_check=True).report_action(self.order_ids)
 
     def _prepare_pdf_data(self, order):
         """Plain values for the printed Request for Quotation to one vendor."""
@@ -175,7 +176,7 @@ class PurchaseRequestRfq(models.Model):
             'info_rows': [
                 ('RFQ No', order.name),
                 ('Requisition Ref', request.name),
-                ('Project Name', project.name or project.code or ''),
+                ('Project Name', project.code or project.name or ''),
                 ('Delivery Location', request.location_id.name or ''),
                 ('RFQ Date', rfq_pdf.fmt_long_date(local(order.create_date))),
                 ('Submission Deadline', rfq_pdf.fmt_short_date(deadline)),

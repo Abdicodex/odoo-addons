@@ -13,7 +13,7 @@
               sequence="10"/>
 
     <menuitem id="menu_purchase_request_rfq"
-              name="RFQs"
+              name="Bid Analysis"
               parent="menu_purchase_request_root"
               action="purchase_request_rfq_action"
               sequence="15"
