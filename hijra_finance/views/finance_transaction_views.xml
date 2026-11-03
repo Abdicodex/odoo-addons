@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="finance_transaction_view_list" model="ir.ui.view">
+        <field name="name">finance.transaction.list</field>
+        <field name="model">finance.transaction</field>
+        <field name="arch" type="xml">
+            <list string="Transactions" decoration-info="state in ('to_approve', 'approved')"
+                  decoration-muted="state == 'cancelled'">
+                <field name="name"/>
+                <field name="date" widget="date"/>
+                <field name="transaction_type" widget="badge"
+                       decoration-danger="transaction_type == 'expense'"
+                       decoration-success="transaction_type == 'income'"/>
+                <field name="partner_id" optional="show"/>
+                <field name="description"/>
+                <field name="project_id" optional="show"/>
+                <field name="budget_id" optional="hide"/>
+                <field name="fund_id" optional="hide"/>
+                <field name="account_id" optional="show"/>
+                <field name="journal_id" string="Bank / Cash" optional="show"/>
+                <field name="cheque_ref" optional="hide"/>
+                <field name="company_id" groups="base.group_multi_company" optional="hide"/>
+                <field name="amount" sum="Total" widget="monetary"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="state" widget="badge"
+                       decoration-info="state in ('to_approve', 'approved')"
+                       decoration-success="state == 'posted'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_form" model="ir.ui.view">
+        <field name="name">finance.transaction.form</field>
+        <field name="model">finance.transaction</field>
+        <field name="arch" type="xml">
+            <form string="Transaction">
+                <header>
+                    <button name="action_submit" string="Request Approval" type="object"
+                            class="oe_highlight" invisible="state != 'draft'"/>
+                    <button name="action_approve" string="Approve" type="object"
+                            class="oe_highlight" invisible="state != 'to_approve'"
+                            groups="hijra_finance.group_finance_approver"/>
+                    <button name="action_post" string="Post" type="object"
+                            class="oe_highlight" invisible="state not in ('draft', 'to_approve', 'approved')"
+                            groups="hijra_finance.group_finance_manager"
+                            confirm="Post this transaction to the books?"/>
+                    <button name="%(hijra_finance.action_report_transaction_voucher)d"
+                            string="Print Voucher" type="action" groups="base.group_user"/>
+                    <button name="action_return_draft" string="Set to Draft" type="object"
+                            invisible="state not in ('to_approve', 'approved', 'cancelled')"
+                            groups="hijra_finance.group_finance_approver"/>
+                    <button name="action_cancel" string="Cancel" type="object"
+                            invisible="state in ('cancelled')"
+                            groups="hijra_finance.group_finance_manager"
+                            confirm="Cancel this transaction? Its journal entry is cancelled too."/>
+                    <field name="state" widget="statusbar"
+                           statusbar_visible="draft,to_approve,approved,posted"/>
+                </header>
+                <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="action_view_move" type="object" class="oe_stat_button"
+                                icon="fa-book" invisible="not move_id"
+                                groups="account.group_account_user">
+                            <div class="o_stat_info">
+                                <span class="o_stat_text">Journal Entry</span>
+                            </div>
+                        </button>
+                    </div>
+                    <div class="oe_title">
+                        <h1><field name="name" readonly="1"/></h1>
+                    </div>
+                    <group>
+                        <group name="main">
+                            <field name="transaction_type" widget="radio" options="{'horizontal': true}"
+                                   readonly="state != 'draft'"/>
+                            <field name="date" widget="date" readonly="state != 'draft'"/>
+                            <field name="journal_id" string="Paid Through" invisible="transaction_type != 'expense'"
+                                   readonly="state != 'draft'" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="journal_id" string="Received Into" invisible="transaction_type != 'income'"
+                                   readonly="state != 'draft'" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="account_id" string="Expense Account" invisible="transaction_type != 'expense'"
+                                   readonly="state != 'draft'" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="account_id" string="Income Account" invisible="transaction_type != 'income'"
+                                   readonly="state != 'draft'" options="{'no_create': True, 'no_open': True}"/>
+                            <label for="amount"/>
+                            <div class="o_row">
+                                <field name="amount" readonly="state != 'draft'"/>
+                                <field name="currency_id" groups="base.group_multi_currency"
+                                       readonly="state != 'draft'"/>
+                            </div>
+                            <field name="partner_id" string="Vendor" invisible="transaction_type != 'expense'"
+                                   readonly="state != 'draft'"/>
+                            <field name="partner_id" string="Customer" invisible="transaction_type != 'income'"
+                                   readonly="state != 'draft'"/>
+                            <field name="description" placeholder="What is this payment for?"
+                                   readonly="state != 'draft'"/>
+                            <field name="cheque_ref" readonly="state != 'draft'"/>
+                        </group>
+                        <group name="codes">
+                            <field name="project_id" readonly="state != 'draft'"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="budget_id" readonly="state != 'draft' or not project_id"
+                                   placeholder="Select the category..."
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="fund_id" readonly="state != 'draft'"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="location_id" readonly="state != 'draft'"
+                                   options="{'no_create': True, 'no_open': True}"/>
+                            <field name="approver_id" widget="many2one_avatar_user"
+                                   readonly="state != 'draft'" options="{'no_create': True}"/>
+                            <field name="company_id" groups="base.group_multi_company"
+                                   readonly="state != 'draft'"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Reference / Notes" name="notes">
+                            <field name="notes" nolabel="1" readonly="state != 'draft'"
+                                   placeholder="Reference, remarks, supporting details..."/>
+                        </page>
+                        <page string="Split Lines" name="split">
+                            <p class="text-muted">
+                                Only when the amount goes to several accounts or projects. The lines must add up
+                                to the amount. Leave empty to use the account and codes above.
+                            </p>
+                            <field name="line_ids" nolabel="1" readonly="state != 'draft'">
+                                <list editable="bottom">
+                                    <field name="sequence" widget="handle"/>
+                                    <field name="company_id" column_invisible="True"/>
+                                    <field name="currency_id" column_invisible="True"/>
+                                    <field name="description" placeholder="Same as above"/>
+                                    <field name="account_id" placeholder="Same as above"
+                                           options="{'no_create': True}"/>
+                                    <field name="project_id" optional="show" options="{'no_create': True}"/>
+                                    <field name="budget_id" optional="show" options="{'no_create': True}"/>
+                                    <field name="fund_id" optional="hide" options="{'no_create': True}"/>
+                                    <field name="location_id" optional="hide" options="{'no_create': True}"/>
+                                    <field name="amount" sum="Total"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Approval" name="approval">
+                            <group>
+                                <group>
+                                    <field name="create_uid" string="Prepared By" readonly="1"/>
+                                    <field name="approved_by_id"/>
+                                    <field name="approved_date"/>
+                                </group>
+                                <group>
+                                    <field name="posted_by_id"/>
+                                    <field name="posted_date"/>
+                                </group>
+                            </group>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_search" model="ir.ui.view">
+        <field name="name">finance.transaction.search</field>
+        <field name="model">finance.transaction</field>
+        <field name="arch" type="xml">
+            <search string="Transactions">
+                <field name="name" string="Transaction"
+                       filter_domain="['|', '|', ('name', 'ilike', self), ('description', 'ilike', self), ('cheque_ref', 'ilike', self)]"/>
+                <field name="partner_id"/>
+                <field name="project_id"/>
+                <field name="fund_id"/>
+                <field name="account_id"/>
+                <field name="journal_id"/>
+                <filter name="my" string="My Transactions" domain="[('create_uid', '=', uid)]"/>
+                <separator/>
+                <filter name="expense" string="Expenses" domain="[('transaction_type', '=', 'expense')]"/>
+                <filter name="income" string="Income" domain="[('transaction_type', '=', 'income')]"/>
+                <separator/>
+                <filter name="draft" string="Draft" domain="[('state', '=', 'draft')]"/>
+                <filter name="to_approve" string="To Approve" domain="[('state', '=', 'to_approve')]"/>
+                <filter name="approved" string="Approved" domain="[('state', '=', 'approved')]"/>
+                <filter name="posted" string="Posted" domain="[('state', '=', 'posted')]"/>
+                <separator/>
+                <filter name="date" string="Date" date="date"/>
+                <group>
+                    <filter name="group_type" string="Type" context="{'group_by': 'transaction_type'}"/>
+                    <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                    <filter name="group_fund" string="Fund" context="{'group_by': 'fund_id'}"/>
+                    <filter name="group_account" string="Account" context="{'group_by': 'account_id'}"/>
+                    <filter name="group_partner" string="Vendor / Customer" context="{'group_by': 'partner_id'}"/>
+                    <filter name="group_journal" string="Bank / Cash" context="{'group_by': 'journal_id'}"/>
+                    <filter name="group_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_month" string="Month" context="{'group_by': 'date:month'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_pivot" model="ir.ui.view">
+        <field name="name">finance.transaction.pivot</field>
+        <field name="model">finance.transaction</field>
+        <field name="arch" type="xml">
+            <pivot string="Transactions">
+                <field name="project_id" type="row"/>
+                <field name="transaction_type" type="col"/>
+                <field name="amount" type="measure"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="finance_transaction_action" model="ir.actions.act_window">
+        <field name="name">Transactions</field>
+        <field name="res_model">finance.transaction</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="search_view_id" ref="finance_transaction_view_search"/>
+    </record>
+
+    <record id="finance_transaction_expense_action" model="ir.actions.act_window">
+        <field name="name">Expenses</field>
+        <field name="res_model">finance.transaction</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="domain">[('transaction_type', '=', 'expense')]</field>
+        <field name="context">{'default_transaction_type': 'expense'}</field>
+        <field name="search_view_id" ref="finance_transaction_view_search"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Record your first expense</p>
+            <p>Date, amount, what it was paid through, the expense account, vendor and project.
+               Posting it creates the journal entry for you.</p>
+        </field>
+    </record>
+
+    <record id="finance_transaction_income_action" model="ir.actions.act_window">
+        <field name="name">Income</field>
+        <field name="res_model">finance.transaction</field>
+        <field name="view_mode">list,form,pivot</field>
+        <field name="domain">[('transaction_type', '=', 'income')]</field>
+        <field name="context">{'default_transaction_type': 'income'}</field>
+        <field name="search_view_id" ref="finance_transaction_view_search"/>
+    </record>
+
+    <record id="finance_transaction_approval_action" model="ir.actions.act_window">
+        <field name="name">To Approve</field>
+        <field name="res_model">finance.transaction</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('state', '=', 'to_approve')]</field>
+        <field name="search_view_id" ref="finance_transaction_view_search"/>
+    </record>
+</odoo>

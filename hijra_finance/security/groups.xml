@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_groups_privilege_hijra_finance" model="res.groups.privilege">
+        <field name="name">HIJRA Finance</field>
+        <field name="sequence">45</field>
+        <field name="category_id" ref="base.module_category_administration"/>
+    </record>
+
+    <!-- enters transactions and sends them for approval; sees only their own -->
+    <record id="group_finance_user" model="res.groups">
+        <field name="name">User</field>
+        <field name="sequence">10</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user')), (4, ref('account.group_account_invoice'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_hijra_finance"/>
+    </record>
+
+    <!-- approves transactions; sees all of them -->
+    <record id="group_finance_approver" model="res.groups">
+        <field name="name">Approver</field>
+        <field name="sequence">20</field>
+        <field name="implied_ids" eval="[(4, ref('group_finance_user'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_hijra_finance"/>
+    </record>
+
+    <!-- full control: posts directly, cancels, resets and edits -->
+    <record id="group_finance_manager" model="res.groups">
+        <field name="name">Finance Manager</field>
+        <field name="sequence">30</field>
+        <field name="implied_ids" eval="[(4, ref('group_finance_approver')), (4, ref('account.group_account_user'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_hijra_finance"/>
+        <field name="user_ids" eval="[(4, ref('base.user_root')), (4, ref('base.user_admin'))]"/>
+    </record>
+</odoo>

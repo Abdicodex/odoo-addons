@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_finance_root" name="Finance" sequence="25"
+              groups="group_finance_user"
+              web_icon="hijra_finance,static/description/icon.png"/>
+
+    <menuitem id="menu_finance_transactions" name="Transactions" parent="menu_finance_root"
+              action="finance_transaction_action" sequence="10"/>
+    <menuitem id="menu_finance_expenses" name="Expenses" parent="menu_finance_root"
+              action="finance_transaction_expense_action" sequence="20"/>
+    <menuitem id="menu_finance_income" name="Income" parent="menu_finance_root"
+              action="finance_transaction_income_action" sequence="30"/>
+    <menuitem id="menu_finance_approvals" name="To Approve" parent="menu_finance_root"
+              action="finance_transaction_approval_action" sequence="40"
+              groups="group_finance_approver"/>
+</odoo>
