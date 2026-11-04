@@ -1,3 +1,5 @@
+import base64
+
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
@@ -7,6 +9,14 @@ DOCUMENTS = [
     ('statement', 'Committee Statement'),
     ('minutes', 'Minutes'),
 ]
+
+
+REPORT_NAMES = {
+    'declaration': 'hijra_procurement.report_declaration',
+    'analysis': 'hijra_procurement.report_bid_analysis',
+    'statement': 'hijra_procurement.report_committee_statement',
+    'minutes': 'hijra_procurement.report_committee_minutes',
+}
 
 
 class ProcurementSignoff(models.Model):
@@ -24,6 +34,7 @@ class ProcurementSignoff(models.Model):
     signed_date = fields.Datetime(string='Signed On', readonly=True, copy=False)
     can_sign = fields.Boolean(compute='_compute_can_sign')
     member_name = fields.Char(string='Member', compute='_compute_member_name')
+    preview_pdf = fields.Binary(compute='_compute_preview_pdf')
 
     _once = models.Constraint(
         'UNIQUE(rfq_id, document, user_id)', 'A member signs each document once.')
@@ -32,6 +43,18 @@ class ProcurementSignoff(models.Model):
     def _compute_member_name(self):
         for rec in self:
             rec.member_name = rec.member_id.full_name or rec.user_id.name
+
+    @api.depends('document', 'rfq_id')
+    def _compute_preview_pdf(self):
+        """The document of this line, shown when the line is opened."""
+        Report = self.env['ir.actions.report'].sudo()
+        for rec in self:
+            rfq = rec.rfq_id.sudo()
+            if not rfq or not rec.document:
+                rec.preview_pdf = False
+                continue
+            pdf, _kind = Report._render_qweb_pdf(REPORT_NAMES[rec.document], [rfq.id])
+            rec.preview_pdf = base64.b64encode(pdf).decode()
 
     @api.depends('signed_date', 'user_id', 'rfq_id.committee_state')
     @api.depends_context('uid')
@@ -69,4 +92,4 @@ class ProcurementSignoff(models.Model):
                 raise UserError(_("Every member must sign the declaration first."))
         self.sudo().signed_date = fields.Datetime.now()
         rfq.sudo()._message_signed(self)
-        return True
+        return {'type': 'ir.actions.client', 'tag': 'soft_reload'}

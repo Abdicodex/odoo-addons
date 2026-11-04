@@ -79,8 +79,7 @@
                     <separator string="Signatures"/>
                     <field name="signoff_ids" nolabel="1">
                         <list create="0" delete="0" edit="0" decoration-success="signed_date"
-                              default_order="document, sequence"
-                              action="action_open_sign" type="object">
+                              default_order="document, sequence">
                             <field name="document"/>
                             <field name="member_name"/>
                             <field name="signed_date"/>
@@ -88,6 +87,28 @@
                             <button name="action_open_sign" type="object" string="Review and Sign"
                                     icon="fa-pencil" class="text-primary" invisible="not can_sign"/>
                         </list>
+                        <!-- clicking a line shows its document; the member named on it signs from here -->
+                        <form string="Signature">
+                            <field name="can_sign" invisible="1"/>
+                            <field name="document" invisible="1"/>
+                            <div class="alert alert-info mb-2" role="alert" invisible="not can_sign">
+                                Read the document below, then press Sign.
+                            </div>
+                            <div class="mb-2">
+                                <strong><field name="member_name" readonly="1" class="d-inline"/></strong>
+                                <span class="text-muted"> - </span>
+                                <field name="signed_date" readonly="1" class="d-inline"/>
+                            </div>
+                            <field name="preview_pdf" widget="pdf_viewer" nolabel="1" readonly="1"/>
+                            <footer>
+                                <button name="action_sign" type="object" string="Sign" class="btn-primary"
+                                        invisible="not can_sign"
+                                        confirm="I have read this document and agree to sign it."/>
+                                <button name="action_open_sign" type="object" string="Other Documents"
+                                        class="btn-secondary"/>
+                                <button string="Close" special="cancel"/>
+                            </footer>
+                        </form>
                     </field>
                     <p class="text-muted">
                         Each member signs the declaration first; the bid analysis, the statement and the

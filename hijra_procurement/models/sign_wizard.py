@@ -3,14 +3,8 @@ import base64
 from odoo import _, api, fields, models
 from odoo.exceptions import UserError
 
-from .signoff import DOCUMENTS
+from .signoff import DOCUMENTS, REPORT_NAMES
 
-REPORT_NAMES = {
-    'declaration': 'hijra_procurement.report_declaration',
-    'analysis': 'hijra_procurement.report_bid_analysis',
-    'statement': 'hijra_procurement.report_committee_statement',
-    'minutes': 'hijra_procurement.report_committee_minutes',
-}
 REQUISITION_REPORT = 'purchase_request_rfq.report_purchase_request'
 PREVIEWS = DOCUMENTS + [('requisition', 'Requisition')]
 
