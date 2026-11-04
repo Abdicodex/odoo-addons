@@ -11,10 +11,10 @@ double-entry journal entry, so nobody has to think in debits and credits.
 * One line per transaction in the list, with filters, grouping and pivot
 * Printable payment voucher (HIJRA template) with the signatures of the people who signed
     """,
-    'version': '20.0.1.0.0',
+    'version': '20.0.1.1.0',
     'category': 'Accounting',
     'license': 'LGPL-3',
-    'depends': ['account', 'mail', 'hr', 'hijra_base', 'om_account_reconcile'],
+    'depends': ['account', 'mail', 'hr', 'project', 'hijra_base', 'om_account_reconcile'],
     'data': [
         'security/groups.xml',
         'security/ir.access.csv',

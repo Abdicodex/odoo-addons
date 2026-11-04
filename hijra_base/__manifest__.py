@@ -1,19 +1,21 @@
 {
     'name': 'HIJRA Base',
-    'summary': 'Shared HIJRA codes: projects, budget codes, funds and locations',
+    'summary': 'Shared HIJRA setup: funds, locations, roles and budget codes on the Project app',
     'description': """
-Global lists used across HIJRA modules (requisitions, and later budgets,
-payments and reports): projects, budget codes per project, funds and
-locations, plus each employee's signature image.
+Shared HIJRA setup used across modules: funds and locations, the roles of the
+procurement and finance flows, budget codes on the Project app's tasks (a task is a
+budget line of its project), plus each employee's signature image.
     """,
-    'version': '20.0.1.1.0',
+    'version': '20.0.2.0.0',
     'category': 'Administration',
     'license': 'LGPL-3',
-    'depends': ['base', 'hr'],
+    'depends': ['base', 'hr', 'project'],
     'data': [
         'security/groups.xml',
         'security/ir.access.csv',
+        'data/roles.xml',
         'views/codes_views.xml',
+        'views/project_views.xml',
         'views/hr_views.xml',
     ],
     'application': False,

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="project_task_view_form_rfq_product" model="ir.ui.view">
+        <field name="name">project.task.form.rfq.product</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="hijra_base.project_task_view_form_budget_code"/>
+        <field name="arch" type="xml">
+            <field name="budget_code" position="after">
+                <field name="purchase_product_id" options="{'no_create': True}"
+                       invisible="not budget_code"/>
+            </field>
+        </field>
+    </record>
+</odoo>

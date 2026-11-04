@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- the budget code of a budget line (a task) -->
+    <record id="project_task_view_form_budget_code" model="ir.ui.view">
+        <field name="name">project.task.form.budget.code</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='project_id']" position="after">
+                <field name="budget_code" placeholder="e.g. BG260-00-8116"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="hijra_role_view_list" model="ir.ui.view">
+        <field name="name">hijra.role.list</field>
+        <field name="model">hijra.role</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="code" readonly="id"/>
+                <field name="user_ids" widget="many2many_tags" options="{'no_create': True}"/>
+            </list>
+        </field>
+    </record>
+    <record id="hijra_role_action" model="ir.actions.act_window">
+        <field name="name">Roles</field>
+        <field name="res_model">hijra.role</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>

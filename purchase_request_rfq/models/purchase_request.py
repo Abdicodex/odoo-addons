@@ -44,12 +44,12 @@ class PurchaseRequest(models.Model):
     department_id = fields.Many2one(
         'hr.department', string='Department', compute='_compute_requester_details', store=True)
     location_id = fields.Many2one('hijra.location', string='Location', tracking=True)
-    project_id = fields.Many2one('hijra.project', string='Project', tracking=True)
+    project_id = fields.Many2one('project.project', string='Project', tracking=True)
     # The user picks the category; the budget code follows from it.
     budget_id = fields.Many2one(
-        'hijra.budget', string='Category', tracking=True,
-        domain="[('project_id', '=', project_id)]")
-    budget_code = fields.Char(string='Budget', related='budget_id.code')
+        'project.task', string='Category', tracking=True,
+        domain="[('project_id', '=', project_id), ('budget_code', '!=', False)]")
+    budget_code = fields.Char(string='Budget', related='budget_id.budget_code')
     fund_id = fields.Many2one('hijra.fund', string='Fund', tracking=True)
     verifier_id = fields.Many2one('res.users', string='Verifier', tracking=True)
 
@@ -148,7 +148,7 @@ class PurchaseRequest(models.Model):
             'department': self.department_id.name or '',
             'location': self.location_id.name or '',
             'email': self.requester_email or '',
-            'project': self.project_id.code or '',
+            'project': self.project_id.name or '',
             'budget': self.budget_code or '',
             'fund': self.fund_id.code or '',
             'category': self.budget_id.name or '',

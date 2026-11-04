@@ -2,6 +2,8 @@ from odoo import fields, models
 
 
 class HijraProject(models.Model):
+    """Legacy: projects now live in the Project app (see migrations/20.0.2.0.0). Kept, unused,
+    so the old data stays available until the move has been checked."""
     _name = 'hijra.project'
     _description = 'HIJRA Project'
     _order = 'code'
@@ -17,6 +19,7 @@ class HijraProject(models.Model):
 
 
 class HijraBudget(models.Model):
+    """Legacy: budget codes are now tasks of the Project app (see HijraProject)."""
     _name = 'hijra.budget'
     _description = 'HIJRA Budget Code'
     _order = 'project_id, code'

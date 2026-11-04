@@ -52,9 +52,10 @@ class FinanceTransaction(models.Model):
     cheque_ref = fields.Char(string='Cheque / Reference No', copy=False)
 
     # HIJRA codes (global lists from hijra_base)
-    project_id = fields.Many2one('hijra.project', string='Project', tracking=True)
+    project_id = fields.Many2one('project.project', string='Project', tracking=True)
     budget_id = fields.Many2one(
-        'hijra.budget', string='Budget Line', domain="[('project_id', '=', project_id)]")
+        'project.task', string='Budget Line',
+        domain="[('project_id', '=', project_id), ('budget_code', '!=', False)]")
     fund_id = fields.Many2one('hijra.fund', string='Fund')
     location_id = fields.Many2one('hijra.location', string='Location')
 
@@ -294,9 +295,9 @@ class FinanceTransaction(models.Model):
         rows = []
         for item in self._get_split_lines():
             rows.append({
-                'project': item['project'].code or '',
+                'project': item['project'].name or '',
                 'code': '-'.join(filter(None, [
-                    item['fund'].code, item['budget'].code, item['location'].code])),
+                    item['fund'].code, item['budget'].budget_code, item['location'].code])),
                 'description': item['description'] or '',
                 'amount': item['amount'] * sign,
                 'currency': currency.name or '',
@@ -342,9 +343,10 @@ class FinanceTransactionLine(models.Model):
     account_id = fields.Many2one(
         'account.account', string='Account', domain="[('account_type', '!=', 'off_balance')]")
     amount = fields.Monetary(required=True, currency_field='currency_id')
-    project_id = fields.Many2one('hijra.project', string='Project')
+    project_id = fields.Many2one('project.project', string='Project')
     budget_id = fields.Many2one(
-        'hijra.budget', string='Budget Line', domain="[('project_id', '=', project_id)]")
+        'project.task', string='Budget Line',
+        domain="[('project_id', '=', project_id), ('budget_code', '!=', False)]")
     fund_id = fields.Many2one('hijra.fund', string='Fund')
     location_id = fields.Many2one('hijra.location', string='Location')
 

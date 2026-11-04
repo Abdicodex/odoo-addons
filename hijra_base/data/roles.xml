@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="role_procurement_officer" model="hijra.role">
+        <field name="name">Procurement &amp; Logistics Officer</field>
+        <field name="code">procurement_officer</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="role_finance_officer" model="hijra.role">
+        <field name="name">Finance Officer</field>
+        <field name="code">finance_officer</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="role_fa_officer" model="hijra.role">
+        <field name="name">Finance &amp; Administration Officer</field>
+        <field name="code">fa_officer</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="role_admin_hr_officer" model="hijra.role">
+        <field name="name">Admin &amp; HR Officer</field>
+        <field name="code">admin_hr_officer</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="role_programme_director" model="hijra.role">
+        <field name="name">Programme Director</field>
+        <field name="code">programme_director</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="role_officer_in_charge" model="hijra.role">
+        <field name="name">Officer-in-Charge</field>
+        <field name="code">officer_in_charge</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="role_admin_assistant" model="hijra.role">
+        <field name="name">Administrative Assistant</field>
+        <field name="code">admin_assistant</field>
+        <field name="sequence">70</field>
+    </record>
+</odoo>

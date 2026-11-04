@@ -18,7 +18,7 @@ class PurchaseOrder(models.Model):
     # "Order Deadline", date_order).
     rfq_subject = fields.Char(
         string='Subject', help="What the RFQ is for, printed under 'Subject' on the document.")
-    rfq_project_id = fields.Many2one('hijra.project', string='Project')
+    rfq_project_id = fields.Many2one('project.project', string='Project')
     rfq_location_id = fields.Many2one('hijra.location', string='Delivery Location')
     rfq_validity_days = fields.Integer(
         string='Quotation Validity (days)', default=90,
@@ -64,7 +64,7 @@ class PurchaseOrder(models.Model):
         if request:
             rows.append(('Requisition Ref', request.name))
         rows += [
-            ('Project Name', project.code or project.name or ''),
+            ('Project Name', project.name or ''),
             ('Delivery Location', self.rfq_location_id.sudo().name or ''),
             ('RFQ Date', rfq_pdf.fmt_long_date(local(self.create_date))),
             ('Submission Deadline', rfq_pdf.fmt_short_date(deadline)),
