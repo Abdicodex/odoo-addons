@@ -43,6 +43,4 @@
               action="hijra_fund_action" sequence="30"/>
     <menuitem id="menu_hijra_location" name="Locations" parent="menu_hijra_codes_root"
               action="hijra_location_action" sequence="40"/>
-    <menuitem id="menu_hijra_role" name="Roles" parent="menu_hijra_codes_root"
-              action="hijra_role_action" sequence="50"/>
 </odoo>

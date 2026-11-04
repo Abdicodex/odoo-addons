@@ -29,4 +29,7 @@
         <field name="res_model">hijra.role</field>
         <field name="view_mode">list</field>
     </record>
+
+    <menuitem id="menu_hijra_role" name="Roles" parent="menu_hijra_codes_root"
+              action="hijra_role_action" sequence="50"/>
 </odoo>
