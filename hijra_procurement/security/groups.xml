@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_groups_privilege_procurement_committee" model="res.groups.privilege">
+        <field name="name">Procurement Committee</field>
+        <field name="sequence">12</field>
+        <field name="category_id" ref="base.module_category_supply_chain"/>
+    </record>
+
+    <!-- Added automatically to the people on the committee: they read the RFQs and sign. -->
+    <record id="group_procurement_committee" model="res.groups">
+        <field name="name">Committee Member</field>
+        <field name="sequence">10</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_procurement_committee"/>
+    </record>
+</odoo>

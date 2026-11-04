@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- The HIJRA Procurement Manual, section 2.2. The manual does not say when the committee
+         is needed; the committee reviews everything from 500 up, as the samples show. -->
+    <record id="band_small" model="procurement.band">
+        <field name="name">Small purchase (under 500)</field>
+        <field name="min_amount">0</field>
+        <field name="method">RFQ</field>
+        <field name="min_invitations">1</field>
+        <field name="min_quotes">1</field>
+        <field name="committee_required" eval="False"/>
+    </record>
+    <record id="band_rfq" model="procurement.band">
+        <field name="name">RFQ (500 to 5,000)</field>
+        <field name="min_amount">500</field>
+        <field name="method">RFQ</field>
+        <field name="min_invitations">3</field>
+        <field name="min_quotes">3</field>
+        <field name="committee_required" eval="True"/>
+    </record>
+    <!-- "above 5,000": the band starts just over 5,000 -->
+    <record id="band_tender" model="procurement.band">
+        <field name="name">ITB / RFP (above 5,000)</field>
+        <field name="min_amount">5000.01</field>
+        <field name="method">ITB or RFP</field>
+        <field name="min_invitations">8</field>
+        <field name="min_quotes">3</field>
+        <field name="committee_required" eval="True"/>
+        <field name="observer_required" eval="True"/>
+        <field name="award_statement_required" eval="True"/>
+    </record>
+    <record id="band_large" model="procurement.band">
+        <field name="name">ITB / RFP (100,000 and above)</field>
+        <field name="min_amount">100000</field>
+        <field name="method">ITB or RFP</field>
+        <field name="min_invitations">20</field>
+        <field name="min_quotes">3</field>
+        <field name="committee_required" eval="True"/>
+        <field name="observer_required" eval="True"/>
+        <field name="award_statement_required" eval="True"/>
+    </record>
+</odoo>

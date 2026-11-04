@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_procurement_root" name="Procurement Committee" sequence="26"
+              groups="group_procurement_committee,purchase.group_purchase_user"/>
+
+    <menuitem id="menu_procurement_sessions" name="Committee Sessions" parent="menu_procurement_root"
+              action="purchase_request_rfq_committee_action" sequence="10"/>
+
+    <menuitem id="menu_procurement_config" name="Configuration" parent="menu_procurement_root"
+              sequence="90" groups="purchase.group_purchase_manager"/>
+    <menuitem id="menu_procurement_committee" name="Committee" parent="menu_procurement_config"
+              action="procurement_committee_action" sequence="10"/>
+    <menuitem id="menu_procurement_bands" name="Procurement Bands" parent="menu_procurement_config"
+              action="procurement_band_action" sequence="20"/>
+</odoo>

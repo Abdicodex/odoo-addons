@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The PDFs are drawn by report/committee_pdf.py (see models/ir_actions_report.py). -->
+    <record id="action_report_declaration" model="ir.actions.report">
+        <field name="name">Declaration of Impartiality</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_procurement.report_declaration</field>
+        <field name="print_report_name">'Declaration - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_bid_analysis" model="ir.actions.report">
+        <field name="name">Summary of Bid Analysis</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_procurement.report_bid_analysis</field>
+        <field name="print_report_name">'Bid Analysis - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_committee_statement" model="ir.actions.report">
+        <field name="name">Committee Statement</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_procurement.report_committee_statement</field>
+        <field name="print_report_name">'Committee Statement - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_committee_minutes" model="ir.actions.report">
+        <field name="name">Committee Minutes</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_procurement.report_committee_minutes</field>
+        <field name="print_report_name">'Minutes - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

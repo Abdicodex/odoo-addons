@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="procurement_band_view_list" model="ir.ui.view">
+        <field name="name">procurement.band.list</field>
+        <field name="model">procurement.band</field>
+        <field name="arch" type="xml">
+            <list editable="bottom">
+                <field name="name"/>
+                <field name="min_amount"/>
+                <field name="method"/>
+                <field name="min_invitations"/>
+                <field name="min_quotes"/>
+                <field name="committee_required"/>
+                <field name="observer_required"/>
+                <field name="award_statement_required"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="procurement_band_action" model="ir.actions.act_window">
+        <field name="name">Procurement Bands</field>
+        <field name="res_model">procurement.band</field>
+        <field name="view_mode">list</field>
+    </record>
+</odoo>
