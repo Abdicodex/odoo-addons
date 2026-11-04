@@ -11,4 +11,17 @@
             </field>
         </field>
     </record>
+
+    <!-- anyone viewing a budget line can raise a requisition from it -->
+    <record id="project_task_view_form_create_requisition" model="ir.ui.view">
+        <field name="name">project.task.form.create.requisition</field>
+        <field name="model">project.task</field>
+        <field name="inherit_id" ref="project.view_task_form2"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header" position="inside">
+                <button name="action_create_requisition" type="object" string="Create Requisition"
+                        invisible="not project_id" groups="base.group_user"/>
+            </xpath>
+        </field>
+    </record>
 </odoo>

@@ -23,9 +23,19 @@ class ProcurementSignWizard(models.TransientModel):
     signoff_id = fields.Many2one('procurement.signoff', required=True, readonly=True, ondelete='cascade')
     rfq_id = fields.Many2one(related='signoff_id.rfq_id')
     document = fields.Selection(related='signoff_id.document')
+    can_sign = fields.Boolean(compute='_compute_can_sign')
     preview_document = fields.Selection(PREVIEWS, string='Viewing', required=True, default='declaration')
     preview_pdf = fields.Binary(compute='_compute_preview_pdf')
     confirmed = fields.Boolean(string="I have read this document and agree to sign it")
+
+    @api.depends('signoff_id.signed_date', 'signoff_id.user_id', 'signoff_id.rfq_id.committee_state')
+    @api.depends_context('uid')
+    def _compute_can_sign(self):
+        for wizard in self:
+            signoff = wizard.signoff_id
+            wizard.can_sign = (
+                not signoff.signed_date and signoff.user_id == self.env.user
+                and signoff.rfq_id.committee_state == 'session')
 
     @api.depends('preview_document', 'signoff_id')
     def _compute_preview_pdf(self):

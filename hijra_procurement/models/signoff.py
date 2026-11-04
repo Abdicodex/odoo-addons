@@ -42,12 +42,8 @@ class ProcurementSignoff(models.Model):
                 and rec.rfq_id.committee_state == 'session')
 
     def action_open_sign(self):
-        """Open the dialog where the member reads the document before signing it."""
+        """Open the dialog that shows the document; the member whose line it is can sign from it."""
         self.ensure_one()
-        if self.signed_date:
-            raise UserError(_("Already signed."))
-        if self.user_id != self.env.user:
-            raise UserError(_("Only %s can sign this.", self.user_id.name))
         wizard = self.env['procurement.sign.wizard'].create(
             {'signoff_id': self.id, 'preview_document': self.document})
         return wizard._reopen()

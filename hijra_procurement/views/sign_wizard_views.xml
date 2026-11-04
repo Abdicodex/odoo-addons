@@ -7,11 +7,16 @@
             <form string="Review and Sign">
                 <field name="rfq_id" invisible="1"/>
                 <field name="document" invisible="1"/>
+                <field name="can_sign" invisible="1"/>
                 <field name="preview_document" invisible="1"/>
-                <div class="alert alert-info mb-2" role="alert">
+                <div class="alert alert-info mb-2" role="alert" invisible="not can_sign">
                     Read the document below, then confirm and sign. You are signing the
                     <strong><field name="document" readonly="1" class="d-inline"/></strong>
                     of <field name="rfq_id" readonly="1" class="d-inline" options="{'no_open': True}"/>.
+                </div>
+                <div class="alert alert-secondary mb-2" role="alert" invisible="can_sign">
+                    Viewing the documents of <field name="rfq_id" readonly="1" class="d-inline"
+                    options="{'no_open': True}"/>. Only the member named on the line can sign it.
                 </div>
                 <div class="mb-2">
                     <span class="me-2 text-muted">View:</span>
@@ -27,14 +32,14 @@
                             class="btn btn-sm btn-secondary me-1"/>
                 </div>
                 <field name="preview_pdf" widget="pdf_viewer" nolabel="1" readonly="1"/>
-                <div class="mt-2">
+                <div class="mt-2" invisible="not can_sign">
                     <field name="confirmed"/>
                     <label for="confirmed"/>
                 </div>
                 <footer>
                     <button name="action_sign" type="object" string="Sign" class="btn-primary"
-                            data-hotkey="s"/>
-                    <button string="Cancel" special="cancel" data-hotkey="x"/>
+                            data-hotkey="s" invisible="not can_sign"/>
+                    <button string="Close" special="cancel" data-hotkey="x"/>
                 </footer>
             </form>
         </field>
