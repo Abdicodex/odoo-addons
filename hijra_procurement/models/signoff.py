@@ -23,9 +23,15 @@ class ProcurementSignoff(models.Model):
     sequence = fields.Integer(related='member_id.sequence', store=True)
     signed_date = fields.Datetime(string='Signed On', readonly=True, copy=False)
     can_sign = fields.Boolean(compute='_compute_can_sign')
+    member_name = fields.Char(string='Member', compute='_compute_member_name')
 
     _once = models.Constraint(
         'UNIQUE(rfq_id, document, user_id)', 'A member signs each document once.')
+
+    @api.depends('member_id.full_name', 'user_id')
+    def _compute_member_name(self):
+        for rec in self:
+            rec.member_name = rec.member_id.full_name or rec.user_id.name
 
     @api.depends('signed_date', 'user_id', 'rfq_id.committee_state')
     @api.depends_context('uid')
@@ -34,6 +40,17 @@ class ProcurementSignoff(models.Model):
             rec.can_sign = (
                 not rec.signed_date and rec.user_id == self.env.user
                 and rec.rfq_id.committee_state == 'session')
+
+    def action_open_sign(self):
+        """Open the dialog where the member reads the document before signing it."""
+        self.ensure_one()
+        if self.signed_date:
+            raise UserError(_("Already signed."))
+        if self.user_id != self.env.user:
+            raise UserError(_("Only %s can sign this.", self.user_id.name))
+        wizard = self.env['procurement.sign.wizard'].create(
+            {'signoff_id': self.id, 'preview_document': self.document})
+        return wizard._reopen()
 
     def action_sign(self):
         """The member signs: the signature on their employee profile is printed on the document."""

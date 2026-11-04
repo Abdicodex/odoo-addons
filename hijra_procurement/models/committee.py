@@ -29,11 +29,19 @@ class ProcurementCommitteeMember(models.Model):
     role = fields.Selection(
         [('chair', 'Chairperson'), ('secretary', 'Secretary'), ('member', 'Member')],
         required=True, default='member')
+    full_name = fields.Char(
+        string='Full Name', compute='_compute_full_name', store=True, readonly=False,
+        help="The name printed on the committee documents; starts from the employee's name.")
     position = fields.Char(
         help="Printed under the name on the committee documents, e.g. Finance Officer.")
 
     _user_uniq = models.Constraint(
         'UNIQUE(committee_id, user_id)', 'This person is already a member of the committee.')
+
+    @api.depends('user_id')
+    def _compute_full_name(self):
+        for rec in self:
+            rec.full_name = rec.user_id.employee_id.name or rec.user_id.name
 
     @api.onchange('user_id')
     def _onchange_user_id(self):

@@ -10,6 +10,9 @@
                         class="oe_highlight"
                         invisible="state != 'open' or committee_state != 'pending' or not committee_required"
                         groups="purchase.group_purchase_user"/>
+                <button name="%(hijra_procurement.action_report_committee_pack)d"
+                        string="Print All Documents" type="action"
+                        invisible="not committee_required"/>
                 <button name="action_generate_minutes" string="Draft Minutes" type="object"
                         invisible="committee_state != 'session'"
                         groups="purchase.group_purchase_user"/>
@@ -78,11 +81,11 @@
                         <list create="0" delete="0" edit="0" decoration-success="signed_date"
                               default_order="document, sequence">
                             <field name="document"/>
-                            <field name="user_id"/>
+                            <field name="member_name"/>
                             <field name="signed_date"/>
                             <field name="can_sign" column_invisible="True"/>
-                            <button name="action_sign" type="object" string="Sign" icon="fa-pencil"
-                                    class="text-primary" invisible="not can_sign"/>
+                            <button name="action_open_sign" type="object" string="Review and Sign"
+                                    icon="fa-pencil" class="text-primary" invisible="not can_sign"/>
                         </list>
                     </field>
                     <p class="text-muted">

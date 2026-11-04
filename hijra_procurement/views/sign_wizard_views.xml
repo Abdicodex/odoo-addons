@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="procurement_sign_wizard_view_form" model="ir.ui.view">
+        <field name="name">procurement.sign.wizard.form</field>
+        <field name="model">procurement.sign.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Review and Sign">
+                <field name="rfq_id" invisible="1"/>
+                <field name="document" invisible="1"/>
+                <field name="preview_document" invisible="1"/>
+                <div class="alert alert-info mb-2" role="alert">
+                    Read the document below, then confirm and sign. You are signing the
+                    <strong><field name="document" readonly="1" class="d-inline"/></strong>
+                    of <field name="rfq_id" readonly="1" class="d-inline" options="{'no_open': True}"/>.
+                </div>
+                <div class="mb-2">
+                    <span class="me-2 text-muted">View:</span>
+                    <button name="action_view_document" type="object" string="Requisition" context="{'preview': 'requisition'}"
+                            class="btn btn-sm btn-secondary me-1"/>
+                    <button name="action_view_document" type="object" string="Declaration" context="{'preview': 'declaration'}"
+                            class="btn btn-sm btn-secondary me-1"/>
+                    <button name="action_view_document" type="object" string="Bid Analysis" context="{'preview': 'analysis'}"
+                            class="btn btn-sm btn-secondary me-1"/>
+                    <button name="action_view_document" type="object" string="Statement" context="{'preview': 'statement'}"
+                            class="btn btn-sm btn-secondary me-1"/>
+                    <button name="action_view_document" type="object" string="Minutes" context="{'preview': 'minutes'}"
+                            class="btn btn-sm btn-secondary me-1"/>
+                </div>
+                <field name="preview_pdf" widget="pdf_viewer" nolabel="1" readonly="1"/>
+                <div class="mt-2">
+                    <field name="confirmed"/>
+                    <label for="confirmed"/>
+                </div>
+                <footer>
+                    <button name="action_sign" type="object" string="Sign" class="btn-primary"
+                            data-hotkey="s"/>
+                    <button string="Cancel" special="cancel" data-hotkey="x"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+</odoo>

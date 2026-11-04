@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_procurement_root" name="Procurement Committee" sequence="26"
-              groups="group_procurement_committee,purchase.group_purchase_user"/>
+    <!-- a tab of the Purchase app; committee members see only this tab -->
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_committee'))]"/>
+    </record>
+
+    <menuitem id="menu_procurement_root" name="Procurement Committee" parent="purchase.menu_purchase_root"
+              sequence="6" groups="group_procurement_committee,purchase.group_purchase_user"/>
 
     <menuitem id="menu_procurement_sessions" name="Committee Sessions" parent="menu_procurement_root"
               action="purchase_request_rfq_committee_action" sequence="10"/>

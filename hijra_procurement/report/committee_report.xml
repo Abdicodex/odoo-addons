@@ -37,4 +37,13 @@
         <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
         <field name="binding_type">report</field>
     </record>
+    <record id="action_report_committee_pack" model="ir.actions.report">
+        <field name="name">All Documents (Requisition + Committee)</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_procurement.report_committee_pack</field>
+        <field name="print_report_name">'Committee Pack - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="purchase_request_rfq.model_purchase_request_rfq"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

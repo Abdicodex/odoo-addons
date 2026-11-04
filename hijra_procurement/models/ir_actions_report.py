@@ -8,7 +8,9 @@ REPORTS = {
     'hijra_procurement.report_bid_analysis': 'analysis',
     'hijra_procurement.report_committee_statement': 'statement',
     'hijra_procurement.report_committee_minutes': 'minutes',
+    'hijra_procurement.report_committee_pack': 'pack',
 }
+PACK_DOCUMENTS = ('declaration', 'analysis', 'statement', 'minutes')
 
 
 class IrActionsReport(models.Model):
@@ -29,4 +31,16 @@ class IrActionsReport(models.Model):
         # imported here so a missing reportlab cannot stop the module from loading
         from ..report import committee_pdf
         font_dir = os.path.dirname(file_path('purchase_request_rfq/static/fonts/Carlito-Regular.ttf'))
-        return committee_pdf.build_pdf(document, [rfq._prepare_committee_data() for rfq in rfqs], font_dir), 'pdf'
+        if document != 'pack':
+            return committee_pdf.build_pdf(
+                document, [rfq._prepare_committee_data() for rfq in rfqs], font_dir), 'pdf'
+        # every document of the session in one file: the requisition, then the four committee documents
+        from odoo.addons.purchase_request_rfq.report import prf_pdf
+        from odoo.tools.pdf import merge_pdf
+        parts = []
+        for rfq in rfqs:
+            parts.append(prf_pdf.build_pdf([rfq.request_id.sudo()._prepare_prf_data()], font_dir))
+            data = rfq._prepare_committee_data()
+            for name in PACK_DOCUMENTS:
+                parts.append(committee_pdf.build_pdf(name, [data], font_dir))
+        return merge_pdf(parts), 'pdf'

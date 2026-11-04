@@ -34,6 +34,7 @@
                         <list editable="bottom">
                             <field name="sequence" widget="handle"/>
                             <field name="user_id" options="{'no_create': True}"/>
+                            <field name="full_name"/>
                             <field name="role"/>
                             <field name="position" placeholder="e.g. Finance Officer"/>
                         </list>

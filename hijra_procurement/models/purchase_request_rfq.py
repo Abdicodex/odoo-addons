@@ -217,7 +217,7 @@ class PurchaseRequestRfq(models.Model):
                 signed[signoff.document] = {
                     'date': local(signoff.signed_date), 'signature': signatures.get(user.id)}
             members.append({
-                'name': user.name or '',
+                'name': (member.full_name if member else '') or user.name or '',
                 'position': (member.position if member else '') or user.job_title or '',
                 'role': member.role if member else 'member',
                 'signed': signed,

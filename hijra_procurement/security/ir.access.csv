@@ -12,6 +12,8 @@ procurement_committee_comp_rule,Committee multi-company,procurement.committee,,c
 procurement_signoff_committee,Signature committee,procurement.signoff,group_procurement_committee,ru,
 procurement_signoff_buyer,Signature buyer,procurement.signoff,purchase.group_purchase_user,crud,
 procurement_signoff_system,Signature system,procurement.signoff,base.group_system,crud,
+procurement_sign_wizard_committee,Sign dialog committee,procurement.sign.wizard,group_procurement_committee,crud,
+procurement_sign_wizard_buyer,Sign dialog buyer,procurement.sign.wizard,purchase.group_purchase_user,crud,
 procurement_rfq_committee,RFQ committee,purchase.request.rfq,group_procurement_committee,r,
 procurement_request_committee,Requisition committee,purchase.request,group_procurement_committee,r,
 procurement_request_line_committee,Requisition item committee,purchase.request.line,group_procurement_committee,r,
