@@ -15,7 +15,6 @@
                 <field name="description"/>
                 <field name="project_id" optional="show"/>
                 <field name="budget_id" optional="hide"/>
-                <field name="fund_id" optional="hide"/>
                 <field name="account_id" optional="show"/>
                 <field name="journal_id" string="Bank / Cash" optional="show"/>
                 <field name="cheque_ref" optional="hide"/>
@@ -102,10 +101,6 @@
                             <field name="budget_id" readonly="state != 'draft' or not project_id"
                                    placeholder="Select the category..."
                                    options="{'no_create': True, 'no_open': True}"/>
-                            <field name="fund_id" readonly="state != 'draft'"
-                                   options="{'no_create': True, 'no_open': True}"/>
-                            <field name="location_id" readonly="state != 'draft'"
-                                   options="{'no_create': True, 'no_open': True}"/>
                             <field name="approver_id" widget="many2one_avatar_user"
                                    readonly="state != 'draft'" options="{'no_create': True}"/>
                             <field name="company_id" groups="base.group_multi_company"
@@ -132,8 +127,6 @@
                                            options="{'no_create': True}"/>
                                     <field name="project_id" optional="show" options="{'no_create': True}"/>
                                     <field name="budget_id" optional="show" options="{'no_create': True}"/>
-                                    <field name="fund_id" optional="hide" options="{'no_create': True}"/>
-                                    <field name="location_id" optional="hide" options="{'no_create': True}"/>
                                     <field name="amount" sum="Total"/>
                                 </list>
                             </field>
@@ -167,7 +160,6 @@
                        filter_domain="['|', '|', ('name', 'ilike', self), ('description', 'ilike', self), ('cheque_ref', 'ilike', self)]"/>
                 <field name="partner_id"/>
                 <field name="project_id"/>
-                <field name="fund_id"/>
                 <field name="account_id"/>
                 <field name="journal_id"/>
                 <filter name="my" string="My Transactions" domain="[('create_uid', '=', uid)]"/>
@@ -184,7 +176,6 @@
                 <group>
                     <filter name="group_type" string="Type" context="{'group_by': 'transaction_type'}"/>
                     <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
-                    <filter name="group_fund" string="Fund" context="{'group_by': 'fund_id'}"/>
                     <filter name="group_account" string="Account" context="{'group_by': 'account_id'}"/>
                     <filter name="group_partner" string="Vendor / Customer" context="{'group_by': 'partner_id'}"/>
                     <filter name="group_journal" string="Bank / Cash" context="{'group_by': 'journal_id'}"/>

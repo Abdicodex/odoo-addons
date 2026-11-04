@@ -10,10 +10,12 @@ The committee step of HIJRA's procurement cycle, on top of the requisition and R
 * A committee session per RFQ: every member signs the Declaration of Impartiality and
   Confidentiality, the Summary of Bid Analysis, the Committee Statement and the Minutes in the
   system, with the signature from their employee profile.
+* The purchase order prints in the HIJRA template and is checked by the Finance Officer, then
+  authorized by the Officer-in-Charge (authorizing confirms it).
 * The four documents print in the HIJRA templates; the RFQ cannot be awarded before the
   committee has decided, and only to the vendor it selected.
     """,
-    'version': '20.0.1.1.0',
+    'version': '20.0.1.2.0',
     'category': 'Inventory/Purchase',
     'license': 'LGPL-3',
     'depends': ['purchase_request_rfq', 'hijra_base', 'project'],
@@ -26,6 +28,7 @@ The committee step of HIJRA's procurement cycle, on top of the requisition and R
         'views/committee_views.xml',
         'views/sign_wizard_views.xml',
         'views/rfq_views.xml',
+        'views/purchase_order_views.xml',
         'views/menus.xml',
     ],
     'post_init_hook': 'post_init_hook',

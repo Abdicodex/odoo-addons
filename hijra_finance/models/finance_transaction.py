@@ -51,13 +51,11 @@ class FinanceTransaction(models.Model):
     notes = fields.Text(string='Reference / Notes')
     cheque_ref = fields.Char(string='Cheque / Reference No', copy=False)
 
-    # HIJRA codes (global lists from hijra_base)
+    # project and budget line (the Project app)
     project_id = fields.Many2one('project.project', string='Project', tracking=True)
     budget_id = fields.Many2one(
         'project.task', string='Budget Line',
         domain="[('project_id', '=', project_id), ('budget_code', '!=', False)]")
-    fund_id = fields.Many2one('hijra.fund', string='Fund')
-    location_id = fields.Many2one('hijra.location', string='Location')
 
     line_ids = fields.One2many(
         'finance.transaction.line', 'transaction_id', string='Split Lines', copy=True,
@@ -145,8 +143,6 @@ class FinanceTransaction(models.Model):
                 'amount': source.amount if is_line else self.amount,
                 'project': (source.project_id or self.project_id) if is_line else self.project_id,
                 'budget': (source.budget_id or self.budget_id) if is_line else self.budget_id,
-                'fund': (source.fund_id or self.fund_id) if is_line else self.fund_id,
-                'location': (source.location_id or self.location_id) if is_line else self.location_id,
             })
         return result
 
@@ -296,8 +292,7 @@ class FinanceTransaction(models.Model):
         for item in self._get_split_lines():
             rows.append({
                 'project': item['project'].name or '',
-                'code': '-'.join(filter(None, [
-                    item['fund'].code, item['budget'].budget_code, item['location'].code])),
+                'code': item['budget'].budget_code or '',
                 'description': item['description'] or '',
                 'amount': item['amount'] * sign,
                 'currency': currency.name or '',
@@ -347,8 +342,6 @@ class FinanceTransactionLine(models.Model):
     budget_id = fields.Many2one(
         'project.task', string='Budget Line',
         domain="[('project_id', '=', project_id), ('budget_code', '!=', False)]")
-    fund_id = fields.Many2one('hijra.fund', string='Fund')
-    location_id = fields.Many2one('hijra.location', string='Location')
 
     @api.onchange('project_id')
     def _onchange_project_id(self):

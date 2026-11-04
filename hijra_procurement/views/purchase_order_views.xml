@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_view_form_approval" model="ir.ui.view">
+        <field name="name">purchase.order.form.approval</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_po_check" string="Check (Finance Officer)" type="object"
+                        class="oe_highlight"
+                        invisible="state not in ('draft', 'sent', 'to approve') or po_check_date"/>
+                <button name="action_po_authorize" string="Authorize (Officer-in-Charge)" type="object"
+                        class="oe_highlight"
+                        invisible="state not in ('draft', 'sent', 'to approve') or not po_check_date or po_authorize_date"/>
+            </xpath>
+            <xpath expr="//form/sheet" position="before">
+                <div class="alert alert-info mb-0" role="alert"
+                     invisible="not rfq_group_id or po_authorize_date or state not in ('draft', 'sent', 'to approve')">
+                    <strong>Awarded.</strong>
+                    <span invisible="po_check_date">Waiting for the Finance Officer to check this order.</span>
+                    <span invisible="not po_check_date">Checked. Waiting for the Officer-in-Charge to authorize it.</span>
+                </div>
+            </xpath>
+            <xpath expr="//page[@name='products']" position="after">
+                <page string="Approval" name="po_approval">
+                    <group>
+                        <group>
+                            <field name="po_check_user_id"/>
+                            <field name="po_check_date"/>
+                        </group>
+                        <group>
+                            <field name="po_authorize_user_id"/>
+                            <field name="po_authorize_date"/>
+                        </group>
+                    </group>
+                    <p class="text-muted">
+                        The Finance Officer checks the order, then the Officer-in-Charge authorizes it;
+                        authorizing confirms the order. Their signatures print on the purchase order.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

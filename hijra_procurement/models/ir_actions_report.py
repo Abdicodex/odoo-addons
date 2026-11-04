@@ -11,26 +11,33 @@ REPORTS = {
     'hijra_procurement.report_committee_pack': 'pack',
 }
 PACK_DOCUMENTS = ('declaration', 'analysis', 'statement', 'minutes')
+PO_REPORT = 'purchase.report_purchaseorder'
 
 
 class IrActionsReport(models.Model):
     _inherit = 'ir.actions.report'
 
     def _render_qweb_pdf(self, report_ref, res_ids=None, data=None):
-        """The committee documents are drawn directly (report/committee_pdf.py) so they match
-        the HIJRA templates instead of going through HTML."""
+        """The committee documents and the purchase order are drawn directly (report/*.py) so
+        they match the HIJRA templates instead of going through HTML."""
         report = self._get_report(report_ref)
         document = REPORTS.get(report.report_name)
-        if not document:
+        if not document and report.report_name != PO_REPORT:
             return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
         if isinstance(res_ids, int):
             res_ids = [res_ids]
         if not res_ids and data:
             res_ids = (data.get('context') or {}).get('active_ids')
+        font_dir = os.path.dirname(file_path('purchase_request_rfq/static/fonts/Carlito-Regular.ttf'))
+        if report.report_name == PO_REPORT:
+            orders = self.env['purchase.order'].browse(res_ids or [])
+            if not orders:
+                return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
+            from ..report import po_pdf
+            return po_pdf.build_pdf([order._prepare_po_pdf_data() for order in orders], font_dir), 'pdf'
         rfqs = self.env['purchase.request.rfq'].browse(res_ids or [])
         # imported here so a missing reportlab cannot stop the module from loading
         from ..report import committee_pdf
-        font_dir = os.path.dirname(file_path('purchase_request_rfq/static/fonts/Carlito-Regular.ttf'))
         if document != 'pack':
             return committee_pdf.build_pdf(
                 document, [rfq._prepare_committee_data() for rfq in rfqs], font_dir), 'pdf'

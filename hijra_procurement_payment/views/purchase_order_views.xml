@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_view_form_pay_vendor" model="ir.ui.view">
+        <field name="name">purchase.order.form.pay.vendor</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_pay_vendor" string="Pay Vendor" type="object" class="oe_highlight"
+                        invisible="state not in ('purchase', 'done') or amount_to_pay &lt;= 0"
+                        groups="hijra_finance.group_finance_user"/>
+            </xpath>
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_view_payments" type="object" class="oe_stat_button" icon="fa-money"
+                        invisible="payment_count == 0" groups="hijra_finance.group_finance_user">
+                    <div class="o_stat_info">
+                        <field name="payment_count" class="o_stat_value"/>
+                        <span class="o_stat_text">Payments</span>
+                    </div>
+                </button>
+            </xpath>
+            <xpath expr="//page[@name='po_approval']" position="after">
+                <page string="Payments" name="po_payments" groups="hijra_finance.group_finance_user"
+                      invisible="state not in ('purchase', 'done')">
+                    <group>
+                        <group>
+                            <field name="paid_amount"/>
+                            <field name="amount_to_pay"/>
+                        </group>
+                    </group>
+                    <field name="finance_transaction_ids" nolabel="1" readonly="1">
+                        <list>
+                            <field name="name"/>
+                            <field name="date"/>
+                            <field name="description"/>
+                            <field name="amount"/>
+                            <field name="state" widget="badge"/>
+                        </list>
+                    </field>
+                    <p class="text-muted">
+                        Press Pay Vendor to prepare the payment. It is recorded as a transaction, so it
+                        shows in Transactions and on the bank's card, and prints as a payment voucher.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+</odoo>

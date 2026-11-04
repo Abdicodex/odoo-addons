@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="finance_transaction_view_form_purchase_order" model="ir.ui.view">
+        <field name="name">finance.transaction.form.purchase.order</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_form"/>
+        <field name="arch" type="xml">
+            <field name="description" position="before">
+                <field name="purchase_order_id" readonly="state != 'draft'"
+                       options="{'no_create': True}"
+                       domain="[('state', 'in', ('purchase', 'done'))]"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_list_purchase_order" model="ir.ui.view">
+        <field name="name">finance.transaction.list.purchase.order</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_list"/>
+        <field name="arch" type="xml">
+            <field name="description" position="after">
+                <field name="purchase_order_id" optional="show"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_search_purchase_order" model="ir.ui.view">
+        <field name="name">finance.transaction.search.purchase.order</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_search"/>
+        <field name="arch" type="xml">
+            <field name="partner_id" position="after">
+                <field name="purchase_order_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

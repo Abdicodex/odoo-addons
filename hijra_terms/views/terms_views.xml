@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Purchase app: Products -> Items -->
+    <record id="purchase.menu_purchase_products" model="ir.ui.menu">
+        <field name="name">Items</field>
+    </record>
+    <record id="purchase.menu_procurement_partner_contact_form" model="ir.ui.menu">
+        <field name="name">Items</field>
+    </record>
+    <record id="purchase.menu_product_in_config_purchase" model="ir.ui.menu">
+        <field name="name">Items</field>
+    </record>
+    <record id="purchase.product_normal_action_puchased" model="ir.actions.act_window">
+        <field name="name">Items</field>
+    </record>
+
+    <!-- the Products tab of the purchase order -->
+    <record id="purchase_order_view_form_items" model="ir.ui.view">
+        <field name="name">purchase.order.form.items</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//page[@name='products']" position="attributes">
+                <attribute name="string">Items</attribute>
+            </xpath>
+        </field>
+    </record>
+</odoo>
