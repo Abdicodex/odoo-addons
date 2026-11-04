@@ -19,3 +19,14 @@ procurement_request_committee,Requisition committee,purchase.request,group_procu
 procurement_request_line_committee,Requisition item committee,purchase.request.line,group_procurement_committee,r,
 procurement_order_committee,Order committee,purchase.order,group_procurement_committee,r,
 procurement_order_line_committee,Order line committee,purchase.order.line,group_procurement_committee,r,
+procurement_file_user,Procurement file requester,procurement.file,purchase_request_rfq.group_purchase_request_user,r,"['|', '|', '|', ('request_id.requester_id', '=', user.id), ('request_id.approver_id', '=', user.id), ('request_id.second_signatory_id', '=', user.id), ('request_id.verifier_id', '=', user.id)]"
+procurement_file_manager,Procurement file manager,procurement.file,purchase_request_rfq.group_purchase_request_manager,r,
+procurement_file_buyer,Procurement file buyer,procurement.file,purchase.group_purchase_user,r,
+procurement_file_committee,Procurement file committee,procurement.file,group_procurement_committee,r,
+procurement_file_system,Procurement file system,procurement.file,base.group_system,crud,
+procurement_file_comp_rule,Procurement file multi-company,procurement.file,,crud,"[('company_id', 'in', company_ids)]"
+procurement_step_user,Procurement step requester,procurement.file.step,purchase_request_rfq.group_purchase_request_user,r,"['|', '|', '|', ('file_id.request_id.requester_id', '=', user.id), ('file_id.request_id.approver_id', '=', user.id), ('file_id.request_id.second_signatory_id', '=', user.id), ('file_id.request_id.verifier_id', '=', user.id)]"
+procurement_step_manager,Procurement step manager,procurement.file.step,purchase_request_rfq.group_purchase_request_manager,r,
+procurement_step_buyer,Procurement step buyer,procurement.file.step,purchase.group_purchase_user,r,
+procurement_step_committee,Procurement step committee,procurement.file.step,group_procurement_committee,r,
+procurement_step_system,Procurement step system,procurement.file.step,base.group_system,crud,

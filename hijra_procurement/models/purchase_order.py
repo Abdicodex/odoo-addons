@@ -49,6 +49,10 @@ class PurchaseOrder(models.Model):
         self._schedule_for_role('finance_officer', _("Check %s", self.name))
         return True
 
+    def action_open_procurement_file(self):
+        self.ensure_one()
+        return self.purchase_request_id.action_open_procurement_file()
+
     def _schedule_for_role(self, code, summary):
         self.ensure_one()
         for user in self.env['hijra.role']._get_users(code):

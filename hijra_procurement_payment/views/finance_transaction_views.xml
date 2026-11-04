@@ -13,6 +13,18 @@
         </field>
     </record>
 
+    <record id="finance_transaction_view_form_procurement_file" model="ir.ui.view">
+        <field name="name">finance.transaction.form.procurement.file</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_open_procurement_file" string="Procurement File" type="object"
+                        invisible="not purchase_order_id"/>
+            </xpath>
+        </field>
+    </record>
+
     <record id="finance_transaction_view_list_purchase_order" model="ir.ui.view">
         <field name="name">finance.transaction.list.purchase.order</field>
         <field name="model">finance.transaction</field>

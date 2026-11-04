@@ -286,8 +286,7 @@ class FinanceTransaction(models.Model):
         self.ensure_one()
         company = self.company_id.sudo()
         currency = self.currency_id
-        # money going out prints as a negative amount, like the paper voucher
-        sign = -1 if self.transaction_type == 'expense' else 1
+        sign = 1
         rows = []
         for item in self._get_split_lines():
             rows.append({

@@ -1,29 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <menuitem id="menu_purchase_request_root"
-              name="Requisitions"
-              parent="purchase.menu_purchase_root"
-              sequence="5"
-              groups="group_purchase_request_user,purchase.group_purchase_user"/>
+    <!-- Everyone can raise requisitions: they see the Purchase app, and the Requisitions entry. -->
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_purchase_request_user'))]"/>
+    </record>
 
+    <!-- The requisitions come first under Orders, so the Purchase app opens on them. -->
     <menuitem id="menu_purchase_request"
               name="Requisitions"
-              parent="menu_purchase_request_root"
+              parent="purchase.menu_procurement_management"
               action="purchase_request_action"
-              sequence="10"/>
-
-    <menuitem id="menu_purchase_request_rfq"
-              name="Bid Analysis"
-              parent="menu_purchase_request_root"
-              action="purchase_request_rfq_action"
-              sequence="15"
-              groups="purchase.group_purchase_user"/>
+              sequence="-10"/>
 
     <menuitem id="menu_purchase_request_approval"
               name="Awaiting My Action"
-              parent="menu_purchase_request_root"
+              parent="purchase.menu_procurement_management"
               action="purchase_request_action_approval"
-              sequence="20"/>
-
-
+              sequence="-9"/>
 </odoo>

@@ -1,3 +1,6 @@
 id,name,model_id,group_id/id,operation,domain
 finance_order_read,Finance reads purchase orders,purchase.order,hijra_finance.group_finance_user,r,
 finance_order_line_read,Finance reads purchase order lines,purchase.order.line,hijra_finance.group_finance_user,r,
+finance_file_read,Finance reads procurement files,procurement.file,hijra_finance.group_finance_user,r,
+finance_file_step_read,Finance reads procurement steps,procurement.file.step,hijra_finance.group_finance_user,r,
+finance_request_read,Finance reads requisitions,purchase.request,hijra_finance.group_finance_user,r,

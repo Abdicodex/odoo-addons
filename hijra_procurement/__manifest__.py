@@ -15,7 +15,7 @@ The committee step of HIJRA's procurement cycle, on top of the requisition and R
 * The four documents print in the HIJRA templates; the RFQ cannot be awarded before the
   committee has decided, and only to the vendor it selected.
     """,
-    'version': '20.0.1.2.0',
+    'version': '20.0.1.3.0',
     'category': 'Inventory/Purchase',
     'license': 'LGPL-3',
     'depends': ['purchase_request_rfq', 'hijra_base', 'project'],
@@ -24,11 +24,13 @@ The committee step of HIJRA's procurement cycle, on top of the requisition and R
         'security/ir.access.csv',
         'data/bands.xml',
         'report/committee_report.xml',
+        'report/procurement_file_report.xml',
         'views/band_views.xml',
         'views/committee_views.xml',
         'views/sign_wizard_views.xml',
         'views/rfq_views.xml',
         'views/purchase_order_views.xml',
+        'views/procurement_file_views.xml',
         'views/menus.xml',
     ],
     'post_init_hook': 'post_init_hook',

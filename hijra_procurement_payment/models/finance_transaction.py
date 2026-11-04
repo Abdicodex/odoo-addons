@@ -8,6 +8,11 @@ class FinanceTransaction(models.Model):
         'purchase.order', string='Purchase Order', copy=False, index='btree_not_null', tracking=True,
         help="The purchase order this payment is for.")
 
+    def action_open_procurement_file(self):
+        """The procurement file (every step and document) of the order this payment is for."""
+        self.ensure_one()
+        return self.purchase_order_id.action_open_procurement_file()
+
     def action_post(self):
         result = super().action_post()
         for rec in self.filtered('purchase_order_id'):

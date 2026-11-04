@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="procurement_file_view_list" model="ir.ui.view">
+        <field name="name">procurement.file.list</field>
+        <field name="model">procurement.file</field>
+        <field name="arch" type="xml">
+            <list string="Procurement Files" decoration-muted="stage == 'cancelled'">
+                <field name="name" string="Requisition"/>
+                <field name="project_id"/>
+                <field name="requester_id" widget="many2one_avatar_user" optional="show"/>
+                <field name="vendor_id" optional="show"/>
+                <field name="amount_total" widget="monetary"/>
+                <field name="currency_id" column_invisible="True"/>
+                <field name="stage" widget="badge"
+                       decoration-info="stage in ('rfq', 'committee', 'order')"
+                       decoration-warning="stage == 'payment'"
+                       decoration-success="stage == 'paid'"
+                       decoration-danger="stage == 'cancelled'"/>
+            </list>
+        </field>
+    </record>
+
+    <record id="procurement_file_view_form" model="ir.ui.view">
+        <field name="name">procurement.file.form</field>
+        <field name="model">procurement.file</field>
+        <field name="arch" type="xml">
+            <form string="Procurement File" create="0" delete="0">
+                <header>
+                    <button name="%(hijra_procurement.action_report_procurement_file)d"
+                            string="Print All Documents" type="action" class="oe_highlight"/>
+                    <button name="action_refresh" string="Refresh" type="object"/>
+                    <field name="stage" widget="statusbar"
+                           statusbar_visible="requisition,rfq,committee,order,payment,paid"/>
+                </header>
+                <sheet>
+                    <div class="oe_title">
+                        <span class="o_form_label">Procurement File</span>
+                        <h1><field name="name"/></h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="request_id"/>
+                            <field name="project_id"/>
+                            <field name="requester_id" widget="many2one_avatar_user"/>
+                        </group>
+                        <group>
+                            <field name="amount_total"/>
+                            <field name="vendor_id"/>
+                            <field name="currency_id" invisible="1"/>
+                        </group>
+                    </group>
+                    <separator string="Steps and documents"/>
+                    <field name="step_ids" nolabel="1" readonly="1">
+                        <list create="0" delete="0" edit="0" decoration-success="state == 'done'"
+                              decoration-muted="state == 'todo'">
+                            <field name="sequence" column_invisible="True"/>
+                            <field name="name"/>
+                            <field name="reference"/>
+                            <field name="detail"/>
+                            <field name="state" widget="badge"
+                                   decoration-success="state == 'done'"
+                                   decoration-warning="state == 'pending'"
+                                   decoration-muted="state == 'todo'"/>
+                            <field name="open_model" column_invisible="True"/>
+                            <field name="print_xmlid" column_invisible="True"/>
+                            <button name="action_open" type="object" string="Open" icon="fa-external-link"
+                                    class="text-primary" invisible="not open_model"/>
+                            <button name="action_print" type="object" string="Print" icon="fa-print"
+                                    class="text-primary" invisible="not print_xmlid"/>
+                        </list>
+                    </field>
+                    <p class="text-muted">
+                        Every step of this purchase, from the requisition to the payment. Open a step to
+                        go to its record, or print its document; Print All Documents puts them in one file.
+                    </p>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="procurement_file_view_search" model="ir.ui.view">
+        <field name="name">procurement.file.search</field>
+        <field name="model">procurement.file</field>
+        <field name="arch" type="xml">
+            <search string="Procurement Files">
+                <field name="name" string="Requisition"/>
+                <field name="project_id"/>
+                <field name="requester_id"/>
+                <field name="vendor_id"/>
+                <group>
+                    <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
+                    <filter name="group_requester" string="Requester" context="{'group_by': 'requester_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="procurement_file_action" model="ir.actions.act_window">
+        <field name="name">Procurement Files</field>
+        <field name="res_model">procurement.file</field>
+        <field name="view_mode">list,form</field>
+        <field name="search_view_id" ref="procurement_file_view_search"/>
+        <field name="context">{'create': False}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">No procurement yet</p>
+            <p>Every requisition gets a file here showing each step and its documents.</p>
+        </field>
+    </record>
+
+    <!-- from the requisition and from the purchase order -->
+    <record id="purchase_request_view_form_procurement_file" model="ir.ui.view">
+        <field name="name">purchase.request.form.procurement.file</field>
+        <field name="model">purchase.request</field>
+        <field name="inherit_id" ref="purchase_request_rfq.purchase_request_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_open_procurement_file" string="Procurement File" type="object"
+                        invisible="state in ('draft', 'rejected', 'cancelled')"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="purchase_order_view_form_procurement_file" model="ir.ui.view">
+        <field name="name">purchase.order.form.procurement.file</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//div[@name='button_box']" position="inside">
+                <button name="action_open_procurement_file" type="object" class="oe_stat_button"
+                        icon="fa-sitemap" invisible="not purchase_request_id">
+                    <div class="o_stat_info">
+                        <span class="o_stat_text">Procurement</span>
+                        <span class="o_stat_text">File</span>
+                    </div>
+                </button>
+            </xpath>
+        </field>
+    </record>
+</odoo>

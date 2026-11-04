@@ -9,6 +9,7 @@ REPORTS = {
     'hijra_procurement.report_committee_statement': 'statement',
     'hijra_procurement.report_committee_minutes': 'minutes',
     'hijra_procurement.report_committee_pack': 'pack',
+    'hijra_procurement.report_procurement_file': 'file',
 }
 PACK_DOCUMENTS = ('declaration', 'analysis', 'statement', 'minutes')
 PO_REPORT = 'purchase.report_purchaseorder'
@@ -35,6 +36,12 @@ class IrActionsReport(models.Model):
                 return super()._render_qweb_pdf(report_ref, res_ids=res_ids, data=data)
             from ..report import po_pdf
             return po_pdf.build_pdf([order._prepare_po_pdf_data() for order in orders], font_dir), 'pdf'
+        if document == 'file':
+            from odoo.tools.pdf import merge_pdf
+            parts = []
+            for file in self.env['procurement.file'].browse(res_ids or []):
+                parts += file.sudo()._pdf_parts()
+            return merge_pdf(parts), 'pdf'
         rfqs = self.env['purchase.request.rfq'].browse(res_ids or [])
         # imported here so a missing reportlab cannot stop the module from loading
         from ..report import committee_pdf
