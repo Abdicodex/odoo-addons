@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <!-- Accounting > Configuration: administrators edit the types and their documents -->
-    <menuitem id="menu_expenditure_types" name="Expenditure Types" parent="account.menu_finance_configuration"
-              action="expenditure_type_action" sequence="35" groups="base.group_system"/>
+    <!-- Purchase > Configuration: administrators edit the types and their documents -->
+    <menuitem id="menu_expenditure_types" name="Expenditure Types" parent="purchase.menu_purchase_config"
+              action="expenditure_type_action" sequence="42" groups="base.group_system"/>
     <menuitem id="menu_supporting_document_types" name="Supporting Document Types"
-              parent="account.menu_finance_configuration" action="supporting_document_type_action"
-              sequence="36" groups="base.group_system"/>
+              parent="purchase.menu_purchase_config" action="supporting_document_type_action"
+              sequence="43" groups="base.group_system"/>
 </odoo>

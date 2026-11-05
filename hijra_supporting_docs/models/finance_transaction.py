@@ -30,12 +30,6 @@ class FinanceTransaction(models.Model):
         for rec in self:
             rec.documents_missing = len(rec.document_ids.filtered(lambda d: d.status == 'missing'))
 
-    @api.onchange('expenditure_type_id')
-    def _onchange_expenditure_type_id(self):
-        account = self.expenditure_type_id.default_account_id
-        if account and not self.account_id:
-            self.account_id = account
-
     # ------------------------------------------------------------------
     # The checklist
     # ------------------------------------------------------------------

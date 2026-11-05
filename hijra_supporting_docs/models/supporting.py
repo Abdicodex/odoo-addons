@@ -45,9 +45,6 @@ class ExpenditureType(models.Model):
     name = fields.Char(required=True)
     sequence = fields.Integer(default=10)
     active = fields.Boolean(default=True)
-    default_account_id = fields.Many2one(
-        'account.account', string='Default Account', domain="[('account_type', '!=', 'off_balance')]",
-        help="Filled in on the payment when this type is chosen and no account is set yet.")
     receipt_type = fields.Selection(
         [('goods', 'Goods (Goods Received Note)'), ('service', 'Service (Service Completion Note)')],
         string='Receipt',

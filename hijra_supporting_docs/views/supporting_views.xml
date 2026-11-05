@@ -26,7 +26,6 @@
             <list>
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
-                <field name="default_account_id" optional="show"/>
                 <field name="receipt_type" optional="show"/>
             </list>
         </field>
@@ -43,7 +42,6 @@
                         <h1><field name="name" placeholder="e.g. Vehicle Rental"/></h1>
                     </div>
                     <group>
-                        <field name="default_account_id" options="{'no_create': True}"/>
                         <field name="receipt_type" widget="radio"/>
                     </group>
                     <separator string="Supporting documents, in the order they are filed"/>
