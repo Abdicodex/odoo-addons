@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="res_groups_privilege_procurement_viewer" model="res.groups.privilege">
+        <field name="name">Procurement Monitoring</field>
+        <field name="sequence">13</field>
+        <field name="category_id" ref="base.module_category_supply_chain"/>
+    </record>
+
+    <!-- M&E: sees every purchase, from the requisition to the payment, without changing anything -->
+    <record id="group_procurement_viewer" model="res.groups">
+        <field name="name">Viewer (all purchases)</field>
+        <field name="sequence">10</field>
+        <field name="implied_ids" eval="[(4, ref('base.group_user'))]"/>
+        <field name="privilege_id" ref="res_groups_privilege_procurement_viewer"/>
+    </record>
+</odoo>

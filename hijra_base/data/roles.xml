@@ -35,4 +35,9 @@
         <field name="code">admin_assistant</field>
         <field name="sequence">70</field>
     </record>
+    <record id="role_me_officer" model="hijra.role">
+        <field name="name">M&amp;E Officer</field>
+        <field name="code">me_officer</field>
+        <field name="sequence">80</field>
+    </record>
 </odoo>

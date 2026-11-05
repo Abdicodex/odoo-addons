@@ -6,7 +6,7 @@ Shared HIJRA setup used across modules: funds and locations, the roles of the
 procurement and finance flows, budget codes on the Project app's tasks (a task is a
 budget line of its project), plus each employee's signature image.
     """,
-    'version': '20.0.2.0.0',
+    'version': '20.0.2.1.0',
     'category': 'Administration',
     'license': 'LGPL-3',
     'depends': ['base', 'hr', 'project'],

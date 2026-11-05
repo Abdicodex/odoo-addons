@@ -13,6 +13,10 @@
                         class="oe_highlight"
                         invisible="state not in ('draft', 'sent', 'to approve') or not po_check_date or po_authorize_date"/>
             </xpath>
+            <!-- the vendor's acknowledgement of the order is not a step of HIJRA's process -->
+            <xpath expr="//button[@name='action_acknowledge']" position="attributes">
+                <attribute name="invisible">1</attribute>
+            </xpath>
             <field name="partner_ref" position="after">
                 <field name="po_date" readonly="state == 'cancel'"/>
             </field>

@@ -22,4 +22,25 @@
     <record id="hijra_receipts.menu_procurement_completion" model="ir.ui.menu">
         <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
     </record>
+    <record id="hijra_procurement.menu_procurement_group" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user')), (4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="hijra_procurement.menu_procurement_files" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="hijra_receipts.menu_procurement_grn" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="hijra_receipts.menu_procurement_completion" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
+    <record id="hijra_procurement.menu_procurement_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('group_procurement_viewer'))]"/>
+    </record>
 </odoo>

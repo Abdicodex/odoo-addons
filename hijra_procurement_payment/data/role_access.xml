@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The access each role gives its holders (edit it under Purchase > Configuration > HIJRA Roles). -->
+    <record id="hijra_base.role_procurement_officer" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('purchase.group_purchase_user'))]"/>
+    </record>
+    <record id="hijra_base.role_finance_officer" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_manager'))]"/>
+    </record>
+    <record id="hijra_base.role_fa_officer" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_approver'))]"/>
+    </record>
+    <record id="hijra_base.role_officer_in_charge" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_approver'))]"/>
+    </record>
+    <record id="hijra_base.role_admin_assistant" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="hijra_base.role_me_officer" model="hijra.role">
+        <field name="group_ids" eval="[(4, ref('hijra_procurement_payment.group_procurement_viewer'))]"/>
+    </record>
+</odoo>
