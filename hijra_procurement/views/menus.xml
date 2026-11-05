@@ -8,6 +8,11 @@
     <menuitem id="menu_procurement_my_work" name="My Work" parent="purchase.menu_purchase_root"
               action="procurement_file_my_work_action" sequence="10"/>
 
+    <!-- Opening the Purchase app lands on My Work -->
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="action" eval="'ir.actions.act_window,%d' % ref('procurement_file_my_work_action')"/>
+    </record>
+
     <!-- Procurement: the buyer's, finance's and the administrators' screens -->
     <menuitem id="menu_procurement_group" name="Procurement" parent="purchase.menu_purchase_root"
               sequence="30" groups="purchase.group_purchase_user,group_procurement_committee,base.group_system"/>
