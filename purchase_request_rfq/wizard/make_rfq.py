@@ -19,6 +19,9 @@ class PurchaseRequestMakeRfq(models.TransientModel):
         string='Submission Deadline', required=True,
         default=lambda self: fields.Datetime.now() + timedelta(days=7))
     validity_days = fields.Integer(string='Quotation Validity (days)', default=90)
+    rfq_date = fields.Date(
+        string='RFQ Date', required=True, default=fields.Date.context_today,
+        help="The date printed on the RFQ; change it to back-date the document.")
     quotation_details = fields.Text(
         string='Quotation Details to Include',
         help="One item per line; printed as bullet points on the RFQ.")
@@ -63,6 +66,8 @@ class PurchaseRequestMakeRfq(models.TransientModel):
                 'rfq_validity_days': self.validity_days,
                 'rfq_quotation_details': self.quotation_details,
                 'rfq_project_id': request.project_id.id,
+                'rfq_budget_id': request.budget_id.id,
+                'rfq_date': self.rfq_date,
                 'rfq_location_id': request.location_id.id,
             })
             orders |= self.env['purchase.order'].create(vals)

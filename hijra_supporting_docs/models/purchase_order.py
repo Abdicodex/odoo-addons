@@ -1,8 +1,11 @@
-from odoo import models
+from odoo import fields, models
 
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
+
+    expenditure_type_id = fields.Many2one(
+        related='purchase_request_id.expenditure_type_id', string='Expenditure Type')
 
     def action_pay_vendor(self):
         """Pay Vendor carries the expenditure type of the requisition to the payment."""

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <menuitem id="menu_procurement_grn" name="Goods Received Notes" parent="purchase.menu_procurement_management"
-              action="procurement_grn_action" sequence="-6"/>
+              action="procurement_grn_action" sequence="-6"
+              groups="purchase.group_purchase_user,base.group_system"/>
     <menuitem id="menu_procurement_completion" name="Service Completion Notes"
-              parent="purchase.menu_procurement_management" action="procurement_completion_action" sequence="-5"/>
+              parent="purchase.menu_procurement_management" action="procurement_completion_action" sequence="-5"
+              groups="purchase.group_purchase_user,base.group_system"/>
 </odoo>

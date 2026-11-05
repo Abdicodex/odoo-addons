@@ -1,3 +1,4 @@
+from . import touch
 from . import procurement_band
 from . import committee
 from . import signoff

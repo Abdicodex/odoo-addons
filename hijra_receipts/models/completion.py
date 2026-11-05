@@ -7,7 +7,8 @@ class ProcurementCompletion(models.Model):
     programme manager. Drafted from the order, then edited (like the committee minutes)."""
     _name = 'procurement.completion'
     _description = 'Service Completion Note'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'procurement.touch.mixin']
+    _file_path = 'request_id'
     _order = 'id desc'
 
     name = fields.Char(string='Note No', default='New', copy=False, readonly=True, tracking=True)
@@ -20,6 +21,8 @@ class ProcurementCompletion(models.Model):
     partner_id = fields.Many2one(related='order_id.partner_id', string='Vendor', store=True)
     company_id = fields.Many2one(related='order_id.company_id', store=True)
     request_id = fields.Many2one(related='order_id.purchase_request_id', store=True)
+    project_id = fields.Many2one(related='order_id.rfq_project_id', string='Project')
+    budget_id = fields.Many2one(related='order_id.rfq_budget_id', string='Budget Line')
     date = fields.Date(string='Date of Note', default=fields.Date.context_today, tracking=True)
     service = fields.Char(
         string='Service', help="What was provided, e.g. refreshments and lunch for 200 participants.")

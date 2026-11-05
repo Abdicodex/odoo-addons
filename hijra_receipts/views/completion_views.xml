@@ -44,6 +44,8 @@
                         <group>
                             <field name="order_id" readonly="state != 'draft'" options="{'no_create': True}"/>
                             <field name="partner_id"/>
+                            <field name="project_id"/>
+                            <field name="budget_id"/>
                             <field name="date" readonly="state != 'draft'"/>
                             <field name="approver_id" widget="many2one_avatar_user" readonly="state != 'draft'"/>
                         </group>
@@ -64,7 +66,8 @@
                     <separator string="Conclusion"/>
                     <field name="conclusion" nolabel="1" readonly="state != 'draft'"/>
                     <group>
-                        <field name="approver_date"/>
+                        <field name="approver_date" groups="!purchase.group_purchase_manager"/>
+                        <field name="approver_date" readonly="0" groups="purchase.group_purchase_manager"/>
                     </group>
                 </sheet>
                 <chatter/>

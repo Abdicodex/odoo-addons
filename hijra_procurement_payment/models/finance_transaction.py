@@ -2,7 +2,8 @@ from odoo import _, fields, models
 
 
 class FinanceTransaction(models.Model):
-    _inherit = 'finance.transaction'
+    _inherit = ['finance.transaction', 'procurement.touch.mixin']
+    _file_path = 'purchase_order_id.purchase_request_id'
 
     purchase_order_id = fields.Many2one(
         'purchase.order', string='Purchase Order', copy=False, index='btree_not_null', tracking=True,

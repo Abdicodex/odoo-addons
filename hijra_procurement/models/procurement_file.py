@@ -51,7 +51,11 @@ class ProcurementFile(models.Model):
     amount_total = fields.Monetary(
         related='request_id.amount_total', store=True, currency_field='currency_id')
     vendor_id = fields.Many2one('res.partner', string='Vendor', compute='_compute_vendor')
-    stage = fields.Selection(STAGES + [('cancelled', 'Cancelled')], compute='_compute_stage')
+    stage = fields.Selection(STAGES + [('cancelled', 'Cancelled')], default='requisition', index=True)
+    next_action = fields.Char(string='Next Action')
+    waiting_user_ids = fields.Many2many(
+        'res.users', 'procurement_file_waiting_user_rel', 'file_id', 'user_id', string='Waiting For')
+    waiting_names = fields.Char(string='Waiting For (names)')
     step_ids = fields.One2many('procurement.file.step', 'file_id', string='Steps')
 
     _request_uniq = models.Constraint('UNIQUE(request_id)', 'A requisition has one procurement file.')
@@ -78,11 +82,6 @@ class ProcurementFile(models.Model):
         for rec in self:
             rec.vendor_id = rec._awarded_order().partner_id
 
-    @api.depends('request_id.state')
-    def _compute_stage(self):
-        for rec in self:
-            rec.stage = rec._current_stage()
-
     def _current_stage(self):
         self.ensure_one()
         request = self.request_id.sudo()
@@ -103,6 +102,75 @@ class ProcurementFile(models.Model):
     def _stage_after_order(self, order):
         """Hook: the receiving and payment modules tell when the order is received and paid."""
         return 'payment'
+
+    # ------------------------------------------------------------------
+    # Where the purchase stands and who has to act next (the My Work board)
+    # ------------------------------------------------------------------
+    def _next_action(self):
+        """(what has to be done next, the users who have to do it)."""
+        self.ensure_one()
+        Users = self.env['res.users']
+        Role = self.env['hijra.role']
+        request = self.request_id.sudo()
+        if request.state == 'draft':
+            return _("Submit the requisition"), request.requester_id
+        if request.state == 'to_verify':
+            return _("Verify the requisition"), request.verifier_id
+        if request.state == 'to_approve':
+            users = Users
+            if not request.approval_date:
+                users |= request.approver_id
+            if request.second_signatory_id and not request.second_approval_date:
+                users |= request.second_signatory_id
+            return _("Approve the requisition"), users
+        if request.state in ('rejected', 'cancelled'):
+            return '', Users
+        buyers = Role._get_users('procurement_officer')
+        rfqs = self._rfqs()
+        if not rfqs:
+            return _("Create the RFQ"), buyers
+        order = self._awarded_order()
+        if not order:
+            rfq = rfqs.filtered(lambda r: r.state == 'open')[:1]
+            if not rfq:
+                return '', Users
+            if not rfq.quotes_count:
+                return _("Enter the vendors' quotes"), buyers
+            if not rfq.committee_required:
+                return _("Choose the vendor and award"), buyers
+            if rfq.committee_state == 'pending':
+                return _("Start the committee session"), buyers
+            if rfq.committee_state == 'session':
+                users = rfq.signoff_ids.filtered(lambda s: not s.signed_date).user_id
+                if not rfq.recommended_order_id:
+                    users |= buyers
+                return _("Committee: choose the vendor and sign the documents"), users
+            return _("Award the vendor"), buyers
+        if order.state in ('draft', 'sent', 'to approve'):
+            if not order.po_check_date:
+                return _("Check the purchase order"), Role._get_users('finance_officer')
+            return _("Authorize the purchase order"), Role._get_users('officer_in_charge')
+        return self._after_order(order)
+
+    def _after_order(self, order):
+        """Hook: the receiving and payment modules say what comes after the order is confirmed."""
+        return '', self.env['res.users']
+
+    def _update_progress(self):
+        for rec in self:
+            text, users = rec._next_action()
+            rec.sudo().write({
+                'stage': rec._current_stage(),
+                'next_action': text or False,
+                'waiting_user_ids': [Command.set(users.ids)],
+                'waiting_names': ', '.join(users.mapped('name')) or False,
+            })
+
+    @api.model_create_multi
+    def create(self, vals_list):
+        files = super().create(vals_list)
+        files._update_progress()
+        return files
 
     # ------------------------------------------------------------------
     # Steps
@@ -196,6 +264,7 @@ class ProcurementFile(models.Model):
     def web_read(self, specification):
         """Opening the file rebuilds its steps, so they always show the current state."""
         if 'step_ids' in specification and len(self) == 1:
+            self.sudo()._update_progress()
             self.sudo()._refresh_steps()
         return super().web_read(specification)
 

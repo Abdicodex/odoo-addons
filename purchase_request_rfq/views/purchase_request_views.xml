@@ -127,20 +127,27 @@
                     <div class="clearfix"/>
                     <separator string="Approval"/>
                     <group invisible="not verify_date">
-                        <field name="verify_date"/>
+                        <field name="verify_date" groups="!purchase_request_rfq.group_purchase_request_manager"/>
+                        <field name="verify_date" readonly="0" groups="purchase_request_rfq.group_purchase_request_manager"/>
                     </group>
                     <group>
                         <group name="approver_block">
                             <field name="approver_id" widget="many2one_avatar_user"
                                    readonly="state != 'draft'" options="{'no_create': True}"/>
                             <field name="approver_position"/>
-                            <field name="approval_date" invisible="not approval_date"/>
+                            <field name="approval_date" invisible="not approval_date"
+                                   groups="!purchase_request_rfq.group_purchase_request_manager"/>
+                            <field name="approval_date" invisible="not approval_date" readonly="0"
+                                   groups="purchase_request_rfq.group_purchase_request_manager"/>
                         </group>
                         <group name="second_signatory_block">
                             <field name="second_signatory_id" widget="many2one_avatar_user"
                                    readonly="state != 'draft'" options="{'no_create': True}"/>
                             <field name="second_position" invisible="not second_signatory_id"/>
-                            <field name="second_approval_date" invisible="not second_approval_date"/>
+                            <field name="second_approval_date" invisible="not second_approval_date"
+                                   groups="!purchase_request_rfq.group_purchase_request_manager"/>
+                            <field name="second_approval_date" invisible="not second_approval_date" readonly="0"
+                                   groups="purchase_request_rfq.group_purchase_request_manager"/>
                         </group>
                     </group>
                     <group invisible="not rejection_reason">

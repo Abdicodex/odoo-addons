@@ -11,7 +11,7 @@ The receiving step of HIJRA's procurement cycle:
   then approved by the programme manager. Prints in the HIJRA format.
 * Both appear as steps of the procurement file and in its Print All Documents.
     """,
-    'version': '20.0.2.0.0',
+    'version': '20.0.2.1.0',
     'category': 'Inventory/Purchase',
     'license': 'LGPL-3',
     'depends': ['hijra_procurement'],

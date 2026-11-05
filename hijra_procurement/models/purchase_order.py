@@ -5,9 +5,13 @@ OPEN_STATES = ('draft', 'sent', 'to approve')
 
 
 class PurchaseOrder(models.Model):
-    _inherit = 'purchase.order'
+    _inherit = ['purchase.order', 'procurement.touch.mixin']
+    _file_path = 'purchase_request_id'
 
     # HIJRA's order approval: the Finance Officer checks, then the Officer-in-Charge authorizes
+    po_date = fields.Date(
+        string='PO Date', default=fields.Date.context_today, copy=False,
+        help="The date printed on the purchase order. Change it when the document is back-dated.")
     po_check_user_id = fields.Many2one('res.users', string='Checked By', copy=False, readonly=True, tracking=True)
     po_check_date = fields.Datetime(string='Checked On', copy=False, readonly=True)
     po_authorize_user_id = fields.Many2one(
@@ -154,7 +158,8 @@ class PurchaseOrder(models.Model):
         return {
             'logo': [value for value in (company.logo, getattr(company, 'logo_web', False)) if value],
             'name': self.name or '',
-            'date': local(self.date_approve or self.date_order).date() if (self.date_approve or self.date_order) else None,
+            'date': self.po_date or (
+                local(self.date_approve or self.date_order).date() if (self.date_approve or self.date_order) else None),
             'supplier': {'code': partner.ref or '', 'lines': supplier_lines},
             'buyer': {'lines': [po_pdf.ORG_NAME] + po_pdf.ORG_LINES},
             'delivery': self.rfq_location_id.sudo().name or request.location_id.name or '',
@@ -163,7 +168,7 @@ class PurchaseOrder(models.Model):
             'untaxed': self.amount_untaxed,
             'tax': self.amount_tax,
             'total': self.amount_total,
-            'prepared': person(self.user_id, self.date_order or self.create_date, signed),
+            'prepared': person(self.user_id, self.po_date or self.date_order or self.create_date, signed),
             'checked': person(self.po_check_user_id, self.po_check_date, True),
             'authorized': person(self.po_authorize_user_id, self.po_authorize_date, True),
         }

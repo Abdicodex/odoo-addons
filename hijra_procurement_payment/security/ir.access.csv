@@ -7,3 +7,5 @@ finance_request_read,Finance reads requisitions,purchase.request,hijra_finance.g
 finance_grn_read,Finance reads goods received notes,procurement.grn,hijra_finance.group_finance_user,r,
 finance_grn_line_read,Finance reads goods received note items,procurement.grn.line,hijra_finance.group_finance_user,r,
 finance_completion_read,Finance reads completion notes,procurement.completion,hijra_finance.group_finance_user,r,
+finance_rfq_read,Finance reads RFQs,purchase.request.rfq,hijra_finance.group_finance_user,r,
+finance_signoff_read,Finance reads committee signatures,procurement.signoff,hijra_finance.group_finance_user,r,

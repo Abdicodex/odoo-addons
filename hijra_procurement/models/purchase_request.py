@@ -2,7 +2,8 @@ from odoo import api, models
 
 
 class PurchaseRequest(models.Model):
-    _inherit = 'purchase.request'
+    _inherit = ['purchase.request', 'procurement.touch.mixin']
+    _file_path = ''
 
     @api.model_create_multi
     def create(self, vals_list):

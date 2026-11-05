@@ -9,6 +9,8 @@
                 <field name="project_id"/>
                 <field name="requester_id" widget="many2one_avatar_user" optional="show"/>
                 <field name="vendor_id" optional="show"/>
+                <field name="next_action" optional="show"/>
+                <field name="waiting_names" optional="show"/>
                 <field name="amount_total" widget="monetary"/>
                 <field name="currency_id" column_invisible="True"/>
                 <field name="stage" widget="badge"
@@ -17,6 +19,29 @@
                        decoration-success="stage == 'paid'"
                        decoration-danger="stage == 'cancelled'"/>
             </list>
+        </field>
+    </record>
+
+    <record id="procurement_file_view_kanban" model="ir.ui.view">
+        <field name="name">procurement.file.kanban</field>
+        <field name="model">procurement.file</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="stage" group_create="0" group_delete="0" group_edit="0"
+                    records_draggable="0" quick_create="0">
+                <field name="currency_id"/>
+                <templates>
+                    <t t-name="card">
+                        <div class="d-flex justify-content-between">
+                            <strong><field name="name"/></strong>
+                            <field name="amount_total" widget="monetary"/>
+                        </div>
+                        <div class="text-muted"><field name="project_id"/></div>
+                        <div><field name="vendor_id"/></div>
+                        <div class="mt-1 fw-bold text-primary"><field name="next_action"/></div>
+                        <div class="text-muted small"><field name="waiting_names"/></div>
+                    </t>
+                </templates>
+            </kanban>
         </field>
     </record>
 
@@ -132,7 +157,10 @@
                 <field name="project_id"/>
                 <field name="requester_id"/>
                 <field name="vendor_id"/>
+                <filter name="waiting_me" string="Waiting for me" domain="[('waiting_user_ids', 'in', [uid])]"/>
+                <filter name="open" string="In progress" domain="[('stage', 'not in', ('paid', 'cancelled'))]"/>
                 <group>
+                    <filter name="group_stage" string="Stage" context="{'group_by': 'stage'}"/>
                     <filter name="group_project" string="Project" context="{'group_by': 'project_id'}"/>
                     <filter name="group_requester" string="Requester" context="{'group_by': 'requester_id'}"/>
                 </group>
@@ -143,12 +171,26 @@
     <record id="procurement_file_action" model="ir.actions.act_window">
         <field name="name">Procurement Files</field>
         <field name="res_model">procurement.file</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">kanban,list,form</field>
         <field name="search_view_id" ref="procurement_file_view_search"/>
         <field name="context">{'create': False}</field>
         <field name="help" type="html">
             <p class="o_view_nocontent_smiling_face">No procurement yet</p>
             <p>Every requisition gets a file here showing each step and its documents.</p>
+        </field>
+    </record>
+
+    <!-- My Work: the same files, showing first what waits for the person who opens it -->
+    <record id="procurement_file_my_work_action" model="ir.actions.act_window">
+        <field name="name">My Work</field>
+        <field name="res_model">procurement.file</field>
+        <field name="view_mode">kanban,list,form</field>
+        <field name="search_view_id" ref="procurement_file_view_search"/>
+        <field name="context">{'create': False, 'search_default_waiting_me': 1}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">Nothing is waiting for you</p>
+            <p>Purchases that need your action (to verify, approve, sign, check, receive, pay...) show here.
+               Remove the filter to see all purchases you can access.</p>
         </field>
     </record>
 

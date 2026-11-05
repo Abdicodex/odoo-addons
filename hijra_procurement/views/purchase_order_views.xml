@@ -13,6 +13,9 @@
                         class="oe_highlight"
                         invisible="state not in ('draft', 'sent', 'to approve') or not po_check_date or po_authorize_date"/>
             </xpath>
+            <field name="partner_ref" position="after">
+                <field name="po_date" readonly="state == 'cancel'"/>
+            </field>
             <xpath expr="//form/sheet" position="before">
                 <div class="alert alert-info mb-0" role="alert"
                      invisible="not rfq_group_id or po_authorize_date or state not in ('draft', 'sent', 'to approve')">
@@ -26,11 +29,13 @@
                     <group>
                         <group>
                             <field name="po_check_user_id"/>
-                            <field name="po_check_date"/>
+                            <field name="po_check_date" groups="!purchase.group_purchase_manager"/>
+                            <field name="po_check_date" readonly="0" groups="purchase.group_purchase_manager"/>
                         </group>
                         <group>
                             <field name="po_authorize_user_id"/>
-                            <field name="po_authorize_date"/>
+                            <field name="po_authorize_date" groups="!purchase.group_purchase_manager"/>
+                            <field name="po_authorize_date" readonly="0" groups="purchase.group_purchase_manager"/>
                         </group>
                     </group>
                     <p class="text-muted">

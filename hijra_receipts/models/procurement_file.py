@@ -46,6 +46,24 @@ class ProcurementFile(models.Model):
         index = next((i for i, step in enumerate(steps) if step['name'] == anchor), len(steps) - 1) + 1
         return steps[:index] + new + steps[index:]
 
+    def _after_order(self, order):
+        """Who has to receive the goods or complete the service before the payment."""
+        Users = self.env['res.users']
+        order = order.sudo()
+        buyers = self.env['hijra.role']._get_users('procurement_officer')
+        if order.is_fully_received():
+            return super()._after_order(order)
+        if order.receipt_type == 'service':
+            note = order.completion_ids.filtered(lambda c: c.state == 'draft')[:1]
+            if note:
+                return _("Approve the service completion note"), note.approver_id
+            return _("Write the service completion note"), buyers
+        grns = order.grn_ids.filtered(lambda g: g.state != 'cancelled')
+        waiting = grns.filtered(lambda g: g.state == 'received')[:1]
+        if waiting:
+            return _("Check the goods received"), waiting.checked_by_id
+        return _("Receive the goods"), buyers
+
     def _extra_pdf_parts(self, font_dir):
         from ..report import completion_pdf, grn_pdf
         _order, grns, notes = self._receipts()

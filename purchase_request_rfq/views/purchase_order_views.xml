@@ -7,7 +7,10 @@
         <field name="arch" type="xml">
             <field name="partner_ref" position="after">
                 <field name="rfq_subject" readonly="state in ('cancel', 'purchase')"/>
+                <field name="rfq_date" readonly="state in ('cancel', 'purchase')"/>
                 <field name="rfq_project_id" options="{'no_create': True}"
+                       readonly="state in ('cancel', 'purchase')"/>
+                <field name="rfq_budget_id" options="{'no_create': True}"
                        readonly="state in ('cancel', 'purchase')"/>
                 <field name="rfq_location_id" options="{'no_create': True}"
                        readonly="state in ('cancel', 'purchase')"/>

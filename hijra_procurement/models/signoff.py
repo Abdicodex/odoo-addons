@@ -22,6 +22,8 @@ REPORT_NAMES = {
 class ProcurementSignoff(models.Model):
     """One member's signature on one committee document of an RFQ."""
     _name = 'procurement.signoff'
+    _inherit = ['procurement.touch.mixin']
+    _file_path = 'rfq_id.request_id'
     _description = 'Committee Signature'
     _order = 'rfq_id, document, sequence, id'
 

@@ -112,7 +112,10 @@
                             <div class="mb-2">
                                 <strong><field name="member_name" readonly="1" class="d-inline"/></strong>
                                 <span class="text-muted"> - </span>
-                                <field name="signed_date" readonly="1" class="d-inline"/>
+                                <field name="signed_date" readonly="1" class="d-inline"
+                                   groups="!purchase.group_purchase_manager"/>
+                            <field name="signed_date" readonly="0" class="d-inline"
+                                   groups="purchase.group_purchase_manager"/>
                             </div>
                             <field name="preview_pdf" widget="pdf_viewer" nolabel="1" readonly="1"/>
                             <footer>

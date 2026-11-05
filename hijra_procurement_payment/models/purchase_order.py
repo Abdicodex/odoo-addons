@@ -42,6 +42,9 @@ class PurchaseOrder(models.Model):
         notes = _("Purchase order %s", self.name)
         if self.partner_ref:
             notes += " / " + _("Vendor reference %s", self.partner_ref)
+        invoices = ', '.join(filter(None, self.sudo().grn_ids.filtered(lambda g: g.state != 'cancelled').mapped('invoice_number')))
+        if invoices:
+            notes += " / " + _("Invoice %s", invoices)
         return {
             'type': 'ir.actions.act_window',
             'name': _('Pay Vendor'),
@@ -56,7 +59,7 @@ class PurchaseOrder(models.Model):
                 'default_description': description,
                 'default_notes': notes,
                 'default_project_id': (self.rfq_project_id or request.project_id).id,
-                'default_budget_id': request.budget_id.id,
+                'default_budget_id': (self.rfq_budget_id or request.budget_id).id,
             },
         }
 

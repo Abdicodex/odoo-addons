@@ -19,6 +19,12 @@ class PurchaseOrder(models.Model):
     rfq_subject = fields.Char(
         string='Subject', help="What the RFQ is for, printed under 'Subject' on the document.")
     rfq_project_id = fields.Many2one('project.project', string='Project')
+    rfq_budget_id = fields.Many2one(
+        'project.task', string='Budget Line',
+        domain="[('project_id', '=', rfq_project_id), ('budget_code', '!=', False)]")
+    rfq_date = fields.Date(
+        string='RFQ Date', default=fields.Date.context_today, copy=False,
+        help="The date printed on the Request for Quotation. Change it when the document is back-dated.")
     rfq_location_id = fields.Many2one('hijra.location', string='Delivery Location')
     rfq_validity_days = fields.Integer(
         string='Quotation Validity (days)', default=90,
@@ -66,7 +72,7 @@ class PurchaseOrder(models.Model):
         rows += [
             ('Project Name', project.name or ''),
             ('Delivery Location', self.rfq_location_id.sudo().name or ''),
-            ('RFQ Date', rfq_pdf.fmt_long_date(local(self.create_date))),
+            ('RFQ Date', rfq_pdf.fmt_long_date(self.rfq_date or local(self.create_date))),
             ('Submission Deadline', rfq_pdf.fmt_short_date(deadline)),
         ]
         return {

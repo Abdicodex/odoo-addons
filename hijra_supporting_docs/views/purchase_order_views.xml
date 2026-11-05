@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_order_view_form_expenditure" model="ir.ui.view">
+        <field name="name">purchase.order.form.expenditure</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="arch" type="xml">
+            <field name="partner_ref" position="after">
+                <field name="expenditure_type_id" invisible="not expenditure_type_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="purchase_request_rfq_view_form_expenditure" model="ir.ui.view">
+        <field name="name">purchase.request.rfq.form.expenditure</field>
+        <field name="model">purchase.request.rfq</field>
+        <field name="inherit_id" ref="purchase_request_rfq.purchase_request_rfq_view_form"/>
+        <field name="arch" type="xml">
+            <field name="request_id" position="after">
+                <field name="project_id"/>
+                <field name="budget_id"/>
+                <field name="location_id"/>
+            </field>
+        </field>
+    </record>
+</odoo>

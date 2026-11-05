@@ -14,6 +14,26 @@ class ProcurementFile(models.Model):
             return 'paid'
         return super()._stage_after_order(order)
 
+    def _after_order(self, order):
+        """The payment, once the goods or service have been received."""
+        text, users = super()._after_order(order)
+        if text:
+            return text, users
+        order = order.sudo()
+        if order.payment_status == 'paid':
+            return '', users
+        Role = self.env['hijra.role']
+        finance = Role._get_users('finance_officer') | Role._get_users('fa_officer')
+        payments = self._payments()
+        pending = payments.filtered(lambda t: t.state in ('draft', 'to_approve', 'approved'))[:1]
+        if not pending:
+            return (_("Pay the balance") if payments else _("Pay the vendor")), finance
+        if pending.state == 'draft':
+            return _("Send the payment for approval"), pending.create_uid | finance
+        if pending.state == 'to_approve':
+            return _("Approve the payment"), pending.approver_id or finance
+        return _("Post the payment"), finance
+
     def _build_steps(self):
         steps = super()._build_steps()
         order = self._awarded_order()

@@ -13,6 +13,7 @@
                                options="{'no_create': True}"/>
                     </group>
                     <group>
+                        <field name="rfq_date"/>
                         <field name="deadline"/>
                         <field name="validity_days"/>
                     </group>

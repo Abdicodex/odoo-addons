@@ -6,13 +6,16 @@
     </record>
 
     <menuitem id="menu_procurement_root" name="Procurement Committee" parent="purchase.menu_purchase_root"
-              sequence="6" groups="group_procurement_committee,purchase.group_purchase_user"/>
+              sequence="6" groups="group_procurement_committee,purchase.group_purchase_user,base.group_system"/>
     <menuitem id="menu_procurement_sessions" name="Committee Sessions" parent="menu_procurement_root"
               action="purchase_request_rfq_committee_action" sequence="10"/>
 
     <!-- one screen per purchase with its steps and documents -->
+    <menuitem id="menu_procurement_my_work" name="My Work" parent="purchase.menu_procurement_management"
+              action="procurement_file_my_work_action" sequence="-20"/>
     <menuitem id="menu_procurement_files" name="Procurement Files" parent="purchase.menu_procurement_management"
-              action="procurement_file_action" sequence="-8"/>
+              action="procurement_file_action" sequence="-8"
+              groups="purchase.group_purchase_user,group_procurement_committee,base.group_system"/>
 
     <!-- the settings live in the Purchase Configuration menu -->
     <menuitem id="menu_procurement_committee" name="Committee" parent="purchase.menu_purchase_config"

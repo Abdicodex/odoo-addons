@@ -14,7 +14,7 @@ checklist):
 * Print Pack: a checklist cover sheet, then every document in order; uploaded PDFs and images are
   printed automatically.
     """,
-    'version': '20.0.1.2.0',
+    'version': '20.0.1.3.0',
     'category': 'Accounting',
     'license': 'LGPL-3',
     'depends': ['hijra_receipts', 'hijra_procurement_payment'],
@@ -24,6 +24,7 @@ checklist):
         'views/supporting_views.xml',
         'views/finance_transaction_views.xml',
         'views/purchase_request_views.xml',
+        'views/purchase_order_views.xml',
         'views/menus.xml',
         'data/supporting_docs_data.xml',
     ],

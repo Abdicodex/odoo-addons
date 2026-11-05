@@ -7,7 +7,8 @@ class ProcurementGrn(models.Model):
     received it and checked by a different person (the manual keeps receiving and inspection apart)."""
     _name = 'procurement.grn'
     _description = 'Goods Received Note'
-    _inherit = ['mail.thread', 'mail.activity.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin', 'procurement.touch.mixin']
+    _file_path = 'request_id'
     _order = 'id desc'
 
     name = fields.Char(string='GRN No', default='New', copy=False, readonly=True, tracking=True)
@@ -20,6 +21,8 @@ class ProcurementGrn(models.Model):
     partner_id = fields.Many2one(related='order_id.partner_id', string='Vendor', store=True)
     company_id = fields.Many2one(related='order_id.company_id', store=True)
     request_id = fields.Many2one(related='order_id.purchase_request_id', store=True)
+    project_id = fields.Many2one(related='order_id.rfq_project_id', string='Project')
+    budget_id = fields.Many2one(related='order_id.rfq_budget_id', string='Budget Line')
     date = fields.Date(string='Date Received', default=fields.Date.context_today, tracking=True)
     location = fields.Char()
     invoice_number = fields.Char(string='Invoice Number')

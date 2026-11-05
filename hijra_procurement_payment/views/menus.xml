@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Finance sees every procurement screen, like the administrators -->
+    <record id="purchase.menu_purchase_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="purchase.menu_purchase_rfq" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="purchase.menu_purchase_form_action" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="hijra_procurement.menu_procurement_root" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="hijra_procurement.menu_procurement_files" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="hijra_receipts.menu_procurement_grn" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+    <record id="hijra_receipts.menu_procurement_completion" model="ir.ui.menu">
+        <field name="group_ids" eval="[(4, ref('hijra_finance.group_finance_user'))]"/>
+    </record>
+</odoo>

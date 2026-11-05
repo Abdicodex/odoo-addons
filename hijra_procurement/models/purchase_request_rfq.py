@@ -24,9 +24,13 @@ def _clock(value):
 
 
 class PurchaseRequestRfq(models.Model):
-    _inherit = ['purchase.request.rfq', 'mail.activity.mixin']
+    _inherit = ['purchase.request.rfq', 'mail.activity.mixin', 'procurement.touch.mixin']
+    _file_path = 'request_id'
 
     currency_id = fields.Many2one(related='request_id.currency_id')
+    project_id = fields.Many2one(related='request_id.project_id', string='Project')
+    budget_id = fields.Many2one(related='request_id.budget_id', string='Budget Line')
+    location_id = fields.Many2one(related='request_id.location_id', string='Location')
     procurement_amount = fields.Monetary(
         string='Estimated Value', related='request_id.amount_total', currency_field='currency_id')
     band_id = fields.Many2one(
@@ -250,7 +254,8 @@ class PurchaseRequestRfq(models.Model):
             'rfq_name': self.name or '',
             'project': request.project_id.name or '',
             'subject': self.subject or '',
-            'rfq_date': local(self.create_date).date() if self.create_date else None,
+            'rfq_date': self.order_ids.sorted('id')[:1].rfq_date or (
+                local(self.create_date).date() if self.create_date else None),
             'date': self.meeting_date,
             'vendors': vendors,
             'items': items,
