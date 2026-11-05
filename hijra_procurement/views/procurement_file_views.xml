@@ -76,7 +76,7 @@
                                                     <button type="object" name="action_open" class="btn btn-sm btn-primary"
                                                             t-if="record.open_model.raw_value">Open</button>
                                                     <button type="object" name="action_create" class="btn btn-sm btn-success"
-                                                            t-if="record.create_method.raw_value and record.state.raw_value != 'done'"><t t-esc="record.create_label.value"/></button>
+                                                            t-if="record.create_method.raw_value and record.state.raw_value != 'done'"><field name="create_label"/></button>
                                                     <button type="object" name="action_print" class="btn btn-sm btn-secondary"
                                                             t-if="record.print_xmlid.raw_value">Print</button>
                                                 </div>
