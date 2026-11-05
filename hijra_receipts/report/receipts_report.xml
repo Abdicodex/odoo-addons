@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- The PDFs are drawn by report/grn_pdf.py and report/completion_pdf.py (see models/ir_actions_report.py). -->
+    <record id="action_report_grn" model="ir.actions.report">
+        <field name="name">Goods Received Note</field>
+        <field name="model">procurement.grn</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_receipts.report_grn</field>
+        <field name="print_report_name">'GRN - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_procurement_grn"/>
+        <field name="binding_type">report</field>
+    </record>
+    <record id="action_report_completion" model="ir.actions.report">
+        <field name="name">Service Completion Note</field>
+        <field name="model">procurement.completion</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_receipts.report_completion</field>
+        <field name="print_report_name">'Completion Note - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_procurement_completion"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

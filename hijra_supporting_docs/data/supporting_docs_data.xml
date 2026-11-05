@@ -1,0 +1,2945 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <!-- Generated from the Concern Supporting Documents Checklist. Edit freely in the app. -->
+    <record id="doc_approved_sr" model="supporting.document.type">
+        <field name="name">Approved SR</field>
+        <field name="source">requisition</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="doc_quotes_tender_and_supporting_documentation" model="supporting.document.type">
+        <field name="name">Quotes / Tender and supporting documentation</field>
+        <field name="source">quotes</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="doc_quote_tender_evaluation_form" model="supporting.document.type">
+        <field name="name">Quote / Tender evaluation form</field>
+        <field name="source">evaluation</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="doc_purchase_order_lpo_or_contract" model="supporting.document.type">
+        <field name="name">Purchase Order (LPO) or Contract</field>
+        <field name="source">order</field>
+        <field name="sequence">40</field>
+        <field name="description">For Hotel payment</field>
+    </record>
+    <record id="doc_vehicle_log_book_sheet" model="supporting.document.type">
+        <field name="name">Vehicle log book / sheet</field>
+        <field name="source">manual</field>
+        <field name="sequence">50</field>
+        <field name="description">Should have passengers and driver signature for all visits and approved by logistic</field>
+    </record>
+    <record id="doc_invoice_original_certified" model="supporting.document.type">
+        <field name="name">Invoice (original, certified)</field>
+        <field name="source">manual</field>
+        <field name="sequence">60</field>
+        <field name="description">For company security escort (if applicable)</field>
+    </record>
+    <record id="doc_payment_request_form" model="supporting.document.type">
+        <field name="name">Payment Request Form</field>
+        <field name="source">voucher</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="doc_proof_of_payment" model="supporting.document.type">
+        <field name="name">Proof of payment</field>
+        <field name="source">manual</field>
+        <field name="sequence">80</field>
+        <field name="description">Including payment reports from the telecom company</field>
+    </record>
+    <record id="doc_note_to_file" model="supporting.document.type">
+        <field name="name">Note to file</field>
+        <field name="source">manual</field>
+        <field name="sequence">90</field>
+        <field name="description">Please include a note to file explaining anything that might be unclear in the documentation (if applicable)</field>
+    </record>
+    <record id="doc_derogation_waiver" model="supporting.document.type">
+        <field name="name">Derogation waiver</field>
+        <field name="source">manual</field>
+        <field name="sequence">100</field>
+        <field name="description">Please ensure a copy of any derogation waiver applicable to this purchase is attached</field>
+    </record>
+    <record id="doc_approved_travel_authorisation_form_ta" model="supporting.document.type">
+        <field name="name">Approved Travel Authorisation Form (TA)</field>
+        <field name="source">manual</field>
+        <field name="sequence">110</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="doc_per_diem_calculator_form" model="supporting.document.type">
+        <field name="name">Per Diem Calculator form</field>
+        <field name="source">manual</field>
+        <field name="sequence">120</field>
+        <field name="description">Per Diem Policy to confirm the applicable perdiem rate</field>
+    </record>
+    <record id="doc_copy_of_ticket_boarding_pass" model="supporting.document.type">
+        <field name="name">Copy of ticket / boarding pass</field>
+        <field name="source">manual</field>
+        <field name="sequence">130</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="doc_contract_framework_agreement_signed" model="supporting.document.type">
+        <field name="name">Contract / framework agreement (signed)</field>
+        <field name="source">manual</field>
+        <field name="sequence">140</field>
+    </record>
+    <record id="doc_purchase_order_lpo" model="supporting.document.type">
+        <field name="name">Purchase Order (LPO)</field>
+        <field name="source">order</field>
+        <field name="sequence">150</field>
+    </record>
+    <record id="doc_material_sample" model="supporting.document.type">
+        <field name="name">Material sample</field>
+        <field name="source">manual</field>
+        <field name="sequence">160</field>
+    </record>
+    <record id="doc_delivery_note_goods_received_note_grn" model="supporting.document.type">
+        <field name="name">Delivery note / Goods received note (GRN)</field>
+        <field name="source">receipt</field>
+        <field name="sequence">170</field>
+    </record>
+    <record id="doc_distribution_beneficiaries_list" model="supporting.document.type">
+        <field name="name">Distribution / beneficiaries list</field>
+        <field name="source">manual</field>
+        <field name="sequence">180</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="doc_service_rendered_completion_certificate" model="supporting.document.type">
+        <field name="name">Service rendered / completion certificate</field>
+        <field name="source">receipt</field>
+        <field name="sequence">190</field>
+    </record>
+    <record id="doc_terms_of_reference_approved" model="supporting.document.type">
+        <field name="name">Terms of Reference (approved)</field>
+        <field name="source">manual</field>
+        <field name="sequence">200</field>
+    </record>
+    <record id="doc_signed_mou_with_relevant_authority_community" model="supporting.document.type">
+        <field name="name">Signed MoU with relevant authority / community</field>
+        <field name="source">manual</field>
+        <field name="sequence">210</field>
+    </record>
+    <record id="doc_supervision_visit_inspection_report" model="supporting.document.type">
+        <field name="name">Supervision / visit / inspection report</field>
+        <field name="source">manual</field>
+        <field name="sequence">220</field>
+    </record>
+    <record id="doc_communication_concern_and_ministry_about_supervision" model="supporting.document.type">
+        <field name="name">Communication (Concern and Ministry) about supervision</field>
+        <field name="source">manual</field>
+        <field name="sequence">230</field>
+    </record>
+    <record id="doc_germination_test" model="supporting.document.type">
+        <field name="name">Germination Test</field>
+        <field name="source">manual</field>
+        <field name="sequence">240</field>
+    </record>
+    <record id="doc_training_meeting_work_plan_invitation_minutes_or_report" model="supporting.document.type">
+        <field name="name">Training / meeting work plan, invitation, minutes or report</field>
+        <field name="source">manual</field>
+        <field name="sequence">250</field>
+    </record>
+    <record id="doc_payment_list_names_titles_amounts_account_numbers" model="supporting.document.type">
+        <field name="name">Payment list (names, titles, amounts, account numbers)</field>
+        <field name="source">manual</field>
+        <field name="sequence">260</field>
+        <field name="description">In case paying many casuals (if applicable)</field>
+    </record>
+    <record id="doc_list_of_participants_signed_and_certified" model="supporting.document.type">
+        <field name="name">List of participants (signed and certified)</field>
+        <field name="source">manual</field>
+        <field name="sequence">270</field>
+    </record>
+    <record id="doc_contract_or_signed_mou" model="supporting.document.type">
+        <field name="name">Contract or signed MoU</field>
+        <field name="source">manual</field>
+        <field name="sequence">280</field>
+    </record>
+    <record id="doc_survey_report" model="supporting.document.type">
+        <field name="name">Survey report</field>
+        <field name="source">manual</field>
+        <field name="sequence">290</field>
+    </record>
+    <record id="doc_approved_sr_travel_authorisation_ta" model="supporting.document.type">
+        <field name="name">Approved SR / Travel Authorisation (TA)</field>
+        <field name="source">requisition</field>
+        <field name="sequence">300</field>
+    </record>
+    <record id="doc_guest_bill_signed_by_staff" model="supporting.document.type">
+        <field name="name">Guest bill signed by staff</field>
+        <field name="source">manual</field>
+        <field name="sequence">310</field>
+    </record>
+    <record id="doc_fuel_release_voucher_from_concern_and_service_station" model="supporting.document.type">
+        <field name="name">Fuel release voucher from Concern and service station</field>
+        <field name="source">manual</field>
+        <field name="sequence">320</field>
+    </record>
+    <record id="doc_staff_contract_signed" model="supporting.document.type">
+        <field name="name">Staff contract (signed)</field>
+        <field name="source">manual</field>
+        <field name="sequence">330</field>
+    </record>
+    <record id="doc_approved_staff_master_payroll" model="supporting.document.type">
+        <field name="name">Approved Staff Master Payroll</field>
+        <field name="source">manual</field>
+        <field name="sequence">340</field>
+    </record>
+    <record id="doc_signed_sga_or_mou_and_request_for_payment_from_partner" model="supporting.document.type">
+        <field name="name">Signed SGA or MoU and request for payment from partner</field>
+        <field name="source">manual</field>
+        <field name="sequence">350</field>
+    </record>
+    <record id="doc_approved_financial_report_2nd_and_subsequent_payments" model="supporting.document.type">
+        <field name="name">Approved financial report (2nd and subsequent payments)</field>
+        <field name="source">manual</field>
+        <field name="sequence">360</field>
+    </record>
+    <record id="doc_casual_labour_form_contract" model="supporting.document.type">
+        <field name="name">Casual Labour form / contract</field>
+        <field name="source">manual</field>
+        <field name="sequence">370</field>
+    </record>
+    <record id="exp_vehicle_rental" model="expenditure.type">
+        <field name="name">Vehicle Rental</field>
+        <field name="sequence">10</field>
+    </record>
+    <record id="exp_vehicle_rental_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+        <field name="description">Should have passengers and driver signature for all visits and approved by logistic</field>
+    </record>
+    <record id="exp_vehicle_rental_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_rental_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_note_to_file"/>
+        <field name="sequence">90</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please include a note to file explaining anything that might be unclear in the documentation (if applicable)</field>
+    </record>
+    <record id="exp_vehicle_rental_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_rental"/>
+        <field name="document_type_id" ref="doc_derogation_waiver"/>
+        <field name="sequence">100</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please ensure a copy of any derogation waiver applicable to this purchase is attached</field>
+    </record>
+    <record id="exp_per_diem" model="expenditure.type">
+        <field name="name">Per Diem</field>
+        <field name="sequence">20</field>
+    </record>
+    <record id="exp_per_diem_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_per_diem"/>
+        <field name="document_type_id" ref="doc_approved_travel_authorisation_form_ta"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_per_diem_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_per_diem"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_per_diem_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_per_diem"/>
+        <field name="document_type_id" ref="doc_per_diem_calculator_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+        <field name="description">Per Diem Policy to confirm the applicable perdiem rate</field>
+    </record>
+    <record id="exp_per_diem_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_per_diem"/>
+        <field name="document_type_id" ref="doc_copy_of_ticket_boarding_pass"/>
+        <field name="sequence">40</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_office_rent" model="expenditure.type">
+        <field name="name">Office Rent</field>
+        <field name="sequence">30</field>
+    </record>
+    <record id="exp_office_rent_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_office_rent_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_office_rent_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_office_rent_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_office_rent_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_office_rent_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_note_to_file"/>
+        <field name="sequence">60</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please include a note to file explaining anything that might be unclear in the documentation (if applicable)</field>
+    </record>
+    <record id="exp_office_rent_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_office_rent"/>
+        <field name="document_type_id" ref="doc_derogation_waiver"/>
+        <field name="sequence">70</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please ensure a copy of any derogation waiver applicable to this purchase is attached</field>
+    </record>
+    <record id="exp_visibility" model="expenditure.type">
+        <field name="name">Visibility</field>
+        <field name="sequence">40</field>
+    </record>
+    <record id="exp_visibility_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_material_sample"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">70</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_visibility_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_visibility_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_visibility"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc" model="expenditure.type">
+        <field name="name">Staff travel costs (Flights etc)</field>
+        <field name="sequence">50</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_approved_travel_authorisation_form_ta"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_copy_of_ticket_boarding_pass"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_travel_costs_flights_etc_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_travel_costs_flights_etc"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral" model="expenditure.type">
+        <field name="name">GBV sensitization and referral</field>
+        <field name="sequence">60</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_gbv_sensitization_and_referral_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_gbv_sensitization_and_referral"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution" model="expenditure.type">
+        <field name="name">Hygiene kit distribution</field>
+        <field name="sequence">70</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hygiene_kit_distribution_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hygiene_kit_distribution"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials" model="expenditure.type">
+        <field name="name">IEC materials</field>
+        <field name="sequence">80</field>
+    </record>
+    <record id="exp_iec_materials_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_material_sample"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">70</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_iec_materials_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_iec_materials_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_iec_materials"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision" model="expenditure.type">
+        <field name="name">Technical onsite supervision</field>
+        <field name="sequence">90</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_terms_of_reference_approved"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_supervision_visit_inspection_report"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_communication_concern_and_ministry_about_supervision"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_technical_onsite_supervision_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_technical_onsite_supervision"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa" model="expenditure.type">
+        <field name="name">Seed germination tests MoA</field>
+        <field name="sequence">100</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_germination_test"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_seed_germination_tests_moa_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_seed_germination_tests_moa"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package" model="expenditure.type">
+        <field name="name">Fodder production package</field>
+        <field name="sequence">110</field>
+    </record>
+    <record id="exp_fodder_production_package_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_fodder_production_package_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_fodder_production_package"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods" model="expenditure.type">
+        <field name="name">Purchase of supplies/goods</field>
+        <field name="sequence">120</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_supplies_goods_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_supplies_goods"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work" model="expenditure.type">
+        <field name="name">Procurement of Services/Works (Construction/Engineering work)</field>
+        <field name="sequence">130</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_procurement_of_services_works_construction_engineering_work_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_procurement_of_services_works_construction_engineering_work"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country" model="expenditure.type">
+        <field name="name">Staff training (in-country)</field>
+        <field name="sequence">140</field>
+    </record>
+    <record id="exp_staff_training_in_country_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_in_country_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_in_country"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern" model="expenditure.type">
+        <field name="name">Staff training (overseas &amp; sponsored by Concern)</field>
+        <field name="sequence">150</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_training_overseas_sponsored_by_concern_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_training_overseas_sponsored_by_concern"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_casual_labour" model="expenditure.type">
+        <field name="name">Casual Labour</field>
+        <field name="sequence">160</field>
+    </record>
+    <record id="exp_casual_labour_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_casual_labour_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_casual_labour_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">30</field>
+        <field name="requirement">optional</field>
+        <field name="description">In case paying many casuals (if applicable)</field>
+    </record>
+    <record id="exp_casual_labour_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_casual_labour_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_casual_labour_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_casual_labour"/>
+        <field name="document_type_id" ref="doc_casual_labour_form_contract"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting" model="expenditure.type">
+        <field name="name">Programme Meeting</field>
+        <field name="sequence">170</field>
+    </record>
+    <record id="exp_programme_meeting_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_approved_travel_authorisation_form_ta"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_meeting_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_meeting"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg" model="expenditure.type">
+        <field name="name">Grants to Self Help Groups (SHG)</field>
+        <field name="sequence">180</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">40</field>
+        <field name="requirement">optional</field>
+        <field name="description">Where you are to several SHGs (if applicable)</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_grants_to_self_help_groups_shg_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_grants_to_self_help_groups_shg"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire" model="expenditure.type">
+        <field name="name">Equipment hire</field>
+        <field name="sequence">190</field>
+    </record>
+    <record id="exp_equipment_hire_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_equipment_hire_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_equipment_hire"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries" model="expenditure.type">
+        <field name="name">Programme training for beneficiaries</field>
+        <field name="sequence">200</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_beneficiaries_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_beneficiaries"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws" model="expenditure.type">
+        <field name="name">Programme training for CWs</field>
+        <field name="sequence">210</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_programme_training_for_cws_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_programme_training_for_cws"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives" model="expenditure.type">
+        <field name="name">Community Workers Incentives</field>
+        <field name="sequence">220</field>
+    </record>
+    <record id="exp_community_workers_incentives_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_community_workers_incentives_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_community_workers_incentives"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision" model="expenditure.type">
+        <field name="name">Joint Monitor and Supervision</field>
+        <field name="sequence">230</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_terms_of_reference_approved"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_communication_concern_and_ministry_about_supervision"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_supervision_visit_inspection_report"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_joint_monitor_and_supervision_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_joint_monitor_and_supervision"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff" model="expenditure.type">
+        <field name="name">Reimbers'mt work related staff</field>
+        <field name="sequence">240</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_approved_travel_authorisation_form_ta"/>
+        <field name="sequence">30</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_copy_of_ticket_boarding_pass"/>
+        <field name="sequence">40</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_reimbers_mt_work_related_staff_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_reimbers_mt_work_related_staff"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy" model="expenditure.type">
+        <field name="name">Consultancy</field>
+        <field name="sequence">250</field>
+    </record>
+    <record id="exp_consultancy_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_terms_of_reference_approved"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_consultancy_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_note_to_file"/>
+        <field name="sequence">100</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please include a note to file explaining anything that might be unclear in the documentation (if applicable)</field>
+    </record>
+    <record id="exp_consultancy_l11" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_consultancy"/>
+        <field name="document_type_id" ref="doc_derogation_waiver"/>
+        <field name="sequence">110</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please ensure a copy of any derogation waiver applicable to this purchase is attached</field>
+    </record>
+    <record id="exp_security_escorts" model="expenditure.type">
+        <field name="name">Security Escorts</field>
+        <field name="sequence">260</field>
+    </record>
+    <record id="exp_security_escorts_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_security_escorts_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_contract_or_signed_mou"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_security_escorts_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_security_escorts_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+        <field name="description">When paying SPU Personnel in Somaliland</field>
+    </record>
+    <record id="exp_security_escorts_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">50</field>
+        <field name="requirement">optional</field>
+        <field name="description">For company security escort (if applicable)</field>
+    </record>
+    <record id="exp_security_escorts_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_security_escorts_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_security_escorts"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys" model="expenditure.type">
+        <field name="name">Baseline Surveys</field>
+        <field name="sequence">270</field>
+    </record>
+    <record id="exp_baseline_surveys_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_survey_report"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">optional</field>
+        <field name="description">(if applicable)</field>
+    </record>
+    <record id="exp_baseline_surveys_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_baseline_surveys_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_baseline_surveys"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection" model="expenditure.type">
+        <field name="name">Utilities (Water, Power, Gabbage collection)</field>
+        <field name="sequence">280</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_utilities_water_power_gabbage_collection"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_utilities_water_power_gabbage_collection"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_utilities_water_power_gabbage_collection"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_utilities_water_power_gabbage_collection"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_utilities_water_power_gabbage_collection_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_utilities_water_power_gabbage_collection"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator" model="expenditure.type">
+        <field name="name">Incentives - Master Trainers &amp; Coordinator</field>
+        <field name="sequence">290</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_terms_of_reference_approved"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+        <field name="description">When paying for more than one</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_incentives_master_trainers_coordinator_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_incentives_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator" model="expenditure.type">
+        <field name="name">Food, Accomondation &amp; Transport - Master Trainers &amp; Coordinator</field>
+        <field name="sequence">300</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+        <field name="description">For Hotel payment</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+        <field name="description">For Transport reimbursement</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_copy_of_ticket_boarding_pass"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_food_accomondation_transport_master_trainers_coordinator_l11" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_food_accomondation_transport_master_trainers_coordinator"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">110</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives" model="expenditure.type">
+        <field name="name">Teacher Incentives</field>
+        <field name="sequence">310</field>
+    </record>
+    <record id="exp_teacher_incentives_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_teacher_incentives_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_teacher_incentives"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments" model="expenditure.type">
+        <field name="name">Hotel Accomondation payments</field>
+        <field name="sequence">320</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_approved_sr_travel_authorisation_ta"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_guest_bill_signed_by_staff"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_hotel_accomondation_payments_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_hotel_accomondation_payments"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes" model="expenditure.type">
+        <field name="name">Meeting Package - Meals/refreshment/Venue paymentes</field>
+        <field name="sequence">330</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_approved_sr_travel_authorisation_ta"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_training_meeting_work_plan_invitation_minutes_or_report"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_meeting_package_meals_refreshment_venue_paymentes_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_meeting_package_meals_refreshment_venue_paymentes"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_telephone_bills" model="expenditure.type">
+        <field name="name">Telephone bills</field>
+        <field name="sequence">340</field>
+    </record>
+    <record id="exp_telephone_bills_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_telephone_bills"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_telephone_bills_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_telephone_bills"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_telephone_bills_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_telephone_bills"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_telephone_bills_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_telephone_bills"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_telephone_bills_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_telephone_bills"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_internet_bills" model="expenditure.type">
+        <field name="name">Internet bills</field>
+        <field name="sequence">350</field>
+    </record>
+    <record id="exp_internet_bills_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_internet_bills"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_internet_bills_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_internet_bills"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_internet_bills_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_internet_bills"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_internet_bills_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_internet_bills"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_internet_bills_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_internet_bills"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage" model="expenditure.type">
+        <field name="name">Vehicle Repairs - Garage</field>
+        <field name="sequence">360</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_repairs_garage_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_repairs_garage"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station" model="expenditure.type">
+        <field name="name">Vehicle Fuel - Petrol Station</field>
+        <field name="sequence">370</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_vehicle_log_book_sheet"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_fuel_release_voucher_from_concern_and_service_station"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_vehicle_fuel_petrol_station_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_vehicle_fuel_petrol_station"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants" model="expenditure.type">
+        <field name="name">School Grants</field>
+        <field name="sequence">380</field>
+    </record>
+    <record id="exp_school_grants_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_school_grants_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_school_grants"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+        <field name="description">Including payment reports from the telecom company</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts" model="expenditure.type">
+        <field name="name">Unconditional Cash Transfers (UCTs)</field>
+        <field name="sequence">390</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+        <field name="description">Including payment reports from the telecom company</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_note_to_file"/>
+        <field name="sequence">70</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please include a note to file explaining anything that might be unclear in the documentation (if applicable)</field>
+    </record>
+    <record id="exp_unconditional_cash_transfers_ucts_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_unconditional_cash_transfers_ucts"/>
+        <field name="document_type_id" ref="doc_derogation_waiver"/>
+        <field name="sequence">80</field>
+        <field name="requirement">optional</field>
+        <field name="description">Please ensure a copy of any derogation waiver applicable to this purchase is attached</field>
+    </record>
+    <record id="exp_cash_for_work" model="expenditure.type">
+        <field name="name">Cash for Work</field>
+        <field name="sequence">400</field>
+    </record>
+    <record id="exp_cash_for_work_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_list_of_participants_signed_and_certified"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_cash_for_work_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_cash_for_work"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+        <field name="description">Including payment reports from the telecom company</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments" model="expenditure.type">
+        <field name="name">Staff salaries and related deductions payments</field>
+        <field name="sequence">410</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_salaries_and_related_deductions_payments"/>
+        <field name="document_type_id" ref="doc_staff_contract_signed"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_salaries_and_related_deductions_payments"/>
+        <field name="document_type_id" ref="doc_approved_staff_master_payroll"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_salaries_and_related_deductions_payments"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_salaries_and_related_deductions_payments"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_staff_salaries_and_related_deductions_payments_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_staff_salaries_and_related_deductions_payments"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_partners" model="expenditure.type">
+        <field name="name">Payment to Partners</field>
+        <field name="sequence">420</field>
+    </record>
+    <record id="exp_payment_to_partners_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_partners"/>
+        <field name="document_type_id" ref="doc_signed_sga_or_mou_and_request_for_payment_from_partner"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_partners_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_partners"/>
+        <field name="document_type_id" ref="doc_approved_financial_report_2nd_and_subsequent_payments"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_partners_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_partners"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_partners_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_partners"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification" model="expenditure.type">
+        <field name="name">Enumerators - Beneficiary Registration and Verification</field>
+        <field name="sequence">430</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_payment_list_names_titles_amounts_account_numbers"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_enumerators_beneficiary_registration_and_verification_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_enumerators_beneficiary_registration_and_verification"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility" model="expenditure.type">
+        <field name="name">Warehouse Rental (Storage Facility)</field>
+        <field name="sequence">440</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_warehouse_rental_storage_facility"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_warehouse_rental_storage_facility"/>
+        <field name="document_type_id" ref="doc_contract_framework_agreement_signed"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_warehouse_rental_storage_facility"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_warehouse_rental_storage_facility"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_warehouse_rental_storage_facility_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_warehouse_rental_storage_facility"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs" model="expenditure.type">
+        <field name="name">Audit Costs</field>
+        <field name="sequence">450</field>
+    </record>
+    <record id="exp_audit_costs_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_terms_of_reference_approved"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_audit_costs_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_audit_costs"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies" model="expenditure.type">
+        <field name="name">Purchase of Medical Supplies</field>
+        <field name="sequence">460</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_medical_supplies_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_medical_supplies"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc" model="expenditure.type">
+        <field name="name">Purchase of Capital Assets (furniture, laptops etc.)</field>
+        <field name="sequence">470</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_capital_assets_furniture_laptops_etc_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_capital_assets_furniture_laptops_etc"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods" model="expenditure.type">
+        <field name="name">Purchase of Therapeutic Foods</field>
+        <field name="sequence">480</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_therapeutic_foods_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_therapeutic_foods"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis" model="expenditure.type">
+        <field name="name">Purchase of Non-Food Items (NFIs)</field>
+        <field name="sequence">490</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_non_food_items_nfis_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_non_food_items_nfis"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle" model="expenditure.type">
+        <field name="name">Purchase of Vehicle</field>
+        <field name="sequence">500</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_purchase_of_vehicle_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_purchase_of_vehicle"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input" model="expenditure.type">
+        <field name="name">Agricultural Input</field>
+        <field name="sequence">510</field>
+    </record>
+    <record id="exp_agricultural_input_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_germination_test"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_agricultural_input_l11" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_agricultural_input"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">110</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking" model="expenditure.type">
+        <field name="name">Water Provision &amp; or Trucking</field>
+        <field name="sequence">520</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_approved_sr"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_quotes_tender_and_supporting_documentation"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_quote_tender_evaluation_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_purchase_order_lpo_or_contract"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l5" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_signed_mou_with_relevant_authority_community"/>
+        <field name="sequence">50</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l6" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_delivery_note_goods_received_note_grn"/>
+        <field name="sequence">60</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l7" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_distribution_beneficiaries_list"/>
+        <field name="sequence">70</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l8" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_service_rendered_completion_certificate"/>
+        <field name="sequence">80</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l9" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_invoice_original_certified"/>
+        <field name="sequence">90</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l10" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">100</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_water_provision_or_trucking_l11" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_water_provision_or_trucking"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">110</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_consortium_members" model="expenditure.type">
+        <field name="name">Payment to Consortium Members</field>
+        <field name="sequence">530</field>
+    </record>
+    <record id="exp_payment_to_consortium_members_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_consortium_members"/>
+        <field name="document_type_id" ref="doc_signed_sga_or_mou_and_request_for_payment_from_partner"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_consortium_members_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_consortium_members"/>
+        <field name="document_type_id" ref="doc_approved_financial_report_2nd_and_subsequent_payments"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_consortium_members_l3" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_consortium_members"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">30</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_payment_to_consortium_members_l4" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_payment_to_consortium_members"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">40</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_bank_charges" model="expenditure.type">
+        <field name="name">Bank Charges</field>
+        <field name="sequence">540</field>
+    </record>
+    <record id="exp_bank_charges_l1" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_bank_charges"/>
+        <field name="document_type_id" ref="doc_payment_request_form"/>
+        <field name="sequence">10</field>
+        <field name="requirement">standard</field>
+    </record>
+    <record id="exp_bank_charges_l2" model="expenditure.type.line">
+        <field name="expenditure_type_id" ref="exp_bank_charges"/>
+        <field name="document_type_id" ref="doc_proof_of_payment"/>
+        <field name="sequence">20</field>
+        <field name="requirement">standard</field>
+        <field name="description">Bank statement or debit advice showing the bank charges amount</field>
+    </record>
+    <record id="exp_sheet1" model="expenditure.type">
+        <field name="name">Sheet1</field>
+        <field name="sequence">550</field>
+    </record>
+    <record id="exp_sheet2" model="expenditure.type">
+        <field name="name">Sheet2</field>
+        <field name="sequence">560</field>
+    </record>
+    <record id="exp_sheet3" model="expenditure.type">
+        <field name="name">Sheet3</field>
+        <field name="sequence">570</field>
+    </record>
+</odoo>

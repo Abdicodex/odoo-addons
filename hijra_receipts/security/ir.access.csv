@@ -1,0 +1,12 @@
+id,name,model_id,group_id/id,operation,domain
+procurement_grn_buyer,GRN buyer,procurement.grn,purchase.group_purchase_user,crud,
+procurement_grn_requester,GRN requester,procurement.grn,purchase_request_rfq.group_purchase_request_user,ru,"['|', ('checked_by_id', '=', user.id), ('request_id.requester_id', '=', user.id)]"
+procurement_grn_system,GRN system,procurement.grn,base.group_system,crud,
+procurement_grn_comp_rule,GRN multi-company,procurement.grn,,crud,"[('company_id', 'in', company_ids)]"
+procurement_grn_line_buyer,GRN item buyer,procurement.grn.line,purchase.group_purchase_user,crud,
+procurement_grn_line_requester,GRN item requester,procurement.grn.line,purchase_request_rfq.group_purchase_request_user,r,"['|', ('grn_id.checked_by_id', '=', user.id), ('grn_id.request_id.requester_id', '=', user.id)]"
+procurement_grn_line_system,GRN item system,procurement.grn.line,base.group_system,crud,
+procurement_completion_buyer,Completion note buyer,procurement.completion,purchase.group_purchase_user,crud,
+procurement_completion_requester,Completion note requester,procurement.completion,purchase_request_rfq.group_purchase_request_user,ru,"['|', ('approver_id', '=', user.id), ('request_id.requester_id', '=', user.id)]"
+procurement_completion_system,Completion note system,procurement.completion,base.group_system,crud,
+procurement_completion_comp_rule,Completion note multi-company,procurement.completion,,crud,"[('company_id', 'in', company_ids)]"

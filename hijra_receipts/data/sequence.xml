@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo noupdate="1">
+    <record id="seq_procurement_grn" model="ir.sequence">
+        <field name="name">Goods Received Note</field>
+        <field name="code">procurement.grn</field>
+        <field name="prefix">SO-GRN</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+    <record id="seq_procurement_completion" model="ir.sequence">
+        <field name="name">Service Completion Note</field>
+        <field name="code">procurement.completion</field>
+        <field name="prefix">SO-SCN</field>
+        <field name="padding">5</field>
+        <field name="number_next">1</field>
+        <field name="company_id" eval="False"/>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+id,name,model_id,group_id/id,operation,domain
+supporting_document_type_read,Document type read,supporting.document.type,base.group_user,r,
+supporting_document_type_system,Document type admin,supporting.document.type,base.group_system,crud,
+expenditure_type_read,Expenditure type read,expenditure.type,base.group_user,r,
+expenditure_type_system,Expenditure type admin,expenditure.type,base.group_system,crud,
+expenditure_type_line_read,Expenditure type document read,expenditure.type.line,base.group_user,r,
+expenditure_type_line_system,Expenditure type document admin,expenditure.type.line,base.group_system,crud,
+finance_document_user,Payment document user,finance.transaction.document,hijra_finance.group_finance_user,crud,"[('transaction_id.create_uid', '=', user.id)]"
+finance_document_approver,Payment document approver,finance.transaction.document,hijra_finance.group_finance_approver,ru,
+finance_document_manager,Payment document manager,finance.transaction.document,hijra_finance.group_finance_manager,crud,
+finance_document_system,Payment document system,finance.transaction.document,base.group_system,crud,
+finance_document_comp_rule,Payment document multi-company,finance.transaction.document,,crud,"[('transaction_id.company_id', 'in', company_ids)]"

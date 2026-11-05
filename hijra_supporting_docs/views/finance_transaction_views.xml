@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="finance_transaction_view_form_documents" model="ir.ui.view">
+        <field name="name">finance.transaction.form.documents</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="%(hijra_supporting_docs.action_report_support_pack)d"
+                        string="Print Supporting Documents" type="action"
+                        invisible="not expenditure_type_id"/>
+            </xpath>
+            <field name="cheque_ref" position="after">
+                <field name="expenditure_type_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+            </field>
+            <xpath expr="//page[@name='notes']" position="after">
+                <page string="Supporting Documents" name="supporting_documents">
+                    <field name="documents_missing" invisible="1"/>
+                    <div class="alert alert-warning" role="alert" invisible="documents_missing == 0">
+                        Standard documents are missing. Tick them as available, upload them or waive them,
+                        otherwise the payment cannot be posted (unless an override reason is written below).
+                    </div>
+                    <div class="mb-2" invisible="not expenditure_type_id">
+                        <button name="action_refresh_checklist" type="object" string="Refresh Checklist"
+                                class="btn btn-secondary"
+                                help="Apply the current document list of the expenditure type"/>
+                    </div>
+                    <p class="text-muted" invisible="expenditure_type_id">
+                        Choose the Expenditure Type to see the supporting documents this payment needs.
+                    </p>
+                    <field name="document_ids" nolabel="1">
+                        <list editable="bottom" decoration-danger="status == 'missing'"
+                              decoration-success="status in ('system', 'attached', 'available')"
+                              decoration-muted="status == 'not_provided'">
+                            <field name="sequence" widget="handle"/>
+                            <field name="document_type_id" readonly="requirement != 'extra'"
+                                   options="{'no_create': True}"/>
+                            <field name="requirement" readonly="1"/>
+                            <field name="status" widget="badge"
+                                   decoration-success="status in ('system', 'attached', 'available')"
+                                   decoration-danger="status == 'missing'"
+                                   decoration-warning="status == 'waived'"/>
+                            <field name="available"/>
+                            <field name="file" filename="file_name" widget="binary"/>
+                            <field name="file_name" column_invisible="True"/>
+                            <field name="waived"/>
+                            <field name="waiver_note" invisible="not waived" required="waived"/>
+                            <field name="system_ref" optional="show"/>
+                            <field name="description" optional="hide"/>
+                            <field name="source" column_invisible="True"/>
+                        </list>
+                    </field>
+                    <group invisible="documents_missing == 0">
+                        <field name="document_override_reason"
+                               placeholder="Only to post although standard documents are missing"/>
+                    </group>
+                    <p class="text-muted">
+                        Uploads are optional: tick Available when the document exists (on paper or elsewhere).
+                        Anything uploaded is printed in the pack automatically; the documents the system makes
+                        tick themselves. Add a line for any additional document.
+                    </p>
+                </page>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_list_expenditure" model="ir.ui.view">
+        <field name="name">finance.transaction.list.expenditure</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_list"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="expenditure_type_id" optional="show"/>
+                <field name="documents_missing" string="Missing Docs" optional="hide"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="finance_transaction_view_search_expenditure" model="ir.ui.view">
+        <field name="name">finance.transaction.search.expenditure</field>
+        <field name="model">finance.transaction</field>
+        <field name="inherit_id" ref="hijra_finance.finance_transaction_view_search"/>
+        <field name="arch" type="xml">
+            <field name="project_id" position="after">
+                <field name="expenditure_type_id"/>
+            </field>
+            <filter name="group_account" position="after">
+                <filter name="group_expenditure" string="Expenditure Type"
+                        context="{'group_by': 'expenditure_type_id'}"/>
+            </filter>
+        </field>
+    </record>
+</odoo>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="action_report_support_pack" model="ir.actions.report">
+        <field name="name">Supporting Documents Pack</field>
+        <field name="model">finance.transaction</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_supporting_docs.report_support_pack</field>
+        <field name="print_report_name">'Supporting Documents - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="hijra_finance.model_finance_transaction"/>
+        <field name="binding_type">report</field>
+    </record>
+</odoo>

@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_request_view_form_expenditure" model="ir.ui.view">
+        <field name="name">purchase.request.form.expenditure</field>
+        <field name="model">purchase.request</field>
+        <field name="inherit_id" ref="purchase_request_rfq.purchase_request_view_form"/>
+        <field name="arch" type="xml">
+            <field name="fund_id" position="after">
+                <field name="expenditure_type_id" readonly="state != 'draft'" options="{'no_create': True}"/>
+            </field>
+        </field>
+    </record>
+</odoo>
