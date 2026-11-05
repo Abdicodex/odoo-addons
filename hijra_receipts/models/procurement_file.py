@@ -10,26 +10,38 @@ class ProcurementFile(models.Model):
         notes = order.completion_ids.filtered(lambda c: c.state != 'cancelled')
         return order, grns, notes
 
+    def _stage_after_order(self, order):
+        if not order.sudo().is_fully_received():
+            return 'receipt'
+        return super()._stage_after_order(order)
+
     def _build_steps(self):
         steps = super()._build_steps()
         order, grns, notes = self._receipts()
         if not order or order.state not in ('purchase', 'done'):
             return steps
+        receive = (order, 'action_receive', _("Receive"))
         new = []
-        for grn in grns:
-            detail = _("Part order") if grn.order_complete == 'part' else _("Complete order")
-            new.append(self._step(
-                _("Goods Received Note"), grn.name, 'done' if grn.state == 'checked' else 'pending',
-                "%s - %s" % (detail, dict(grn._fields['state'].selection).get(grn.state)),
-                grn, 'hijra_receipts.action_report_grn', grn))
-        for note in notes:
-            new.append(self._step(
-                _("Service Completion Note"), note.name, 'done' if note.state == 'approved' else 'pending',
-                dict(note._fields['state'].selection).get(note.state), note,
-                'hijra_receipts.action_report_completion', note))
-        if not new:
-            new.append(self._step(
-                _("Goods Received / Service Completion"), '', 'todo', _("Not recorded yet")))
+        if order.receipt_type == 'service':
+            for note in notes:
+                new.append(self._step(
+                    _("Service Completion Note"), note.name, 'done' if note.state == 'approved' else 'pending',
+                    dict(note._fields['state'].selection).get(note.state), note,
+                    'hijra_receipts.action_report_completion', note, phase='receipt'))
+            if not notes:
+                new.append(self._step(
+                    _("Service Completion Note"), '', 'todo', _("Not recorded yet"), phase='receipt', create=receive))
+        else:
+            for grn in grns:
+                detail = _("Part order") if grn.order_complete == 'part' else _("Complete order")
+                new.append(self._step(
+                    _("Goods Received Note"), grn.name, 'done' if grn.state == 'checked' else 'pending',
+                    "%s - %s" % (detail, dict(grn._fields['state'].selection).get(grn.state)),
+                    grn, 'hijra_receipts.action_report_grn', grn, phase='receipt'))
+            if order._remaining_quantities() and not grns.filtered(lambda g: g.state == 'draft'):
+                new.append(self._step(
+                    _("Goods Received Note"), '', 'todo',
+                    _("Items still to receive") if grns else _("Not recorded yet"), phase='receipt', create=receive))
         anchor = _("Purchase Order")
         index = next((i for i, step in enumerate(steps) if step['name'] == anchor), len(steps) - 1) + 1
         return steps[:index] + new + steps[index:]

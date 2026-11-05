@@ -70,6 +70,7 @@ class ProcurementGrn(models.Model):
                 raise UserError(_("Enter the quantity received on at least one item."))
             rec.write({'state': 'received', 'received_by_id': self.env.user.id,
                        'received_date': fields.Datetime.now()})
+            rec._apply_received(1)
             rec.message_post(body=_("Received by %s.", self.env.user.name))
             if rec.checked_by_id:
                 rec.activity_schedule(
@@ -89,10 +90,19 @@ class ProcurementGrn(models.Model):
             rec.activity_unlink(['mail.mail_activity_data_todo'])
             rec.message_post(body=_("Checked by %s.", user.name))
 
+    def _apply_received(self, sign):
+        """Keep the received quantity of the order lines (the standard Received column) in step."""
+        for line in self.line_ids:
+            if line.order_line_id and line.qty_received:
+                order_line = line.order_line_id.sudo()
+                order_line.qty_received = max(order_line.qty_received + sign * line.qty_received, 0.0)
+
     def action_cancel(self):
         for rec in self:
             if rec.state == 'checked':
                 raise UserError(_("A checked note cannot be cancelled."))
+            if rec.state == 'received':
+                rec._apply_received(-1)
             rec.state = 'cancelled'
 
     def action_reset_draft(self):

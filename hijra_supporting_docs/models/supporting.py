@@ -48,6 +48,11 @@ class ExpenditureType(models.Model):
     default_account_id = fields.Many2one(
         'account.account', string='Default Account', domain="[('account_type', '!=', 'off_balance')]",
         help="Filled in on the payment when this type is chosen and no account is set yet.")
+    receipt_type = fields.Selection(
+        [('goods', 'Goods (Goods Received Note)'), ('service', 'Service (Service Completion Note)')],
+        string='Receipt',
+        help="Decides how purchases of this type are received: with a Goods Received Note or with a "
+             "Service Completion Note (one or the other). Empty: the buyer chooses on the order.")
     note = fields.Text()
     line_ids = fields.One2many('expenditure.type.line', 'expenditure_type_id', string='Supporting Documents', copy=True)
 

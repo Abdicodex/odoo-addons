@@ -4,3 +4,6 @@ finance_order_line_read,Finance reads purchase order lines,purchase.order.line,h
 finance_file_read,Finance reads procurement files,procurement.file,hijra_finance.group_finance_user,r,
 finance_file_step_read,Finance reads procurement steps,procurement.file.step,hijra_finance.group_finance_user,r,
 finance_request_read,Finance reads requisitions,purchase.request,hijra_finance.group_finance_user,r,
+finance_grn_read,Finance reads goods received notes,procurement.grn,hijra_finance.group_finance_user,r,
+finance_grn_line_read,Finance reads goods received note items,procurement.grn.line,hijra_finance.group_finance_user,r,
+finance_completion_read,Finance reads completion notes,procurement.completion,hijra_finance.group_finance_user,r,

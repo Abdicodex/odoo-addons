@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="procurement_grn_view_form_pay_vendor" model="ir.ui.view">
+        <field name="name">procurement.grn.form.pay.vendor</field>
+        <field name="model">procurement.grn</field>
+        <field name="inherit_id" ref="hijra_receipts.procurement_grn_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_pay_vendor" string="Pay Vendor" type="object" class="oe_highlight"
+                        invisible="state not in ('received', 'checked')"
+                        groups="hijra_finance.group_finance_user"/>
+            </xpath>
+        </field>
+    </record>
+
+    <record id="procurement_completion_view_form_pay_vendor" model="ir.ui.view">
+        <field name="name">procurement.completion.form.pay.vendor</field>
+        <field name="model">procurement.completion</field>
+        <field name="inherit_id" ref="hijra_receipts.procurement_completion_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//header/field[@name='state']" position="before">
+                <button name="action_pay_vendor" string="Pay Vendor" type="object" class="oe_highlight"
+                        invisible="state != 'approved'" groups="hijra_finance.group_finance_user"/>
+            </xpath>
+        </field>
+    </record>
+</odoo>

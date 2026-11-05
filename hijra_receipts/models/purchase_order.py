@@ -5,23 +5,28 @@ from odoo.exceptions import UserError
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
+    receipt_type = fields.Selection(
+        [('goods', 'Goods'), ('service', 'Service')], string='Receipt Type', default='goods',
+        required=True, copy=True, tracking=True,
+        help="Goods are received with a Goods Received Note; a service is closed with a Service Completion Note. "
+             "One or the other, never both.")
     grn_ids = fields.One2many('procurement.grn', 'order_id', string='Goods Received Notes')
     grn_count = fields.Integer(compute='_compute_receipt_counts')
     completion_ids = fields.One2many('procurement.completion', 'order_id', string='Service Completion Notes')
     completion_count = fields.Integer(compute='_compute_receipt_counts')
-    can_receive_goods = fields.Boolean(compute='_compute_receipt_counts')
-    can_complete_service = fields.Boolean(compute='_compute_receipt_counts')
+    receipt_locked = fields.Boolean(compute='_compute_receipt_counts')
 
-    @api.depends(
-        'state', 'order_line.product_qty', 'grn_ids.state', 'grn_ids.line_ids.qty_received',
-        'completion_ids.state')
+    @api.depends('grn_ids.state', 'completion_ids.state')
     def _compute_receipt_counts(self):
         for order in self:
             order.grn_count = len(order.grn_ids.filtered(lambda g: g.state != 'cancelled'))
             order.completion_count = len(order.completion_ids.filtered(lambda c: c.state != 'cancelled'))
-            confirmed = order.state in ('purchase', 'done')
-            order.can_complete_service = confirmed and not order.completion_count
-            order.can_receive_goods = confirmed and bool(order._remaining_quantities())
+            order.receipt_locked = bool(order.grn_count or order.completion_count)
+
+    def _check_can_receive(self):
+        self.ensure_one()
+        if self.state not in ('purchase', 'done'):
+            raise UserError(_("Confirm the order first: it has to be authorized by the Officer-in-Charge."))
 
     def _remaining_quantities(self):
         """{order line id: quantity still to receive}, counting the notes already marked as received."""
@@ -38,15 +43,31 @@ class PurchaseOrder(models.Model):
                 remaining[line.id] = left
         return remaining
 
-    def _check_can_receive(self):
+    def is_fully_received(self):
+        """True when the goods are all received, or the service is completed and approved."""
         self.ensure_one()
-        if self.state not in ('purchase', 'done'):
-            raise UserError(_("Confirm the order first: it has to be authorized by the Officer-in-Charge."))
+        if self.receipt_type == 'service':
+            return bool(self.completion_ids.filtered(lambda c: c.state == 'approved'))
+        return not self._remaining_quantities()
+
+    # ------------------------------------------------------------------
+    # One Receive button: it opens the goods received note or the service completion note
+    # ------------------------------------------------------------------
+    def action_receive(self):
+        """The standard Receive button opens the receipt document of this order."""
+        if len(self) != 1:
+            return super().action_receive()
+        self._check_can_receive()
+        if self.receipt_type == 'service':
+            return self.action_complete_service()
+        return self.action_receive_goods()
 
     def action_receive_goods(self):
-        """A new goods received note for what is still to be received on this order."""
+        """The goods received note for what is still to be received on this order."""
         self.ensure_one()
         self._check_can_receive()
+        if self.receipt_type != 'goods':
+            raise UserError(_("%s is an order for a service: use its Service Completion Note.", self.name))
         draft = self.grn_ids.filtered(lambda g: g.state == 'draft')[:1]
         if draft:
             return self._open(draft)
@@ -79,9 +100,14 @@ class PurchaseOrder(models.Model):
         return self._open(grn)
 
     def action_complete_service(self):
-        """A new service completion note, drafted from this order."""
+        """The service completion note of this order, drafted from it."""
         self.ensure_one()
         self._check_can_receive()
+        if self.receipt_type != 'service':
+            raise UserError(_("%s is an order for goods: use its Goods Received Note.", self.name))
+        existing = self.completion_ids.filtered(lambda c: c.state != 'cancelled')[:1]
+        if existing:
+            return self._open(existing)
         first = self.order_line.filtered(lambda l: not l.display_type)[:1]
         item = (first.purchase_request_line_id.sudo().description or first.name or '').strip()
         request = self.purchase_request_id.sudo()

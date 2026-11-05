@@ -30,7 +30,7 @@
                             string="Print All Documents" type="action" class="oe_highlight"/>
                     <button name="action_refresh" string="Refresh" type="object"/>
                     <field name="stage" widget="statusbar"
-                           statusbar_visible="requisition,rfq,committee,order,payment,paid"/>
+                           statusbar_visible="requisition,rfq,committee,order,receipt,payment,paid"/>
                 </header>
                 <sheet>
                     <div class="oe_title">
@@ -49,29 +49,74 @@
                             <field name="currency_id" invisible="1"/>
                         </group>
                     </group>
-                    <separator string="Steps and documents"/>
-                    <field name="step_ids" nolabel="1" readonly="1">
-                        <list create="0" delete="0" edit="0" decoration-success="state == 'done'"
-                              decoration-muted="state == 'todo'">
-                            <field name="sequence" column_invisible="True"/>
-                            <field name="name"/>
-                            <field name="reference"/>
-                            <field name="detail"/>
-                            <field name="state" widget="badge"
-                                   decoration-success="state == 'done'"
-                                   decoration-warning="state == 'pending'"
-                                   decoration-muted="state == 'todo'"/>
-                            <field name="open_model" column_invisible="True"/>
-                            <field name="print_xmlid" column_invisible="True"/>
-                            <button name="action_open" type="object" string="Open" icon="fa-external-link"
-                                    class="text-primary" invisible="not open_model"/>
-                            <button name="action_print" type="object" string="Print" icon="fa-print"
-                                    class="text-primary" invisible="not print_xmlid"/>
-                        </list>
-                    </field>
+                    <notebook>
+                        <page string="Timeline" name="timeline">
+                            <field name="step_ids" nolabel="1" readonly="1" mode="kanban">
+                                <kanban create="0" delete="0" edit="0" records_draggable="0">
+                                    <field name="sequence"/>
+                                    <field name="state"/>
+                                    <field name="open_model"/>
+                                    <field name="print_xmlid"/>
+                                    <field name="create_method"/>
+                                    <field name="create_label"/>
+                                    <templates>
+                                        <t t-name="card">
+                                            <div t-attf-class="border-start border-4 ps-2 #{record.state.raw_value == 'done' ? 'border-success' : (record.state.raw_value == 'pending' ? 'border-warning' : 'border-secondary')}">
+                                                <div class="d-flex justify-content-between align-items-center">
+                                                    <span class="text-muted small text-uppercase"><field name="phase"/></span>
+                                                    <field name="state" widget="badge"
+                                                           decoration-success="state == 'done'"
+                                                           decoration-warning="state == 'pending'"
+                                                           decoration-muted="state == 'todo'"/>
+                                                </div>
+                                                <div class="fw-bold"><field name="name"/></div>
+                                                <div><field name="reference"/></div>
+                                                <div class="text-muted small"><field name="detail"/></div>
+                                                <div class="mt-2 d-flex gap-1 flex-wrap">
+                                                    <button type="object" name="action_open" class="btn btn-sm btn-primary"
+                                                            t-if="record.open_model.raw_value">Open</button>
+                                                    <button type="object" name="action_create" class="btn btn-sm btn-success"
+                                                            t-if="record.create_method.raw_value and record.state.raw_value != 'done'"><t t-esc="record.create_label.value"/></button>
+                                                    <button type="object" name="action_print" class="btn btn-sm btn-secondary"
+                                                            t-if="record.print_xmlid.raw_value">Print</button>
+                                                </div>
+                                            </div>
+                                        </t>
+                                    </templates>
+                                </kanban>
+                            </field>
+                        </page>
+                        <page string="List" name="steps_list">
+                            <field name="step_ids" nolabel="1" readonly="1">
+                                <list create="0" delete="0" edit="0" decoration-success="state == 'done'"
+                                      decoration-muted="state == 'todo'">
+                                    <field name="sequence" column_invisible="True"/>
+                                    <field name="phase" optional="show"/>
+                                    <field name="name"/>
+                                    <field name="reference"/>
+                                    <field name="detail"/>
+                                    <field name="state" widget="badge"
+                                           decoration-success="state == 'done'"
+                                           decoration-warning="state == 'pending'"
+                                           decoration-muted="state == 'todo'"/>
+                                    <field name="open_model" column_invisible="True"/>
+                                    <field name="print_xmlid" column_invisible="True"/>
+                                    <field name="create_method" column_invisible="True"/>
+                                    <field name="create_label" column_invisible="True"/>
+                                    <button name="action_open" type="object" string="Open" icon="fa-external-link"
+                                            class="text-primary" invisible="not open_model"/>
+                                    <button name="action_create" type="object" string="Do this step" icon="fa-play"
+                                            class="text-success" invisible="not create_method or state == 'done'"/>
+                                    <button name="action_print" type="object" string="Print" icon="fa-print"
+                                            class="text-primary" invisible="not print_xmlid"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                     <p class="text-muted">
-                        Every step of this purchase, from the requisition to the payment. Open a step to
-                        go to its record, or print its document; Print All Documents puts them in one file.
+                        Every step of this purchase, from the requisition to the payment and its supporting
+                        documents. Open a step to go to its record, press the green button to do a step that is
+                        not done yet, or print its document; Print All Documents puts them in one file.
                     </p>
                 </sheet>
             </form>

@@ -98,6 +98,9 @@ class ProcurementCompletion(models.Model):
             if rec.approver_id and rec.approver_id != user and not user.has_group('base.group_system'):
                 raise UserError(_("Only %s can approve this note.", rec.approver_id.name))
             rec.write({'state': 'approved', 'approver_id': user.id, 'approver_date': fields.Datetime.now()})
+            # the service is delivered: the order is received in full
+            for line in rec.order_id.sudo().order_line.filtered(lambda l: not l.display_type):
+                line.qty_received = line.product_qty
             rec.message_post(body=_("Approved by %s.", user.name))
 
     def action_cancel(self):

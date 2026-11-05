@@ -9,8 +9,18 @@ STAGES = [
     ('rfq', 'Quotations'),
     ('committee', 'Committee'),
     ('order', 'Purchase Order'),
+    ('receipt', 'Receipt'),
     ('payment', 'Payment'),
     ('paid', 'Paid'),
+]
+PHASES = [
+    ('requisition', 'Requisition'),
+    ('quotations', 'Quotations'),
+    ('committee', 'Committee'),
+    ('order', 'Purchase Order'),
+    ('receipt', 'Receipt'),
+    ('payment', 'Payment'),
+    ('documents', 'Supporting Documents'),
 ]
 COMMITTEE_DOCUMENTS = [
     ('declaration', 'Declaration of Impartiality', 'hijra_procurement.action_report_declaration'),
@@ -21,10 +31,11 @@ COMMITTEE_DOCUMENTS = [
 
 
 class ProcurementFile(models.Model):
-    """One screen per requisition with every step of its procurement and the documents of each.
+    """One screen per requisition: the whole procurement as a chain of steps, each with its record and
+    its document one click away.
 
-    The steps are read from the requisition, its RFQ, the committee session, the purchase order
-    and (with the Pay Vendor module) the payments, so nothing is typed in twice.
+    The steps are read from the requisition, its RFQ, the committee session, the purchase order, the
+    receipt, the payments and the supporting documents, so nothing is typed in twice.
     """
     _name = 'procurement.file'
     _description = 'Procurement File'
@@ -90,25 +101,32 @@ class ProcurementFile(models.Model):
         return self._stage_after_order(order)
 
     def _stage_after_order(self, order):
-        """Hook: the Pay Vendor module tells when the order is paid."""
+        """Hook: the receiving and payment modules tell when the order is received and paid."""
         return 'payment'
 
     # ------------------------------------------------------------------
     # Steps
     # ------------------------------------------------------------------
     @staticmethod
-    def _step(name, reference, state, detail, open_rec=None, print_xmlid=None, print_recs=None):
-        return {
+    def _step(name, reference, state, detail, open_rec=None, print_xmlid=None, print_recs=None,
+              phase=None, create=None):
+        """One step of the chain. `create` = (record, method, label): the button that does the step."""
+        step = {
             'name': name,
             'reference': reference or '',
             'state': state,
             'detail': detail or '',
+            'phase': phase,
             'open_model': open_rec._name if open_rec else False,
             'open_id': open_rec.id if open_rec else 0,
             'print_xmlid': print_xmlid if print_recs else False,
             'print_model': print_recs._name if print_recs else False,
             'print_ids': ','.join(str(i) for i in print_recs.ids) if print_recs else False,
         }
+        if create:
+            record, method, label = create
+            step.update(create_model=record._name, create_id=record.id, create_method=method, create_label=label)
+        return step
 
     def _build_steps(self):
         """The steps, in the order of the procurement cycle."""
@@ -119,19 +137,21 @@ class ProcurementFile(models.Model):
         steps.append(self._step(
             _("Purchase Requisition"), request.name,
             'done' if request.state in ('approved', 'rfq_created') else 'pending', label,
-            request, 'purchase_request_rfq.action_report_purchase_request', request))
+            request, 'purchase_request_rfq.action_report_purchase_request', request, phase='requisition'))
         rfqs = self._rfqs()
         if not rfqs:
-            steps.append(self._step(_("Request for Quotation"), '', 'todo', _("Not created yet")))
+            create = (request, 'action_open_make_rfq', _("Create RFQ")) if request.state == 'approved' else None
+            steps.append(self._step(
+                _("Request for Quotation"), '', 'todo', _("Not created yet"), phase='quotations', create=create))
         for rfq in rfqs:
             steps.append(self._step(
                 _("Request for Quotation"), rfq.name, 'done' if rfq.quotes_count else 'pending',
                 _("%(quotes)s quotes from %(vendors)s vendors", quotes=rfq.quotes_count,
                   vendors=rfq.invited_count),
-                rfq, 'purchase.report_purchase_quotation', rfq.order_ids))
+                rfq, 'purchase.report_purchase_quotation', rfq.order_ids, phase='quotations'))
             if not rfq.committee_required:
                 steps.append(self._step(
-                    _("Committee"), rfq.name, 'done', _("Not required for this value"), rfq))
+                    _("Committee"), rfq.name, 'done', _("Not required for this value"), rfq, phase='committee'))
                 continue
             for document, title, xmlid in COMMITTEE_DOCUMENTS:
                 rows = rfq.signoff_ids.filtered(lambda s: s.document == document)
@@ -144,7 +164,7 @@ class ProcurementFile(models.Model):
                     state = 'todo'
                 detail = _("%(signed)s of %(total)s signed", signed=signed, total=len(rows)) if rows \
                     else _("Session not started")
-                steps.append(self._step(title, rfq.name, state, detail, rfq, xmlid, rfq))
+                steps.append(self._step(title, rfq.name, state, detail, rfq, xmlid, rfq, phase='committee'))
         order = self._awarded_order()
         if order:
             if order.state in ('purchase', 'done'):
@@ -155,15 +175,15 @@ class ProcurementFile(models.Model):
                 state, detail = 'pending', _("Waiting for the Officer-in-Charge's authorization")
             steps.append(self._step(
                 _("Purchase Order"), order.name, state, detail, order,
-                'purchase.action_report_purchase_order', order))
+                'purchase.action_report_purchase_order', order, phase='order'))
             for bill in order.invoice_ids:
                 steps.append(self._step(
                     _("Vendor Bill"), bill.name or _("Draft"),
                     'done' if bill.state == 'posted' else 'pending',
                     dict(bill._fields['payment_state'].selection).get(bill.payment_state, ''),
-                    bill, 'account.account_invoices', bill))
+                    bill, 'account.account_invoices', bill, phase='payment'))
         elif rfqs:
-            steps.append(self._step(_("Purchase Order"), '', 'todo', _("Not awarded yet")))
+            steps.append(self._step(_("Purchase Order"), '', 'todo', _("Not awarded yet"), phase='order'))
         return steps
 
     def _refresh_steps(self):
@@ -187,7 +207,7 @@ class ProcurementFile(models.Model):
     # Printing everything
     # ------------------------------------------------------------------
     def _extra_pdf_parts(self, font_dir):
-        """Hook: the Pay Vendor module adds the payment vouchers."""
+        """Hook: the receiving, payment and supporting documents modules add their documents."""
         return []
 
     def _pdf_parts(self):
@@ -221,6 +241,7 @@ class ProcurementFileStep(models.Model):
     file_id = fields.Many2one('procurement.file', required=True, ondelete='cascade', index=True)
     sequence = fields.Integer()
     name = fields.Char(string='Step', required=True)
+    phase = fields.Selection(PHASES)
     reference = fields.Char()
     state = fields.Selection(
         [('done', 'Done'), ('pending', 'In Progress'), ('todo', 'Not Started')], required=True)
@@ -230,6 +251,10 @@ class ProcurementFileStep(models.Model):
     print_xmlid = fields.Char()
     print_model = fields.Char()
     print_ids = fields.Char()
+    create_model = fields.Char()
+    create_id = fields.Integer()
+    create_method = fields.Char()
+    create_label = fields.Char()
 
     def action_open(self):
         """Go to the record of this step."""
@@ -245,6 +270,14 @@ class ProcurementFileStep(models.Model):
             'views': [(False, 'form')],
             'target': 'current',
         }
+
+    def action_create(self):
+        """Do this step: the button of a step that is not done yet (Create RFQ, Receive, Pay Vendor ...)."""
+        self.ensure_one()
+        method = self.create_method or ''
+        if not self.create_model or not method.startswith('action_'):
+            raise UserError(_("Nothing to do for this step."))
+        return getattr(self.env[self.create_model].browse(self.create_id), method)()
 
     def action_print(self):
         """Print the document of this step."""

@@ -281,8 +281,13 @@ class FinanceTransactionDocument(models.Model):
                     parts.append(grn_pdf.build_pdf([g._prepare_grn_pdf_data() for g in grns]))
                 if notes:
                     parts.append(completion_pdf.build_pdf([n._prepare_completion_pdf_data() for n in notes]))
-        if self.file:
-            pdf = pack_pdf.file_to_pdf(pack_pdf.raw_bytes(self.file), self.file_name or '')
-            if pdf:
-                parts.append(pdf)
-        return parts
+        return parts + self._upload_parts()
+
+    def _upload_parts(self):
+        """The uploaded file of this row as PDF, if it can be printed (PDFs and images)."""
+        self.ensure_one()
+        from ..report import pack_pdf
+        if not self.file:
+            return []
+        pdf = pack_pdf.file_to_pdf(pack_pdf.raw_bytes(self.file), self.file_name or '')
+        return [pdf] if pdf else []

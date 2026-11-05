@@ -9,4 +9,13 @@
         <field name="binding_model_id" ref="hijra_finance.model_finance_transaction"/>
         <field name="binding_type">report</field>
     </record>
+    <record id="action_report_support_doc" model="ir.actions.report">
+        <field name="name">Supporting Document</field>
+        <field name="model">finance.transaction.document</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">hijra_supporting_docs.report_support_doc</field>
+        <field name="print_report_name">'Document - %s' % (object.document_type_id.name)</field>
+        <field name="binding_model_id" ref="model_finance_transaction_document"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>

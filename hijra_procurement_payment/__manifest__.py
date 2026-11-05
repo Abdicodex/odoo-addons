@@ -10,14 +10,15 @@ Connects purchasing and finance so paying a vendor takes a few clicks:
 * When the order has a posted vendor bill, the payment settles it automatically.
 * The procurement file shows the payments, and Print All Documents adds their vouchers.
     """,
-    'version': '20.0.1.2.0',
+    'version': '20.0.2.0.0',
     'category': 'Accounting',
     'license': 'LGPL-3',
-    'depends': ['hijra_procurement', 'hijra_finance'],
+    'depends': ['hijra_procurement', 'hijra_receipts', 'hijra_finance'],
     'data': [
         'security/ir.access.csv',
         'views/finance_transaction_views.xml',
         'views/purchase_order_views.xml',
+        'views/receipt_views.xml',
     ],
     'application': False,
     'installable': True,

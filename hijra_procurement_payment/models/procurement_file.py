@@ -23,9 +23,11 @@ class ProcurementFile(models.Model):
                 steps.append(self._step(
                     _("Payment"), payment.name, 'done' if payment.state == 'posted' else 'pending',
                     "%s %s" % (format(payment.amount, ',.2f'), payment.currency_id.name or ''),
-                    payment, 'hijra_finance.action_report_transaction_voucher', payment))
+                    payment, 'hijra_finance.action_report_transaction_voucher', payment, phase='payment'))
             if not payments:
-                steps.append(self._step(_("Payment"), '', 'todo', _("Not paid yet")))
+                steps.append(self._step(
+                    _("Payment"), '', 'todo', _("Not paid yet"), phase='payment',
+                    create=(order, 'action_pay_vendor', _("Pay Vendor"))))
         return steps
 
     def _extra_pdf_parts(self, font_dir):
