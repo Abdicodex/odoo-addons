@@ -7,8 +7,13 @@
         <field name="arch" type="xml">
             <xpath expr="//header/field[@name='state']" position="before">
                 <button name="action_pay_vendor" string="Pay Vendor" type="object" class="oe_highlight"
-                        invisible="state not in ('purchase', 'done') or amount_to_pay &lt;= 0"
+                        invisible="state not in ('purchase', 'done')"
                         groups="hijra_finance.group_finance_user"/>
+            </xpath>
+            <xpath expr="//form/sheet" position="inside">
+                <field name="payment_status" invisible="1"/>
+                <widget name="web_ribbon" title="Paid" bg_color="text-bg-success"
+                        invisible="payment_status != 'paid' or state not in ('purchase', 'done')"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_payments" type="object" class="oe_stat_button" icon="fa-money"
@@ -24,6 +29,7 @@
                       invisible="state not in ('purchase', 'done')">
                     <group>
                         <group>
+                            <field name="payment_status"/>
                             <field name="paid_amount"/>
                             <field name="amount_to_pay"/>
                         </group>

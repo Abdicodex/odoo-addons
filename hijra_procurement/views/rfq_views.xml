@@ -21,6 +21,24 @@
                         groups="purchase.group_purchase_manager"
                         confirm="All signatures of this session will be removed. Continue?"/>
             </xpath>
+            <xpath expr="//notebook" position="before">
+                <field name="shortfall" invisible="1"/>
+                <div class="alert alert-warning" role="alert" invisible="not shortfall">
+                    <strong>Fewer vendors than the procurement policy asks for.</strong>
+                    <span invisible="not band_id">
+                        This purchase (<field name="band_id" readonly="1" class="d-inline" options="{'no_open': True}"/>)
+                        needs <field name="min_invitations" readonly="1" class="d-inline"/> vendors invited and
+                        <field name="min_quotes" readonly="1" class="d-inline"/> quotes; so far
+                        <field name="invited_count" readonly="1" class="d-inline"/> invited and
+                        <field name="quotes_count" readonly="1" class="d-inline"/> quoted. Write the justification below.
+                    </span>
+                </div>
+                <group invisible="not shortfall">
+                    <field name="shortfall_justification" string="Justification"
+                           readonly="committee_state in ('session', 'decided') or state != 'open'"
+                           placeholder="Why were fewer vendors invited or quoted than the policy asks for?"/>
+                </group>
+            </xpath>
             <xpath expr="//page[@name='comparison']" position="after">
                 <page string="Committee" name="committee" invisible="not committee_required">
                     <group>
@@ -39,9 +57,6 @@
                                 <span class="text-muted">of at least</span>
                                 <field name="min_quotes"/>
                             </div>
-                            <field name="shortfall" invisible="1"/>
-                            <field name="shortfall_justification" invisible="not shortfall"
-                                   readonly="committee_state != 'pending'"/>
                         </group>
                         <group string="Meeting" name="meeting">
                             <field name="committee_state" widget="badge"

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="purchase_request_make_rfq_view_form_shortfall" model="ir.ui.view">
+        <field name="name">purchase.request.make.rfq.form.shortfall</field>
+        <field name="model">purchase.request.make.rfq</field>
+        <field name="inherit_id" ref="purchase_request_rfq.purchase_request_make_rfq_view_form"/>
+        <field name="arch" type="xml">
+            <xpath expr="//form/group[1]" position="after">
+                <field name="shortfall" invisible="1"/>
+                <field name="vendor_count" invisible="1"/>
+                <field name="min_invitations" invisible="1"/>
+                <div class="alert alert-warning" role="alert" invisible="not shortfall">
+                    The procurement policy asks for at least <field name="min_invitations" readonly="1"
+                    class="d-inline"/> vendors for this value; you chose <field name="vendor_count" readonly="1"
+                    class="d-inline"/>. Write the justification, or add vendors.
+                </div>
+                <group invisible="not shortfall">
+                    <field name="shortfall_justification" required="shortfall"
+                           placeholder="Why fewer vendors than the policy asks for?"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

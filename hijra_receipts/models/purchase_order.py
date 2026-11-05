@@ -9,12 +9,34 @@ class PurchaseOrder(models.Model):
     grn_count = fields.Integer(compute='_compute_receipt_counts')
     completion_ids = fields.One2many('procurement.completion', 'order_id', string='Service Completion Notes')
     completion_count = fields.Integer(compute='_compute_receipt_counts')
+    can_receive_goods = fields.Boolean(compute='_compute_receipt_counts')
+    can_complete_service = fields.Boolean(compute='_compute_receipt_counts')
 
-    @api.depends('grn_ids.state', 'completion_ids.state')
+    @api.depends(
+        'state', 'order_line.product_qty', 'grn_ids.state', 'grn_ids.line_ids.qty_received',
+        'completion_ids.state')
     def _compute_receipt_counts(self):
         for order in self:
             order.grn_count = len(order.grn_ids.filtered(lambda g: g.state != 'cancelled'))
             order.completion_count = len(order.completion_ids.filtered(lambda c: c.state != 'cancelled'))
+            confirmed = order.state in ('purchase', 'done')
+            order.can_complete_service = confirmed and not order.completion_count
+            order.can_receive_goods = confirmed and bool(order._remaining_quantities())
+
+    def _remaining_quantities(self):
+        """{order line id: quantity still to receive}, counting the notes already marked as received."""
+        self.ensure_one()
+        received = {}
+        for grn in self.grn_ids.filtered(lambda g: g.state in ('received', 'checked')):
+            for line in grn.line_ids:
+                if line.order_line_id:
+                    received[line.order_line_id.id] = received.get(line.order_line_id.id, 0.0) + line.qty_received
+        remaining = {}
+        for line in self.order_line.filtered(lambda l: not l.display_type):
+            left = line.product_qty - received.get(line.id, 0.0)
+            if left > 1e-9:
+                remaining[line.id] = left
+        return remaining
 
     def _check_can_receive(self):
         self.ensure_one()
@@ -25,6 +47,11 @@ class PurchaseOrder(models.Model):
         """A new goods received note for what is still to be received on this order."""
         self.ensure_one()
         self._check_can_receive()
+        draft = self.grn_ids.filtered(lambda g: g.state == 'draft')[:1]
+        if draft:
+            return self._open(draft)
+        if not self._remaining_quantities():
+            raise UserError(_("Everything on %s has already been received.", self.name))
         before = {}
         for done in self.env['procurement.grn.line'].sudo().search(
                 [('grn_id.order_id', '=', self.id), ('grn_id.state', 'in', ('received', 'checked'))]):

@@ -10,6 +10,8 @@ class PurchaseOrder(models.Model):
     paid_amount = fields.Monetary(compute='_compute_paid', currency_field='currency_id')
     amount_to_pay = fields.Monetary(compute='_compute_paid', currency_field='currency_id')
     payment_count = fields.Integer(compute='_compute_paid')
+    payment_status = fields.Selection(
+        [('unpaid', 'Not Paid'), ('partial', 'Partly Paid'), ('paid', 'Paid')], compute='_compute_paid')
 
     @api.depends('amount_total', 'finance_transaction_ids.state', 'finance_transaction_ids.amount')
     def _compute_paid(self):
@@ -19,6 +21,12 @@ class PurchaseOrder(models.Model):
             order.paid_amount = sum(posted.mapped('amount'))
             order.amount_to_pay = max(order.amount_total - order.paid_amount, 0.0)
             order.payment_count = len(transactions.filtered(lambda t: t.state != 'cancelled'))
+            if order.paid_amount > 0 and order.amount_to_pay <= 0:
+                order.payment_status = 'paid'
+            elif order.paid_amount > 0:
+                order.payment_status = 'partial'
+            else:
+                order.payment_status = 'unpaid'
 
     def _default_pay_account(self):
         """The account the payment is booked to: the vendor's payable account when a bill was

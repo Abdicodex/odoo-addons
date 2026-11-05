@@ -6,11 +6,13 @@
         <field name="inherit_id" ref="purchase.purchase_order_form"/>
         <field name="arch" type="xml">
             <xpath expr="//header/field[@name='state']" position="before">
+                <field name="can_receive_goods" invisible="1"/>
+                <field name="can_complete_service" invisible="1"/>
                 <button name="action_receive_goods" string="Receive Goods" type="object"
-                        class="oe_highlight" invisible="state not in ('purchase', 'done')"
+                        class="oe_highlight" invisible="not can_receive_goods"
                         groups="purchase.group_purchase_user"/>
                 <button name="action_complete_service" string="Completion Note" type="object"
-                        invisible="state not in ('purchase', 'done')" groups="purchase.group_purchase_user"/>
+                        invisible="not can_complete_service" groups="purchase.group_purchase_user"/>
             </xpath>
             <xpath expr="//div[@name='button_box']" position="inside">
                 <button name="action_view_grns" type="object" class="oe_stat_button" icon="fa-truck"
